@@ -2,7 +2,6 @@ var values = {
 	amount: 3
 };
 
-
 var createHex = function() {
 	var group = new Group();
 
@@ -17,7 +16,6 @@ var createHex = function() {
 	return hexagon;
 }
 
-
 var size = createHex().bounds.size;
 for (var y = 0; y < values.amount; y++) {
 	for (var x = 0; x < values.amount; x++) {
@@ -30,5 +28,12 @@ var onMouseMove = function(event) {
 	project.activeLayer.selected = false;
 	if (event.item)
 		event.item.selected = true;
+}
+
+var onMouseDown = function(event) {
+	var position = event.item.position;
+	var mechRaster = new Raster('redMech', position);
+	mechRaster.size.width = 50;
+	mechRaster.size.height = 75;
 }
 
