@@ -2,6 +2,13 @@ var values = {
 	amount: 3
 };
 
+var createRedMech = function() { 
+	redMech = new Raster('redMechImage', view.center);
+	visible = false;
+	redMech.size.width = 50;
+	redMech.size.height = 75;
+}
+
 var createHex = function() {
 	var group = new Group();
 
@@ -24,6 +31,8 @@ for (var y = 0; y < values.amount; y++) {
 	}
 }
 
+createRedMech();
+
 var onMouseMove = function(event) {
 	project.activeLayer.selected = false;
 	if (event.item)
@@ -31,9 +40,10 @@ var onMouseMove = function(event) {
 }
 
 var onMouseDown = function(event) {
-	var position = event.item.position;
-	var mechRaster = new Raster('redMech', position);
-	mechRaster.size.width = 50;
-	mechRaster.size.height = 75;
+	if (event.item) {
+		var selectedHexPosition = event.item.position;
+		redMech.setPosition(selectedHexPosition);
+		redMech.visible = true;
+	}
 }
 
