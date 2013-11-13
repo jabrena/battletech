@@ -8,7 +8,7 @@ var hexagon = new Path.RegularPolygon({
 	center: view.center,
 	sides: 6,
 	radius: 75,
-	fillColor: 'gray',
+	fillColor: 'darkgrey',
 	parent: group
 });
 
