@@ -24,3 +24,9 @@ for (var y = 0; y < values.amount; y++) {
 		group.addChild(copy);
 	}
 }
+
+function onMouseMove(event) {
+	project.activeLayer.selected = false;
+	if (event.item)
+		event.item.selected = true;
+}
