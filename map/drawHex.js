@@ -5,8 +5,10 @@ var mapSize = {
 	hexWidth: 9
 };
 
+var topLeftPoint = new Point(HEX_RADIUS, HEX_RADIUS);
+
 var createRedMech = function() { 
-	redMech = new Raster('redMechImage', view.center);
+	redMech = new Raster('redMechImage', topLeftPoint);
 	visible = false;
 	redMech.size.width = 50;
 	redMech.size.height = 75;
@@ -16,7 +18,7 @@ var createHex = function() {
 	var group = new Group();
 
 	var hexagon = new Path.RegularPolygon({
-		center: new Point(HEX_RADIUS, HEX_RADIUS),
+		center: topLeftPoint,
 		sides: 6,
 		radius: HEX_RADIUS,
 		fillColor: 'darkgrey',
