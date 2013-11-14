@@ -1,17 +1,22 @@
 var HEX_RADIUS = 75;
 
-var mapSize = {
-	hexHeight: 5,
-	hexWidth: 9
-};
+var map = {
+	path: new Path(),
+	size: {
+		hexHeight: 5,
+		hexWidth: 9
+	}
+}
 
 var topLeftPoint = new Point(HEX_RADIUS, HEX_RADIUS);
 
 var createRedMech = function() { 
 	redMech = new Raster('redMechImage', topLeftPoint);
-	visible = false;
 	redMech.size.width = 50;
 	redMech.size.height = 75;
+	redMech.path = new Path();
+	redMech.path.strokeColor = 'red';
+	redMech.path.closed = false;
 }
 
 var createHex = function() {
@@ -29,9 +34,10 @@ var createHex = function() {
 }
 
 var size = createHex().bounds.size;
-for (var y = 0; y < mapSize.hexHeight; y++) {
-	for (var x = 0; x < mapSize.hexWidth; x++) {
+for (var y = 0; y < map.size.hexHeight; y++) {
+	for (var x = 0; x < map.size.hexWidth; x++) {
 		var hex = createHex();
+		map.path.add(hex);
 		hex.position += size * [x + (y % 2 ? 0.5 : 0), y * 0.75];
 	}
 }
@@ -49,10 +55,19 @@ var canMove = function(currentPosition, newPosition) {
 	return	(xDiff < MaxDistance && yDiff < MaxDistance);
 }
 
+var drawPath = function(currentPosition, newPosition) {
+	redMech.path.removeSegments();
+	redMech.path = new Path(currentPosition, newPosition);
+	redMech.path.strokeColor = 'red';
+	redMech.path.closed = false;
+}
+
 var onMouseMove = function(event) {
 	project.activeLayer.selected = false;
-	if (event.item)
+	if (event.item) {
+		drawPath(redMech.position, event.item.position);
 		event.item.selected = true;
+	}
 }
 
 var onMouseDown = function(event) {
@@ -60,7 +75,6 @@ var onMouseDown = function(event) {
 		var selectedHexPosition = event.item.position;
 		if(canMove(redMech.position, selectedHexPosition)) {
 			redMech.setPosition(selectedHexPosition);
-			redMech.visible = true;
 		}
 	}
 }
