@@ -1,7 +1,8 @@
 var HEX_RADIUS = 75;
 
-var values = {
-	amount: 3
+var mapSize = {
+	hexHeight: 5,
+	hexWidth: 9
 };
 
 var createRedMech = function() { 
@@ -15,7 +16,7 @@ var createHex = function() {
 	var group = new Group();
 
 	var hexagon = new Path.RegularPolygon({
-		center: view.center,
+		center: new Point(HEX_RADIUS, HEX_RADIUS),
 		sides: 6,
 		radius: HEX_RADIUS,
 		fillColor: 'darkgrey',
@@ -26,8 +27,8 @@ var createHex = function() {
 }
 
 var size = createHex().bounds.size;
-for (var y = 0; y < values.amount; y++) {
-	for (var x = 0; x < values.amount; x++) {
+for (var y = 0; y < mapSize.hexHeight; y++) {
+	for (var x = 0; x < mapSize.hexWidth; x++) {
 		var hex = createHex();
 		hex.position += size * [x + (y % 2 ? 0.5 : 0), y * 0.75];
 	}
