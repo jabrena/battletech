@@ -1,3 +1,5 @@
+var HEX_RADIUS = 75;
+
 var values = {
 	amount: 3
 };
@@ -15,7 +17,7 @@ var createHex = function() {
 	var hexagon = new Path.RegularPolygon({
 		center: view.center,
 		sides: 6,
-		radius: 75,
+		radius: HEX_RADIUS,
 		fillColor: 'darkgrey',
 		parent: group
 	});
@@ -33,6 +35,17 @@ for (var y = 0; y < values.amount; y++) {
 
 createRedMech();
 
+var canMove = function(currentPosition, newPosition) {
+	var xDiff = Math.abs(newPosition.x - currentPosition.x);
+	var yDiff = Math.abs(newPosition.y - currentPosition.y);
+	var MaxDistance = 2*HEX_RADIUS;
+
+	console.log("xDiff: " + xDiff);
+	console.log("yDiff: " + yDiff);
+
+	return	(xDiff < MaxDistance && yDiff < MaxDistance);
+}
+
 var onMouseMove = function(event) {
 	project.activeLayer.selected = false;
 	if (event.item)
@@ -42,8 +55,10 @@ var onMouseMove = function(event) {
 var onMouseDown = function(event) {
 	if (event.item) {
 		var selectedHexPosition = event.item.position;
-		redMech.setPosition(selectedHexPosition);
-		redMech.visible = true;
+		if(canMove(redMech.position, selectedHexPosition)) {
+			redMech.setPosition(selectedHexPosition);
+			redMech.visible = true;
+		}
 	}
 }
 
