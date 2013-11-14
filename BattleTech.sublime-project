@@ -2,7 +2,7 @@
 	"folders":
 	[
 		{
-			"path": "/C/Dev/BattleTech",
+			"path": "../BattleTech",
 			"folder_exclude_patterns": ["node_modules"]
 		}
 	]

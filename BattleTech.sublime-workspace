@@ -31,7 +31,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 246,
+				"buffer_size": 356,
 				"line_ending": "Windows",
 				"name": "index.html"
 			}
@@ -40,7 +40,7 @@
 			"file": "map/drawHex.js",
 			"settings":
 			{
-				"buffer_size": 149,
+				"buffer_size": 938,
 				"line_ending": "Windows"
 			}
 		}
@@ -137,15 +137,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 246,
+						"buffer_size": 356,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								166,
-								166
+								183,
+								183
 							]
 						],
 						"settings":
@@ -164,20 +164,21 @@
 					"file": "map/drawHex.js",
 					"settings":
 					{
-						"buffer_size": 149,
+						"buffer_size": 938,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								149,
+								0,
 								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
