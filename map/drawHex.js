@@ -1,6 +1,8 @@
 var HEX_RADIUS = 75;
+var MAP_WIDTH = 9;
+var MAP_HEIGHT = 5;
 
-var createMapMatrix = function(rows, columns) {
+var createMapMatrix = function(columns, rows) {
 	var matrix = [];
 	for (var column = 0; column < columns; column++) {
 		var verticalArray = [];
@@ -15,10 +17,10 @@ var createMapMatrix = function(rows, columns) {
 var map = {
 	path: new Path(),
 	size: {
-		hexHeight: 5,
-		hexWidth: 9
+		hexHeight: MAP_HEIGHT,
+		hexWidth: MAP_WIDTH
 	},
-	matrix: createMapMatrix(2, 2)
+	matrix: createMapMatrix(MAP_HEIGHT, MAP_WIDTH)
 }
 
 console.log(map.matrix);
