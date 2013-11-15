@@ -1,12 +1,27 @@
 var HEX_RADIUS = 75;
 
+var createMapMatrix = function(rows, columns) {
+	var matrix = [];
+	for (var column = 0; column < columns; column++) {
+		var verticalArray = [];
+		for (var row = 0; row < rows; row++) {
+			verticalArray[row] = 1;
+		}
+		matrix[column] = verticalArray;
+	}
+	return matrix;
+}
+
 var map = {
 	path: new Path(),
 	size: {
 		hexHeight: 5,
 		hexWidth: 9
-	}
+	},
+	matrix: createMapMatrix(2, 2)
 }
+
+console.log(map.matrix);
 
 var topLeftPoint = new Point(HEX_RADIUS, HEX_RADIUS);
 
