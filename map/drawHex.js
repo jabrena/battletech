@@ -7,7 +7,7 @@ var createMapMatrix = function(columns, rows) {
 	for (var column = 0; column < columns; column++) {
 		var verticalArray = [];
 		for (var row = 0; row < rows; row++) {
-			verticalArray[row] = 1;
+			verticalArray[row] = row;
 		}
 		matrix[column] = verticalArray;
 	}
@@ -20,10 +20,9 @@ var map = {
 		hexHeight: MAP_HEIGHT,
 		hexWidth: MAP_WIDTH
 	},
-	matrix: createMapMatrix(MAP_HEIGHT, MAP_WIDTH)
+	grid: createMapMatrix(MAP_HEIGHT, MAP_WIDTH)
 }
-
-console.log(map.matrix);
+console.log(map.grid);
 
 var topLeftPoint = new Point(HEX_RADIUS, HEX_RADIUS);
 
@@ -36,7 +35,7 @@ var createRedMech = function() {
 	redMech.path.closed = false;
 }
 
-var createHex = function() {
+var createHex = function(terrianType) {
 	var group = new Group();
 
 	var hexagon = new Path.RegularPolygon({
@@ -53,7 +52,8 @@ var createHex = function() {
 var size = createHex().bounds.size;
 for (var y = 0; y < map.size.hexHeight; y++) {
 	for (var x = 0; x < map.size.hexWidth; x++) {
-		var hex = createHex();
+		var terrianType = map.grid[y][x]; //dictionary with move cost and type?
+		var hex = createHex(terrianType);
 		map.path.add(hex);
 		hex.position += size * [x + (y % 2 ? 0.5 : 0), y * 0.75];
 	}
