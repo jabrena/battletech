@@ -1,4 +1,4 @@
-define(['App/PathFinding/Core/Grid', 'App/PathFinding/Finders/AStarFinder'], 
+define(['PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder'], 
 function(Grid, PathFinder) {
 
 });

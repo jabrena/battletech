@@ -1,4 +1,4 @@
-define(['App/PathFinding/Core/Heap', 'App/PathFinding/Core/Util', 'App/PathFinding/Core/Heuristic'], 
+define(['PathFinding/Core/Heap', 'PathFinding/Core/Util', 'PathFinding/Core/Heuristic'], 
 function(Heap, Util, Heuristic) {
 
     /**
