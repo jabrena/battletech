@@ -27,6 +27,6 @@ define([], function() {
         this.walkable = (walkable === undefined ? true : walkable);
     };
 
-    reutrn Node;
+    return Node;
 });
 //module.exports = Node;
