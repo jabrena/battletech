@@ -1,5 +1,5 @@
-define(['PathFinding/Core/Heap', 'PathFinding/Core/Util', 'PathFinding/Core/Heuristic'], 
-function(Heap, Util, Heuristic) {
+define(['PathFinding/Core/Util', 'PathFinding/Core/Heuristic'], 
+function(Util, Heuristic) {
 
     /**
      * A* path-finder.
@@ -98,4 +98,6 @@ function(Heap, Util, Heuristic) {
         // fail to find the path
         return [];
     };
+
+    return AStarFinder;
 });

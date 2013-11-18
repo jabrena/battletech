@@ -6,4 +6,9 @@ function(Grid, PathFinder) {
 	}
 
 	var grid = new Grid(map.width, map.height); 
+	var pathFinder = new PathFinder();
+
+	var gridBackup = grid.clone();
+	var path = pathFinder.findPath(1, 2, 4, 2, gridBackup);
+	console.log(path);
 });
