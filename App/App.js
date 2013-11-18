@@ -1,5 +1,14 @@
-define(['PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder'], 
-function(Grid, PathFinder) {
+define(['PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/MapDrawer'], 
+function(Grid, PathFinder, MapDrawer) {
+	'use strict';
+
+	var SetUpCanvas = function() {
+		$(document).ready(function() {
+			var canvas = $('#myCanvas');
+			paper.setup(canvas);
+		});
+	}();
+
 	var map = {
 		width: 9,
 		height: 5
@@ -7,6 +16,8 @@ function(Grid, PathFinder) {
 
 	var grid = new Grid(map.width, map.height); 
 	var pathFinder = new PathFinder();
+	var mapDrawer = new MapDrawer()
+	mapDrawer.drawMap();
 
 	var gridBackup = grid.clone();
 	var path = pathFinder.findPath(1, 2, 4, 2, gridBackup);
