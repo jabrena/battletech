@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"Map",
+				"MapDrawer"
+			],
+			[
 				"hex",
 				"hexHeight"
 			],
@@ -63,7 +67,15 @@
 			"file": "App/index.html",
 			"settings":
 			{
-				"buffer_size": 420,
+				"buffer_size": 467,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "App/PathFinding/Finders/AStarFinder.js",
+			"settings":
+			{
+				"buffer_size": 4001,
 				"line_ending": "Windows"
 			}
 		},
@@ -71,24 +83,26 @@
 			"file": "App/App.js",
 			"settings":
 			{
-				"buffer_size": 131,
-				"line_ending": "Windows",
-				"name": "App.js"
-			}
-		},
-		{
-			"file": "App/PathFinding/Core/Node.js",
-			"settings":
-			{
-				"buffer_size": 896,
+				"buffer_size": 597,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "App/PathFinding/finders/AStarFinder.js",
+			"contents": "define(['PathFinding/Core/Grid'], function(Grid) {\n	'use strict';\n	var HEX_RADIUS = 75;\n	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);\n\n	var _grid;\n\n	var _createHex = function(centerPosition) {\n		var group = new paper.Group();\n\n		var hexagon = new paper.Path.RegularPolygon({\n			center: centerPosition,\n			sides: 6,\n			radius: HEX_RADIUS,\n			fillColor: 'darkgrey',\n			parent: group\n		});\n\n		//group.remove();\n		return hexagon;\n	}\n\n	var MapDrawer = function(grid) {\n		_grid = grid;\n	}\n\n	MapDrawer.prototype.drawMap = function()  {\n		var size = _createHex().bounds.size;\n		for (var y = 0; y < _grid.height; y++) {\n			for (var x = 0; x < _grid.width; x++) {\n				var startingPosition = TOP_LEFT_POINT;\n				var modifiedX += size._width * [x + (y % 2 ? 0.5 : 0), y * 0.75];\n				var modifiedY += size * [x + (y % 2 ? 0.5 : 0), y * 0.75];\n				console.log(targetPosition);\n				var hex = _createHex(targetPosition);\n			}\n		}\n	}\n\n	return MapDrawer;\n});",
+			"file": "App/Map/MapDrawer.js",
+			"file_size": 925,
+			"file_write_time": 130293096405559570,
 			"settings":
 			{
-				"buffer_size": 4007,
+				"buffer_size": 957,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "App/PathFinding/Core/Grid.js",
+			"settings":
+			{
+				"buffer_size": 6564,
 				"line_ending": "Windows"
 			}
 		}
@@ -118,11 +132,19 @@
 	"file_history":
 	[
 		"/D/Dev/BattleTech/App/PathFinding/Core/Grid.js",
+		"/D/Dev/BattleTech/App/Map/MapDrawer.js",
+		"/D/Dev/BattleTech/libs/jquery.js",
+		"/D/Dev/BattleTech/App/PathFinding/Finders/AStarFinder.js",
 		"/D/Dev/BattleTech/App/PathFinding/Core/Heap.js",
+		"/D/Dev/PathFinding.js-Node/node_modules/pathfinding/node_modules/heap/lib/heap.js",
+		"/D/Dev/BattleTech/App/PathFinding/Core/Node.js",
+		"/D/Dev/BattleTech/App/App.js",
+		"/D/Dev/BattleTech/App/PathFinding/finders/AStarFinder.js",
+		"/D/Dev/BattleTech/App/Map/drawHex.js",
+		"/D/Dev/BattleTech/App/index.html",
 		"/D/Dev/BattleTech/App/PathFinding/core/Util.js",
 		"/D/Dev/BattleTech/App/PathFinding/core/Heuristic.js",
 		"/D/Dev/BattleTech/App/PathFinding/core/Grid.js",
-		"/D/Dev/BattleTech/App/PathFinding/finders/AStarFinder.js",
 		"/D/Dev/BattleTech/.gitignore",
 		"/D/Dev/BattleTech/App/PathFinding/core/Node.js",
 		"/D/Dev/BattleTech/BattleTech.sublime-project",
@@ -167,6 +189,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -174,6 +197,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"jquery",
+			"min.map",
+			"core/heap",
 			"canMove",
 			"svg",
 			"initForceGraph",
@@ -198,7 +224,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -206,15 +232,15 @@
 					"file": "App/index.html",
 					"settings":
 					{
-						"buffer_size": 420,
+						"buffer_size": 467,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								178,
-								178
+								272,
+								272
 							]
 						],
 						"settings":
@@ -229,45 +255,18 @@
 				},
 				{
 					"buffer": 1,
-					"file": "App/App.js",
+					"file": "App/PathFinding/Finders/AStarFinder.js",
 					"settings":
 					{
-						"buffer_size": 131,
+						"buffer_size": 4001,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								115,
-								115
-							]
-						],
-						"settings":
-						{
-							"auto_name": "App.js",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "App/PathFinding/Core/Node.js",
-					"settings":
-					{
-						"buffer_size": 896,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								860,
-								860
+								74,
+								74
 							]
 						],
 						"settings":
@@ -283,19 +282,73 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "App/PathFinding/finders/AStarFinder.js",
+					"buffer": 2,
+					"file": "App/App.js",
 					"settings":
 					{
-						"buffer_size": 4007,
+						"buffer_size": 597,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								978,
-								978
+								466,
+								466
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "App/Map/MapDrawer.js",
+					"settings":
+					{
+						"buffer_size": 957,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								746,
+								746
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 396.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "App/PathFinding/Core/Grid.js",
+					"settings":
+					{
+						"buffer_size": 6564,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								100,
+								88
 							]
 						],
 						"settings":
@@ -356,7 +409,23 @@
 		[
 			[
 				"grid",
-				"pathfinding/Grid.js"
+				"PathFinding/Core/Grid.js"
+			],
+			[
+				"app",
+				"App.js"
+			],
+			[
+				"asta",
+				"PathFinding/Finders/AStarFinder.js"
+			],
+			[
+				"done",
+				"PathFinding/Core/Node.js"
+			],
+			[
+				"map",
+				"Map/drawHex.js"
 			],
 			[
 				"buyappfe",
