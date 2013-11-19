@@ -4,6 +4,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
 
 	var _grid;
+	var _hexSize;
 
 	var _createHex = function(centerPosition) {
 		var group = new paper.Group();
@@ -19,22 +20,31 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		return hexagon;
 	}
 
+	var _getHexStartingPosition = function(row, column) {
+		var size = _getHexSize();
+		var startingPosition = new paper.Point(TOP_LEFT_POINT);
+		startingPosition.x += size._width * (row + (column % 2 ? 0.5 : 0));
+		startingPosition.y += size._height *(column * 0.75);
+		return startingPosition;
+	}
+
+	var _getHexSize = function() {
+		if (!_hexSize) {
+			var tempHex = _createHex()
+			_hexSize = tempHex.bounds.size;
+			tempHex.remove();
+		}
+		return _hexSize;
+	}
+
 	var MapDrawer = function(grid) {
 		_grid = grid;
 	}
 
 	MapDrawer.prototype.drawMap = function()  {
-		var tempHex = _createHex()
-		var size = tempHex.bounds.size;
-		tempHex.remove();
 		for (var y = 0; y < _grid.height; y++) {
 			for (var x = 0; x < _grid.width; x++) {
-				//hex.position += size * [x + (y % 2 ? 0.5 : 0), y * 0.75];
-				var startingPosition = new paper.Point(TOP_LEFT_POINT);
-				startingPosition.x += size._width * (x + (y % 2 ? 0.5 : 0));
-				startingPosition.y += size._height *(y * 0.75);
-				console.log(startingPosition);
-				var hex = _createHex(startingPosition);
+				var hex = _createHex(_getHexStartingPosition(x, y));
 			}
 		}
 	}
