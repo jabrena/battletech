@@ -5,10 +5,9 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 	var _grid;
 	var _hexSize;
+	var _mapGroup;
 
-	var _createHex = function(centerPosition) {
-		var group = new paper.Group();
-
+	var _createHex = function(centerPosition, group) {
 		var hexagon = new paper.Path.RegularPolygon({
 			center: centerPosition,
 			sides: 6,
@@ -30,23 +29,31 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 	var _getHexSize = function() {
 		if (!_hexSize) {
-			var tempHex = _createHex()
+			var tempGroup = new paper.Group();
+			var tempHex = _createHex(TOP_LEFT_POINT, tempGroup)
 			_hexSize = tempHex.bounds.size;
 			tempHex.remove();
+			tempGroup.remove();
 		}
 		return _hexSize;
 	}
 
 	var MapDrawer = function(grid) {
 		_grid = grid;
+		_mapGroup = new paper.Group();
 	}
 
 	MapDrawer.prototype.drawMap = function()  {
 		for (var y = 0; y < _grid.height; y++) {
 			for (var x = 0; x < _grid.width; x++) {
-				var hex = _createHex(_getHexStartingPosition(x, y));
+				var startingPosition = _getHexStartingPosition(x, y);
+				_createHex(startingPosition, _mapGroup);
 			}
 		}
+	}
+
+	MapDrawer.prototype.colorPath = function(path) {
+		debugger;
 	}
 
 	return MapDrawer;

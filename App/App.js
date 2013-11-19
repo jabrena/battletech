@@ -20,6 +20,8 @@ function(Grid, PathFinder, MapDrawer) {
 			var gridBackup = grid.clone();
 			var path = pathFinder.findPath(1, 2, 4, 2, gridBackup);
 			console.log(path);
+
+			mapDrawer.colorPath(path);
 		});
 	}();
 });
