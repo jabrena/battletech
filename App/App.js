@@ -9,7 +9,7 @@ function(Grid, PathFinder, MapDrawer) {
 
 			var map = {
 				width: 9,
-				height: 5
+				height: 1
 			}
 
 			var grid = new Grid(map.width, map.height); 
@@ -18,7 +18,7 @@ function(Grid, PathFinder, MapDrawer) {
 			mapDrawer.drawMap();
 
 			var gridBackup = grid.clone();
-			var path = pathFinder.findPath(1, 1, 6, 3, gridBackup);
+			var path = pathFinder.findPath(0, 0, 5, 0, gridBackup);
 			mapDrawer.colorPath(path);
 		});
 	}();

@@ -55,6 +55,8 @@ function(Util, Heuristic) {
 
             // if reached the end position, construct the path and return it
             if (node === endNode) {
+                console.log('End node reached');
+                console.log(node);
                 return Util.backtrace(endNode);
             }
 

@@ -13,7 +13,7 @@ define([], function() {
         if (type < .75) {
             return { weight: 1, color: 'tan' };
         } else {
-            return { weight: 100000, color: 'black' };
+            return { weight: 100, color: 'black' };
         }
     }
 
