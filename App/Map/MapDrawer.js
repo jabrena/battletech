@@ -7,14 +7,16 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _hexSize;
 	var _mapGroup;
 
-	var _createHex = function(centerPosition, group) {
+	var _createHex = function(position, group) {
 		var hexagon = new paper.Path.RegularPolygon({
-			center: centerPosition,
+			center: position,
 			sides: 6,
 			radius: HEX_RADIUS,
 			fillColor: 'darkgrey',
 			parent: group
 		});
+		hexagon.row = position.row;
+		hexagon.column = position.column
 
 		return hexagon;
 	}
@@ -24,6 +26,8 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var startingPosition = new paper.Point(TOP_LEFT_POINT);
 		startingPosition.x += size._width * (row + (column % 2 ? 0.5 : 0));
 		startingPosition.y += size._height *(column * 0.75);
+		startingPosition.row = row;
+		startingPosition.column = column;
 		return startingPosition;
 	}
 
