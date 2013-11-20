@@ -7,12 +7,12 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _hexSize;
 	var _mapGroup;
 
-	var _createHex = function(position, group) {
+	var _createHex = function(nodeDetails, position, group) {
 		var hexagon = new paper.Path.RegularPolygon({
 			center: position,
 			sides: 6,
 			radius: HEX_RADIUS,
-			fillColor: 'darkgrey',
+			fillColor: nodeDetails.color,
 			parent: group
 		});
 		hexagon.row = position.row;
@@ -33,8 +33,9 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 	var _getHexSize = function() {
 		if (!_hexSize) {
+			var fakeNode =  { color: 'fake' }
 			var tempGroup = new paper.Group();
-			var tempHex = _createHex(TOP_LEFT_POINT, tempGroup)
+			var tempHex = _createHex(fakeNode, TOP_LEFT_POINT, tempGroup)
 			_hexSize = tempHex.bounds.size;
 			tempHex.remove();
 			tempGroup.remove();
@@ -51,7 +52,8 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		for (var y = 0; y < _grid.height; y++) {
 			for (var x = 0; x < _grid.width; x++) {
 				var startingPosition = _getHexStartingPosition(x, y);
-				_createHex(startingPosition, _mapGroup);
+				var nodeDetails = _grid.getNodeAt(x, y).details;
+				_createHex(nodeDetails, startingPosition, _mapGroup);
 			}
 		}
 	}

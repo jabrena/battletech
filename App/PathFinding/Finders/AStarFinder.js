@@ -77,7 +77,8 @@ function(Util, Heuristic) {
                 //var zeroYDistance = (y - node.y === 0);
                 //var OneOrSqrt2 = (zeroXDistance || zeroYDistance) ? 1 : SQRT2;
                 //ng = node.g + OneOrSqrt2;
-                ng = neighbor.details.weight;
+                ng = node.g + neighbor.details.weight;
+                console.log(ng);
 
                 // check if the neighbor has not been inspected yet, or
                 // can be reached with smaller cost from the current node

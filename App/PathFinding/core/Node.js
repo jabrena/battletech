@@ -9,8 +9,14 @@
  */
 define([], function() {
     var _getDetailsFromType = function(type) {
-        return { weight: type };
+        type = Math.random();
+        if (type < .75) {
+            return { weight: 1, color: 'tan' };
+        } else {
+            return { weight: 100000, color: 'black' };
+        }
     }
+
 
     function Node(x, y, walkable, type) {
         this.x = x;
