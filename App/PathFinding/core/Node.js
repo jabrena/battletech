@@ -8,25 +8,16 @@
  * @param {boolean} [walkable] - Whether this node is walkable.
  */
 define([], function() {
+    var _getDetailsFromType = function(type) {
+        return { weight: type };
+    }
 
-    function Node(x, y, walkable) {
-        /**
-         * The x coordinate of the node on the grid.
-         * @type number
-         */
+    function Node(x, y, walkable, type) {
         this.x = x;
-        /**
-         * The y coordinate of the node on the grid.
-         * @type number
-         */
         this.y = y;
-        /**
-         * Whether this node can be walked through.
-         * @type boolean
-         */
+        this.details =  _getDetailsFromType(type);
         this.walkable = (walkable === undefined ? true : walkable);
     };
 
     return Node;
 });
-//module.exports = Node;

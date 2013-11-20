@@ -72,7 +72,12 @@ function(Util, Heuristic) {
 
                 // get the distance between current node and the neighbor
                 // and calculate the next g score
-                ng = node.g + ((x - node.x === 0 || y - node.y === 0) ? 1 : SQRT2);
+
+                //var zeroXDistance = (x - node.x) === 0;
+                //var zeroYDistance = (y - node.y === 0);
+                //var OneOrSqrt2 = (zeroXDistance || zeroYDistance) ? 1 : SQRT2;
+                //ng = node.g + OneOrSqrt2;
+                ng = neighbor.details.weight;
 
                 // check if the neighbor has not been inspected yet, or
                 // can be reached with smaller cost from the current node

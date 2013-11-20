@@ -45,7 +45,7 @@ define(['PathFinding/core/Node'], function(Node) {
         for (i = 0; i < height; ++i) {
             nodes[i] = new Array(width);
             for (j = 0; j < width; ++j) {
-                nodes[i][j] = new Node(j, i);
+                nodes[i][j] = new Node(j, i, true, 1);
             }
         }
 
@@ -215,7 +215,10 @@ define(['PathFinding/core/Node'], function(Node) {
         for (i = 0; i < height; ++i) {
             newNodes[i] = new Array(width);
             for (j = 0; j < width; ++j) {
-                newNodes[i][j] = new Node(j, i, thisNodes[i][j].walkable);
+                newNodes[i][j] = new Node(j,
+                                          i, 
+                                          thisNodes[i][j].walkable,
+                                          thisNodes[i][j].details);
             }
         }
 

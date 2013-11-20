@@ -19,8 +19,6 @@ function(Grid, PathFinder, MapDrawer) {
 
 			var gridBackup = grid.clone();
 			var path = pathFinder.findPath(1, 1, 6, 3, gridBackup);
-			console.log(path);
-
 			mapDrawer.colorPath(path);
 		});
 	}();
