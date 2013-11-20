@@ -18,7 +18,7 @@ function(Grid, PathFinder, MapDrawer) {
 			mapDrawer.drawMap();
 
 			var gridBackup = grid.clone();
-			var path = pathFinder.findPath(1, 2, 4, 2, gridBackup);
+			var path = pathFinder.findPath(1, 1, 6, 3, gridBackup);
 			console.log(path);
 
 			mapDrawer.colorPath(path);
