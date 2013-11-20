@@ -57,13 +57,16 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	}
 
 	MapDrawer.prototype.colorPath = function(pointsInPath) {
+		var hexesOnMap = _mapGroup._children;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			var hexOnPath = _(_mapGroup._children).findWhere({'row': point[0], 'column': point[1]});
+			var hexOnPath = _(hexesOnMap).findWhere({'row': point[0], 'column': point[1]});
 			hexesOnPath.push(hexOnPath);
 		});
 
-		console.log(hexesOnPath);
+		hexesOnPath.forEach(function(hex) {
+			hex.setSelected(true);
+		});
 	}
 
 	return MapDrawer;
