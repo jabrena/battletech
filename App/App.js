@@ -3,8 +3,6 @@ function(Grid, PathFinder, MapDrawer) {
 	'use strict';
 
 	var SetUpCanvas = function() {
-		//$(document).ready(function() {
-		setTimeout(function() {
 			var canvas = $('#myCanvas')[0];
 			paper.setup(canvas);
 
@@ -22,7 +20,5 @@ function(Grid, PathFinder, MapDrawer) {
 			//var path = pathFinder.findPath(0, 0, 5, 0, gridBackup);
 			var path = pathFinder.findPath(0, 0, 5, 4, grid);
 			mapDrawer.colorPath(path);
-		//});
-		}, 100);
 	}();
 });
