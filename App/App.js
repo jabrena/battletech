@@ -20,5 +20,6 @@ function(Grid, PathFinder, MapDrawer) {
 			//var path = pathFinder.findPath(0, 0, 5, 0, gridBackup);
 			var path = pathFinder.findPath(0, 0, 5, 4, grid);
 			mapDrawer.colorPath(path);
+			paper.view.draw();
 	}();
 });
