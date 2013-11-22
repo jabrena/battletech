@@ -83,8 +83,13 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		});
 
 		availableHexes.forEach(function(hex) {
-			hex.setOpacity(.2);
+			hex.setOpacity(.4);
 		});
+	}
+	
+	MapDrawer.prototype.getHexFromNode = function(node) {
+		var hexesOnMap = _mapGroup._children;
+		return _(hexesOnMap).findWhere({'column': node.x, 'row': node.y });
 	}
 
 	return MapDrawer;

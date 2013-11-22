@@ -1,5 +1,5 @@
-define(['PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/MapDrawer'], 
-function(Grid, PathFinder, MapDrawer) {
+define(['PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/MapDrawer', 'Character/Mech'], 
+function(Grid, PathFinder, MapDrawer, Mech) {
 	'use strict';
 
 	var SetUpCanvas = function() {
@@ -15,6 +15,8 @@ function(Grid, PathFinder, MapDrawer) {
 			var pathFinder = new PathFinder();
 			var mapDrawer = new MapDrawer(grid)
 			mapDrawer.drawMap();
+
+			var mech = new Mech(mapDrawer, grid.getNodeAt(0,0));
 
 			var gridBackup = _.clone(grid);
 			var path = pathFinder.findPath(0, 0, 5, 4, gridBackup, 7);
