@@ -73,7 +73,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 	MapDrawer.prototype.colorHexesWithinReach = function(markedGrid) {
 		var allNodes = _(markedGrid.nodes).flatten();
-		var availableNodes = _(allNodes).where({ 'opened': true });
+		var availableNodes = _(allNodes).where({ 'opened': true, 'withinRage': true });
 
 		var hexesOnMap = _mapGroup._children;
 		var availableHexes = [];

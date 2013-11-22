@@ -26,7 +26,7 @@ function(Util, Heuristic) {
      * @return {Array.<[number, number]>} The path, including both start and
      *     end positions.
      */
-    AStarFinder.prototype.findPath = function(startX, startY, endX, endY, grid) {
+    AStarFinder.prototype.findPath = function(startX, startY, endX, endY, grid, movePoints) {
         var openList = new Heap(function(nodeA, nodeB) {
                 return nodeA.f - nodeB.f;
             }),
@@ -76,11 +76,13 @@ function(Util, Heuristic) {
 
                 // check if the neighbor has not been inspected yet, or
                 // can be reached with smaller cost from the current node
-                if (!neighbor.opened || ng < neighbor.g) {
+                if (!neighbor.opened || ng < neighbor.g ) {
                     neighbor.g = ng;
                     neighbor.h = neighbor.h || weight * heuristic(abs(x - endX), abs(y - endY));
                     neighbor.f = neighbor.g + neighbor.h;
                     neighbor.parent = node;
+
+                    neighbor.withinRage = neighbor.g <= movePoints;
 
                     if (!neighbor.opened) {
                         openList.push(neighbor);
