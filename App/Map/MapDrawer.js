@@ -21,13 +21,13 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		return hexagon;
 	}
 
-	var _getHexStartingPosition = function(row, column) {
+	var _getHexStartingPosition = function(column, row) {
 		var size = _getHexSize();
 		var startingPosition = new paper.Point(TOP_LEFT_POINT);
-		startingPosition.x += size._width * (row + (column % 2 ? 0.5 : 0));
-		startingPosition.y += size._height *(column * 0.75);
-		startingPosition.row = row;
+		startingPosition.x += size._width * (column + (row % 2 ? 0.5 : 0));
+		startingPosition.y += size._height *(row * 0.75);
 		startingPosition.column = column;
+		startingPosition.row = row;
 		return startingPosition;
 	}
 
@@ -62,7 +62,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var hexesOnMap = _mapGroup._children;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			var hexOnPath = _(hexesOnMap).findWhere({'row': point[0], 'column': point[1] });
+			var hexOnPath = _(hexesOnMap).findWhere({'column': point[0], 'row': point[1] });
 			hexesOnPath.push(hexOnPath);
 		});
 
@@ -78,7 +78,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var hexesOnMap = _mapGroup._children;
 		var availableHexes = [];
 		availableNodes.forEach(function(node) {
-			var availableHex = _(hexesOnMap).findWhere({'row': node.x, 'column': node.y });
+			var availableHex = _(hexesOnMap).findWhere({'column': node.x, 'row': node.y });
 			availableHexes.push(availableHex);
 		});
 
