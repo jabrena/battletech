@@ -19,6 +19,7 @@ function(Grid, PathFinder, MapDrawer) {
 			var gridBackup = _.clone(grid);
 			var path = pathFinder.findPath(0, 0, 5, 4, gridBackup);
 			mapDrawer.colorPath(path);
+			mapDrawer.colorHexesWithinReach(gridBackup);
 			paper.view.draw();
 	}();
 });

@@ -62,12 +62,28 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var hexesOnMap = _mapGroup._children;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			var hexOnPath = _(hexesOnMap).findWhere({'row': point[0], 'column': point[1]});
+			var hexOnPath = _(hexesOnMap).findWhere({'row': point[0], 'column': point[1] });
 			hexesOnPath.push(hexOnPath);
 		});
 
 		hexesOnPath.forEach(function(hex) {
 			hex.setSelected(true);
+		});
+	}
+
+	MapDrawer.prototype.colorHexesWithinReach = function(markedGrid) {
+		var allNodes = _(markedGrid.nodes).flatten();
+		var availableNodes = _(allNodes).where({ 'opened': true });
+
+		var hexesOnMap = _mapGroup._children;
+		var availableHexes = [];
+		availableNodes.forEach(function(node) {
+			var availableHex = _(hexesOnMap).findWhere({'row': node.x, 'column': node.y });
+			availableHexes.push(availableHex);
+		});
+
+		availableHexes.forEach(function(hex) {
+			hex.setOpacity(.2);
 		});
 	}
 
