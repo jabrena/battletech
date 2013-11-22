@@ -22,7 +22,6 @@ var map = {
 	},
 	grid: createMapMatrix(MAP_HEIGHT, MAP_WIDTH)
 }
-console.log(map.grid);
 
 var topLeftPoint = new Point(HEX_RADIUS, HEX_RADIUS);
 
@@ -65,9 +64,6 @@ var canMove = function(currentPosition, newPosition) {
 	var xDiff = Math.abs(newPosition.x - currentPosition.x);
 	var yDiff = Math.abs(newPosition.y - currentPosition.y);
 	var MaxDistance = 2*HEX_RADIUS;
-
-	console.log("xDiff: " + xDiff);
-	console.log("yDiff: " + yDiff);
 
 	return	(xDiff < MaxDistance && yDiff < MaxDistance);
 }

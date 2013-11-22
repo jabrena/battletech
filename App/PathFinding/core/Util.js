@@ -9,7 +9,6 @@ define([], function() {
         backtrace: function(node) {
             var path = [[node.x, node.y]];
             while (node.parent) {
-                console.log(node.details.color + "x: " + node.x + ", y:" + node.y);
                 node = node.parent;
                 path.push([node.x, node.y]);
             }

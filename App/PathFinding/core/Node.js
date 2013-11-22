@@ -20,7 +20,6 @@ define([], function() {
 
     function Node(x, y, walkable, type) {
         window.nodeCount = (window.nodeCount) ? window.nodeCount + 1 : 1;
-        console.log('I am node number ' + window.nodeCount);
         this.x = x;
         this.y = y;
         this.details =  _getDetailsFromType(type);
