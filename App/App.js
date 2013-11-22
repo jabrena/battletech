@@ -16,9 +16,8 @@ function(Grid, PathFinder, MapDrawer) {
 			var mapDrawer = new MapDrawer(grid)
 			mapDrawer.drawMap();
 
-			//var gridBackup = grid.clone(); // different randoms!
-			//var path = pathFinder.findPath(0, 0, 5, 0, gridBackup);
-			var path = pathFinder.findPath(0, 0, 5, 4, grid);
+			var gridBackup = _.clone(grid);
+			var path = pathFinder.findPath(0, 0, 5, 4, gridBackup);
 			mapDrawer.colorPath(path);
 			paper.view.draw();
 	}();
