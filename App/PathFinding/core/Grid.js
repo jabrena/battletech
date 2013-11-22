@@ -144,25 +144,48 @@ define(['PathFinding/core/Node'], function(Node) {
             s3 = false, d3 = false,
             nodes = this.nodes;
 
-        // ↑ up
+        // ↑ North (ne)
         if (this.isWalkableAt(x, y - 1)) {
             neighbors.push(nodes[y - 1][x]);
             s0 = true;
         }
-        // → right
+        // → East
         if (this.isWalkableAt(x + 1, y)) {
             neighbors.push(nodes[y][x + 1]);
             s1 = true;
         }
-        // ↓ down
+        // ↓ South
         if (this.isWalkableAt(x, y + 1)) {
             neighbors.push(nodes[y + 1][x]);
             s2 = true;
         }
-        // ← left
+        // ← West
         if (this.isWalkableAt(x - 1, y)) {
             neighbors.push(nodes[y][x - 1]);
             s3 = true;
+        }
+
+        var onEvenRow = (y % 2 == 0) ? true: false;
+        if (onEvenRow) {
+            // NW (ne is north)
+            if (this.isWalkableAt(x - 1, y - 1)) {
+                neighbors.push(nodes[y - 1][x - 1]);
+            }
+
+            // SW (se is south)
+            if (this.isWalkableAt(x - 1, y + 1)) {
+                neighbors.push(nodes[y + 1][x - 1]);
+            }
+        } else {
+            // NE (nw is north)
+            if (this.isWalkableAt(x + 1, y -1)) {
+                neighbors.push(nodes[y -1][x + 1]);
+            }
+
+            // SE (sw is south)
+            if (this.isWalkableAt(x + 1, y + 1)) {
+                neighbors.push(nodes[y + 1][x + 1]);
+            }
         }
 
         if (!allowDiagonal) {
