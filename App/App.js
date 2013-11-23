@@ -24,7 +24,8 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 			var _tool = new paper.Tool();
 			_tool.onMouseMove = function(event) {
 				paper.project.activeLayer.selected = false;
-				if (event.item) {
+				if (event.item && event.item.children) {
+
 					var node = event.item.children[0];
 					var tempGrid = grid.clone();
 					var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
