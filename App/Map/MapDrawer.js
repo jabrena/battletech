@@ -1,6 +1,6 @@
 define(['PathFinding/Core/Grid'], function(Grid) {
 	'use strict';
-	var HEX_RADIUS = 75;
+	var HEX_RADIUS = 25;
 	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
 
 	var _grid;

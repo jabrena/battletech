@@ -7,8 +7,8 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 			paper.setup(canvas);
 
 			var map = {
-				width: 9,
-				height: 5
+				width: 28,
+				height: 17
 			}
 
 			var grid = new Grid(map.width, map.height); 
