@@ -17,23 +17,8 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 			mapDrawer.drawMap();
 
 			var mech = new Mech(mapDrawer, grid.getNodeAt(0,0));
+			mapDrawer.colorHexesWithinReach(mech, pathFinder);
 
-			var GridSE = grid.clone();
-			var PathToSE = pathFinder.findPath(0, 0, map.width-1, map.height-1, GridSE, mech.remainingMovement());
-			mapDrawer.colorHexesWithinReach(GridSE);
-			
-			var GridNE = grid.clone();
-			var PathToNe = pathFinder.findPath(0, 0, map.width-1, 0, GridNE, mech.remainingMovement());
-			mapDrawer.colorHexesWithinReach(GridNE);
-
-			var GridNW = grid.clone();
-			var PathToNe = pathFinder.findPath(0, 0, 0, 0, GridNW, mech.remainingMovement());
-			mapDrawer.colorHexesWithinReach(GridNW);
-
-			var GridSW = grid.clone();
-			var PathToNe = pathFinder.findPath(0, 0, 0, map.height-1, GridSW, mech.remainingMovement());
-			mapDrawer.colorHexesWithinReach(GridSW);
-			
 			paper.view.draw();
 
 			var _tool = new paper.Tool();
@@ -42,7 +27,9 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 				if (event.item) {
 					var node = event.item.children[0];
 					var tempGrid = grid.clone();
-					var path = pathFinder.findPath(0, 0, node.column, node.row, tempGrid, mech.remainingMovement());
+					var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
+												   node.column, node.row,
+					 							   tempGrid, mech.remainingMovement());
 					mapDrawer.colorPath(path);					
 				}
 			}
@@ -53,7 +40,7 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 					var target =  event.item.children[0];
 					var gridBackup = grid.clone();
 
-					var path = pathFinder.findPath(0, 0,
+					var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
 												   target.column, target.row,
 												   gridBackup, mech.remainingMovement());
 
@@ -70,6 +57,8 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 					})
 
 					mech.moveToHex(furthestReachableHexOnPath);
+					mapDrawer.clearMovableHexes();
+					mapDrawer.colorHexesWithinReach(mech, pathFinder);
 				}
 			}
 	}();

@@ -72,7 +72,31 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		});
 	}
 
-	MapDrawer.prototype.colorHexesWithinReach = function(markedGrid) {
+	MapDrawer.prototype.colorHexesWithinReach = function(mech, pathFinder) {
+		// find paths to every coner to avoid missing possible moves.
+		// there should be a better way to do this.
+		var SeMapCorner = _grid.getNodeAt(_grid.width-1, _grid.height-1);
+		_colorPathsTo(mech, SeMapCorner, pathFinder);
+
+		var NeMapCorner = _grid.getNodeAt(_grid.width-1, 0);
+		_colorPathsTo(mech, NeMapCorner, pathFinder);
+
+		var NwMapCorner = _grid.getNodeAt(0, 0);
+		_colorPathsTo(mech, NwMapCorner, pathFinder);
+
+		var SwMapCorner = _grid.getNodeAt(0, _grid.height-1);
+		_colorPathsTo(mech, SwMapCorner, pathFinder);
+	}
+
+	var _colorPathsTo = function(mech, destinationNode, pathFinder) {
+		var tempGrid = _grid.clone();
+		var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
+								   destinationNode.x, destinationNode.y,
+								   tempGrid, mech.remainingMovement());
+		_colorMovableHexes(tempGrid);
+	}
+	
+	var _colorMovableHexes = function(markedGrid) {
 		var allNodes = _(markedGrid.nodes).flatten();
 		var availableNodes = _(allNodes).where({ 'opened': true, 'withinRage': true });
 
@@ -84,6 +108,12 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 		availableHexes.forEach(function(hex) {
 			hex.setOpacity(.4);
+		});
+	}
+
+	MapDrawer.prototype.clearMovableHexes = function(node) {
+		_mapHexes.forEach(function(hex) {
+			hex.setOpacity(1);
 		});
 	}
 
