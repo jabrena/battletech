@@ -11,9 +11,9 @@ define([], function() {
     var _getDetailsFromType = function(type) {
         type = Math.random();
         if (type < .75) {
-            return { weight: 1, color: 'tan' };
+            return { weight: 1, color: 'tan', groundImage: 'clayGround'};
         } else {
-            return { weight: 100, color: 'black' };
+            return { weight: 100, color: 'black', groundImage: 'mountainGround' };
         }
     }
 

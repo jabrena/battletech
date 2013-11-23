@@ -15,8 +15,17 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 			sides: 6,
 			radius: HEX_RADIUS,
 			fillColor: nodeDetails.color,
-			parent: group
+			parent: group,
+			clipMask: true
 		});
+
+		if (nodeDetails.groundImage) {
+			var hexImage = new paper.Raster(nodeDetails.groundImage, position);
+			hexImage.size.height = HEX_RADIUS * 4;
+			hexImage.size.width = HEX_RADIUS * 4;
+			group.addChild(hexImage);
+		}
+
 		hexagon.row = position.row;
 		hexagon.column = position.column
 
