@@ -5,9 +5,12 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 	var _grid;
 	var _hexSize;
-	var _mapGroup;
+	var _mapHexes;
+	var _tool
 
-	var _createHex = function(nodeDetails, position, group) {
+	var _createHex = function(nodeDetails, position) {
+		var group = new paper.Group();
+
 		var hexagon = new paper.Path.RegularPolygon({
 			center: position,
 			sides: 6,
@@ -18,6 +21,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		hexagon.row = position.row;
 		hexagon.column = position.column
 
+		_mapHexes.push(hexagon);
 		return hexagon;
 	}
 
@@ -34,18 +38,24 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _getHexSize = function() {
 		if (!_hexSize) {
 			var fakeNode =  { color: 'fake' }
-			var tempGroup = new paper.Group();
-			var tempHex = _createHex(fakeNode, TOP_LEFT_POINT, tempGroup)
+			var tempHex = _createHex(fakeNode, TOP_LEFT_POINT)
 			_hexSize = tempHex.bounds.size;
 			tempHex.remove();
-			tempGroup.remove();
 		}
 		return _hexSize;
 	}
 
 	var MapDrawer = function(grid) {
 		_grid = grid;
-		_mapGroup = new paper.Group();
+		_mapHexes = []
+		_tool = new paper.Tool();
+
+		_tool.onMouseMove = function(event) {
+			paper.project.activeLayer.selected = false;
+			if (event.item) {
+				event.item.selected = true;
+			}
+		}
 	}
 
 	MapDrawer.prototype.drawMap = function()  {
@@ -53,16 +63,15 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 			for (var x = 0; x < _grid.width; x++) {
 				var startingPosition = _getHexStartingPosition(x, y);
 				var nodeDetails = _grid.getNodeAt(x, y).details;
-				_createHex(nodeDetails, startingPosition, _mapGroup);
+				_createHex(nodeDetails, startingPosition);
 			}
 		}
 	}
 
 	MapDrawer.prototype.colorPath = function(pointsInPath) {
-		var hexesOnMap = _mapGroup._children;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			var hexOnPath = _(hexesOnMap).findWhere({'column': point[0], 'row': point[1] });
+			var hexOnPath = _(_mapHexes).findWhere({'column': point[0], 'row': point[1] });
 			hexesOnPath.push(hexOnPath);
 		});
 
@@ -75,10 +84,9 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var allNodes = _(markedGrid.nodes).flatten();
 		var availableNodes = _(allNodes).where({ 'opened': true, 'withinRage': true });
 
-		var hexesOnMap = _mapGroup._children;
 		var availableHexes = [];
 		availableNodes.forEach(function(node) {
-			var availableHex = _(hexesOnMap).findWhere({'column': node.x, 'row': node.y });
+			var availableHex = _(_mapHexes).findWhere({'column': node.x, 'row': node.y });
 			availableHexes.push(availableHex);
 		});
 
@@ -86,10 +94,13 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 			hex.setOpacity(.4);
 		});
 	}
-	
+
 	MapDrawer.prototype.getHexFromNode = function(node) {
-		var hexesOnMap = _mapGroup._children;
-		return _(hexesOnMap).findWhere({'column': node.x, 'row': node.y });
+		return _(_mapHexes).findWhere({'column': node.x, 'row': node.y });
+	}
+
+	MapDrawer.prototype.getHexFromPoint = function(point) {
+		return _(_mapHexes).findWhere({'column': point.x, 'row': point.y });
 	}
 
 	return MapDrawer;
