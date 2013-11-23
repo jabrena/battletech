@@ -5,8 +5,9 @@ define([], function() {
 	var Mech = function(map, startingNode) {
 		var startingHex = map.getHexFromNode(startingNode)
 		_mech = new paper.Raster('redMechImage', startingHex.position);
-		_mech.size.width = 50;
-		_mech.size.height = 75;
+		
+		_mech.size.width = startingHex.bounds.size.width *.5;
+		_mech.size.height = startingHex.bounds.size.height *.6;
 		_mech.movement = 3;
 
 		_mech.data.position = { row: undefined, column: undefined };
