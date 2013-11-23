@@ -37,7 +37,7 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 
 			_tool.onMouseDown = function(event) {
 				paper.project.activeLayer.selected = false;
-				if (event.item) {
+				if (event.item && event.item.children) {
 					var target =  event.item.children[0];
 					var gridBackup = grid.clone();
 
