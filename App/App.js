@@ -40,7 +40,10 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 			_tool.onMouseMove = function(event) {
 				paper.project.activeLayer.selected = false;
 				if (event.item) {
-					event.item.selected = true;
+					var node = event.item.children[0];
+					var tempGrid = grid.clone();
+					var path = pathFinder.findPath(0, 0, node.column, node.row, tempGrid, mech.remainingMovement());
+					mapDrawer.colorPath(path);					
 				}
 			}
 
@@ -67,8 +70,6 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 					})
 
 					mech.moveToHex(furthestReachableHexOnPath);
-					//mapDrawer.colorPath(path);
-					//mapDrawer.colorHexesWithinReach(gridBackup);
 				}
 			}
 	}();

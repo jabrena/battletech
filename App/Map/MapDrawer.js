@@ -60,6 +60,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	}
 
 	MapDrawer.prototype.colorPath = function(pointsInPath) {
+		paper.project.activeLayer.selected = false;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
 			var hexOnPath = _(_mapHexes).findWhere({'column': point[0], 'row': point[1] });
