@@ -6,7 +6,6 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _grid;
 	var _hexSize;
 	var _mapHexes;
-	var _tool
 
 	var _createHex = function(nodeDetails, position) {
 		var group = new paper.Group();
@@ -48,14 +47,6 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var MapDrawer = function(grid) {
 		_grid = grid;
 		_mapHexes = []
-		_tool = new paper.Tool();
-
-		_tool.onMouseMove = function(event) {
-			paper.project.activeLayer.selected = false;
-			if (event.item) {
-				event.item.selected = true;
-			}
-		}
 	}
 
 	MapDrawer.prototype.drawMap = function()  {

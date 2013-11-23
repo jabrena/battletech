@@ -241,6 +241,7 @@ define(['PathFinding/core/Node'], function(Node) {
                 newNodes[i][j] = new Node(j,
                                           i, 
                                           thisNodes[i][j].walkable,
+                                          thisNodes[i][j].type,
                                           thisNodes[i][j].details);
             }
         }
