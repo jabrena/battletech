@@ -53,7 +53,7 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 						var possibleMove = gridBackup.getNodeAt(point[0], point[1]);
 						console.log(possibleMove.withinRage);
 						if (possibleMove.withinRage && !furthestReachableHexOnPath) {
-							furthestReachableHexOnPath = mapDrawer.getHexFromNode(possibleMove);
+							furthestReachableHexOnPath = mapDrawer.getHexFromNode(possibleMove).hex;
 						}
 					})
 
