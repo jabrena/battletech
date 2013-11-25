@@ -22,8 +22,10 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		hexagon.column = position.column
 
 		var hexImage = new paper.Raster(nodeDetails.groundImage, position);
-		hexImage.size.height = HEX_RADIUS * 4;
-		hexImage.size.width = HEX_RADIUS * 4;
+
+		//hexImage.size.height = HEX_RADIUS * 4;
+		//hexImage.size.width = HEX_RADIUS * 4;
+		hexImage.fitBounds(hexagon.bounds, true);
 		group.addChild(hexImage);
 		hexImage.row = position.row;
 		hexImage.column = position.column
@@ -74,7 +76,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		paper.project.activeLayer.selected = false;
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			var hexOnPath = _getHexFromPoint(point).hex;
+			hexesOnPath.push(_getHexFromPoint(point).hex);
 		});
 
 		hexesOnPath.forEach(function(hex) {
