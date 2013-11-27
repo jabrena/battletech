@@ -1,34 +1,8 @@
 define(['PathFinding/Core/Grid', 'Map/HexDrawer'], function(Grid, HexDrawer) {
 	'use strict';
-	var HEX_RADIUS = 25;
-	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
-
 	var _grid;
-	var _hexSize;
 	var _mapHexes;
 	var _hexDrawer;
-
-	var _getHexStartingPosition = function(column, row) {
-		var size = _getHexSize();
-		var startingPosition = new paper.Point(TOP_LEFT_POINT);
-		startingPosition.x += size._width * (column + (row % 2 ? 0.5 : 0));
-		startingPosition.y += size._height *(row * 0.75);
-		startingPosition.column = column;
-		startingPosition.row = row;
-		return startingPosition;
-	}
-
-	var _getHexSize = function() {
-		if (!_hexSize) {
-			var tempHex = new paper.Path.RegularPolygon({
-				sides: 6,
-				radius: HEX_RADIUS,
-			});
-
-			_hexSize = tempHex.bounds.size;
-		}
-		return _hexSize;
-	}
 
 	var _initLayers = function() {
 		if (paper.project.layers.length !== 1) {
@@ -43,7 +17,7 @@ define(['PathFinding/Core/Grid', 'Map/HexDrawer'], function(Grid, HexDrawer) {
 	var MapDrawer = function(grid) {
 		_grid = grid;
 		_mapHexes = []
-		_hexDrawer = new HexDrawer(HEX_RADIUS);
+		_hexDrawer = new HexDrawer();
 
 		_initLayers();
 	}
@@ -54,9 +28,9 @@ define(['PathFinding/Core/Grid', 'Map/HexDrawer'], function(Grid, HexDrawer) {
 
 		for (var y = 0; y < _grid.height; y++) {
 			for (var x = 0; x < _grid.width; x++) {
-				var startingPosition = _getHexStartingPosition(x, y);
+				var coordinates = { column: x, row: y };
 				var nodeDetails = _grid.getNodeAt(x, y).details;
-				var hex = _hexDrawer.drawHex(nodeDetails, startingPosition, topLayer, bottomLayer);
+				var hex = _hexDrawer.drawHex(nodeDetails, coordinates, topLayer, bottomLayer);
 
 				_mapHexes.push(hex);
 			}
