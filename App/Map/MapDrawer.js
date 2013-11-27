@@ -114,13 +114,13 @@ define(['PathFinding/Core/Grid', 'Map/HexDrawer'], function(Grid, HexDrawer) {
 		});
 
 		availableHexes.forEach(function(hex) {
-			hex.setOpacity(.6);
+			hex.setOpacity(.3);
 		});
 	}
 
 	MapDrawer.prototype.clearMovableHexes = function(node) {
 		_mapHexes.forEach(function(hex) {
-			hex.setOpacity(.01);
+			hex.setOpacity(.01); //zero would erase selected outlines
 		});
 	}
 

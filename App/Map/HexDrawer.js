@@ -14,7 +14,7 @@ define([], function() {
 			fillColor: 'green',
 			parent: group,
 			clipMask: false,
-			opacity: .01,
+			opacity: .01, //zero would erase selected outlines
 			name: 'hexagon'
 		});
 
