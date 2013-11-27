@@ -32,9 +32,8 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 
 		var bottomGroup = new paper.Group();
 
-		var subHex = hexagon.clone(false);
+		var subHex = hexagon.copyTo(bottomGroup);
 		subHex.setClipMask(true);
-		subHex.setParent(bottomGroup)
 
 		var hexImage = new paper.Raster(nodeDetails.groundImage, position);
 		hexImage.fitBounds(hexagon.bounds, true);
