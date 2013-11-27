@@ -38,6 +38,7 @@ define([], function() {
 
 		var hexImage = new paper.Raster(nodeDetails.groundImage, hexToCopy.position);
 		hexImage.fitBounds(maskingHex.bounds, true);
+
 		group.addChild(hexImage);
 	}
 
