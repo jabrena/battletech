@@ -3,7 +3,7 @@ define([], function() {
 	var _p
 
 	var Mech = function(map, startingNode) {
-		var startingHex = map.getHexFromNode(startingNode).hex;
+		var startingHex = map.getHexFromNode(startingNode);
 		_mech = new paper.Raster('redMechImage', startingHex.position);
 		
 		_mech.size.width = startingHex.bounds.size.width *.5;

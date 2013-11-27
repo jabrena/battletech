@@ -26,7 +26,7 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 				paper.project.activeLayer.selected = false;
 				if (event.item && event.item.children) {
 
-					var node = event.item.children[0];
+					var node = event.item.children['hexagon'];
 					var tempGrid = grid.clone();
 					var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
 												   node.column, node.row,
@@ -38,22 +38,20 @@ function(Grid, PathFinder, MapDrawer, Mech) {
 			_tool.onMouseDown = function(event) {
 				paper.project.activeLayer.selected = false;
 				if (event.item && event.item.children) {
-					var target =  event.item.children[0];
-					var gridBackup = grid.clone();
 
+					var node = event.item.children['hexagon'];
+					var tempGrid = grid.clone();
 					var path = pathFinder.findPath(mech.getPosition().column, mech.getPosition().row,
-												   target.column, target.row,
-												   gridBackup, mech.remainingMovement());
-
-					console.log("path", path);
+												   node.column, node.row,
+												   tempGrid, mech.remainingMovement());
 
 					path = path.reverse();
 					var furthestReachableHexOnPath;
 					path.forEach(function(point) {
-						var possibleMove = gridBackup.getNodeAt(point[0], point[1]);
+						var possibleMove = tempGrid.getNodeAt(point[0], point[1]);
 						console.log(possibleMove.withinRage);
 						if (possibleMove.withinRage && !furthestReachableHexOnPath) {
-							furthestReachableHexOnPath = mapDrawer.getHexFromNode(possibleMove).hex;
+							furthestReachableHexOnPath = mapDrawer.getHexFromNode(possibleMove);
 						}
 					})
 

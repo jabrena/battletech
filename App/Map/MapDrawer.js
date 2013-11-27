@@ -1,4 +1,4 @@
-define(['PathFinding/Core/Grid'], function(Grid) {
+define(['PathFinding/Core/Grid', 'Map/HexDrawer'], function(Grid, HexDrawer) {
 	'use strict';
 	var HEX_RADIUS = 25;
 	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
@@ -6,44 +6,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _grid;
 	var _hexSize;
 	var _mapHexes;
-
-	var _createHex = function(nodeDetails, position) {
-		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
-		topLayer.activate();
-
-		var topGroup = new paper.Group();
-		var hexagon = new paper.Path.RegularPolygon({
-			center: position,
-			sides: 6,
-			radius: HEX_RADIUS,
-			fillColor: nodeDetails.color,
-			parent: topGroup,
-			clipMask: false,
-			opacity: .01,
-		});
-		hexagon.row = position.row;
-		hexagon.column = position.column
-		hexagon.onMouseEnter = function() {
-			console.log('use me instead of mouse over');
-		};
-
-		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
-		bottomLayer.activate();
-
-		var bottomGroup = new paper.Group();
-
-		var subHex = hexagon.copyTo(bottomGroup);
-		subHex.setClipMask(true);
-
-		var hexImage = new paper.Raster(nodeDetails.groundImage, position);
-		hexImage.fitBounds(hexagon.bounds, true);
-		bottomGroup.addChild(hexImage);
-		hexImage.row = position.row;
-		hexImage.column = position.column
-
-		var hexImagePair = { hex: hexagon, image: hexImage };
-		_mapHexes.push(hexImagePair);
-	}
+	var _hexDrawer;
 
 	var _getHexStartingPosition = function(column, row) {
 		var size = _getHexSize();
@@ -67,38 +30,48 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		return _hexSize;
 	}
 
-	var MapDrawer = function(grid) {
-		_grid = grid;
-		_mapHexes = []
-
+	var _initLayers = function() {
+		if (paper.project.layers.length !== 1) {
+			throw ('this should be one, we are about to create a nasty bug!')
+		}
 		paper.project.activeLayer.name = 'top';
 	
 		var bottomLayer = new paper.Layer();
 		bottomLayer.name = 'bottom';
 	}
 
+	var MapDrawer = function(grid) {
+		_grid = grid;
+		_mapHexes = []
+		_hexDrawer = new HexDrawer(HEX_RADIUS);
+
+		_initLayers();
+	}
+
 	MapDrawer.prototype.drawMap = function()  {
+		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
+		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
+
 		for (var y = 0; y < _grid.height; y++) {
 			for (var x = 0; x < _grid.width; x++) {
 				var startingPosition = _getHexStartingPosition(x, y);
 				var nodeDetails = _grid.getNodeAt(x, y).details;
-				_createHex(nodeDetails, startingPosition);
+				var hex = _hexDrawer.drawHex(nodeDetails, startingPosition, topLayer, bottomLayer);
+
+				_mapHexes.push(hex);
 			}
 		}
 
-		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
-		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
-
 		topLayer.moveAbove(bottomLayer);
 		topLayer.activate();
-
 	}
 
 	MapDrawer.prototype.colorPath = function(pointsInPath) {
 		paper.project.activeLayer.selected = false;
+
 		var hexesOnPath = [];
 		pointsInPath.forEach(function(point) {
-			hexesOnPath.push(_getHexFromPoint(point).hex);
+			hexesOnPath.push(_getHexFromPoint(point));
 		});
 
 		hexesOnPath.forEach(function(hex) {
@@ -137,7 +110,7 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 		var self = this;
 		var availableHexes = [];
 		availableNodes.forEach(function(node) {
-			availableHexes.push(_getHexFromNode(node).image);
+			availableHexes.push(_getHexFromNode(node));
 		});
 
 		availableHexes.forEach(function(hex) {
@@ -146,22 +119,22 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	}
 
 	MapDrawer.prototype.clearMovableHexes = function(node) {
-		_mapHexes.forEach(function(item) {
-			item.image.setOpacity(1);
+		_mapHexes.forEach(function(hex) {
+			hex.setOpacity(.01);
 		});
 	}
 
 	var _getHexFromNode = function(node) {
-		return _(_mapHexes).find(function(item) { 
-			return item.hex.column === node.x && item.hex.row === node.y
+		return _(_mapHexes).find(function(hex) { 
+			return hex.column === node.x && hex.row === node.y
 		});
 	}
 	MapDrawer.prototype.getHexFromNode = _getHexFromNode;
 
 
 	var _getHexFromPoint = function(point) {
-		return _(_mapHexes).find(function(item) { 
-			return item.hex.column === point[0] && item.hex.row === point[1];
+		return _(_mapHexes).find(function(hex) { 
+			return hex.column === point[0] && hex.row === point[1];
 		});
 	}
 	MapDrawer.prototype.getHexFromPoint = _getHexFromPoint;
