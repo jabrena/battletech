@@ -8,30 +8,41 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var _mapHexes;
 
 	var _createHex = function(nodeDetails, position) {
-		var group = new paper.Group();
+		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
+		topLayer.activate();
 
+		var topGroup = new paper.Group();
 		var hexagon = new paper.Path.RegularPolygon({
 			center: position,
 			sides: 6,
 			radius: HEX_RADIUS,
 			fillColor: nodeDetails.color,
-			parent: group,
-			clipMask: true
+			parent: topGroup,
+			clipMask: false,
+			opacity: .01,
 		});
 		hexagon.row = position.row;
 		hexagon.column = position.column
+		hexagon.onMouseEnter = function() {
+			console.log('use me instead of mouse over');
+		};
+
+		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
+		bottomLayer.activate();
+
+		var bottomGroup = new paper.Group();
+
+		var subHex = hexagon.clone(false);
+		subHex.setClipMask(true);
+		subHex.setParent(bottomGroup)
 
 		var hexImage = new paper.Raster(nodeDetails.groundImage, position);
-
-		//hexImage.size.height = HEX_RADIUS * 4;
-		//hexImage.size.width = HEX_RADIUS * 4;
 		hexImage.fitBounds(hexagon.bounds, true);
-		group.addChild(hexImage);
+		bottomGroup.addChild(hexImage);
 		hexImage.row = position.row;
 		hexImage.column = position.column
 
 		var hexImagePair = { hex: hexagon, image: hexImage };
-
 		_mapHexes.push(hexImagePair);
 	}
 
@@ -60,6 +71,11 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 	var MapDrawer = function(grid) {
 		_grid = grid;
 		_mapHexes = []
+
+		paper.project.activeLayer.name = 'top';
+	
+		var bottomLayer = new paper.Layer();
+		bottomLayer.name = 'bottom';
 	}
 
 	MapDrawer.prototype.drawMap = function()  {
@@ -70,6 +86,13 @@ define(['PathFinding/Core/Grid'], function(Grid) {
 				_createHex(nodeDetails, startingPosition);
 			}
 		}
+
+		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
+		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
+
+		topLayer.moveAbove(bottomLayer);
+		topLayer.activate();
+
 	}
 
 	MapDrawer.prototype.colorPath = function(pointsInPath) {
