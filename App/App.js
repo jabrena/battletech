@@ -2,7 +2,7 @@ define(['AppGlobals','PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder',
 function(AppGlobals, Grid, PathFinder, MapDrawer, Mech) {
 	'use strict';
 
-	var SetUpCanvas = function() {
+	var InitApp = function() {
 		var canvas = $('#myCanvas')[0];
 		paper.setup(canvas);
 
@@ -11,18 +11,18 @@ function(AppGlobals, Grid, PathFinder, MapDrawer, Mech) {
 			height: 17
 		}
 
-		AppGlobals.grid = new Grid(map.width, map.height); 
+		AppGlobals.tool = new paper.Tool();
 		AppGlobals.pathFinder = new PathFinder();
+		AppGlobals.grid = new Grid(map.width, map.height); 
 		AppGlobals.mapDrawer = new MapDrawer(AppGlobals.grid)
-		AppGlobals.mapDrawer.drawMap();
-
 		AppGlobals.mech = new Mech(AppGlobals.mapDrawer, AppGlobals.grid.getNodeAt(0,0));
+		
+		AppGlobals.mapDrawer.drawMap();
 		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
 
 		paper.view.draw();
 
-		AppGlobals.tool = new paper.Tool();
 	}
 
-	setTimeout(SetUpCanvas, 500);
+	setTimeout(InitApp, 500);
 });
