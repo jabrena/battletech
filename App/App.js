@@ -15,14 +15,14 @@ function(AppGlobals, Grid, PathFinder, MapDrawer, Mech) {
 		AppGlobals.pathFinder = new PathFinder();
 		AppGlobals.grid = new Grid(map.width, map.height); 
 		AppGlobals.mapDrawer = new MapDrawer(AppGlobals.grid)
-		AppGlobals.mech = new Mech(AppGlobals.mapDrawer, AppGlobals.grid.getNodeAt(0,0));
-		
 		AppGlobals.mapDrawer.drawMap();
+		
+		AppGlobals.mech = new Mech(AppGlobals.mapDrawer, AppGlobals.grid.getNodeAt(0,0));
 		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
 
 		paper.view.draw();
 
 	}
 
-	setTimeout(InitApp, 500);
+	setTimeout(InitApp, 600);
 });
