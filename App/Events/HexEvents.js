@@ -13,6 +13,8 @@ define(['AppGlobals'], function(AppGlobals) {
 	}
 
 	var whenMouseClicksHex = function(event) {
+		paper.project.activeLayer.selected = false;
+
 		var hex = event.target;
 		var tempGrid = AppGlobals.grid.clone();
 		var path = AppGlobals.pathFinder.findPath(AppGlobals.mech.getPosition().column, AppGlobals.mech.getPosition().row,
@@ -31,6 +33,8 @@ define(['AppGlobals'], function(AppGlobals) {
 		AppGlobals.mech.moveToHex(furthestReachableHexOnPath);
 		AppGlobals.mapDrawer.clearMovableHexes();
 		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
+
+		whenMouseEntersHex(event);
 	}
 	
 	return {
