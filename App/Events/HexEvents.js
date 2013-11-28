@@ -11,8 +11,30 @@ define(['AppGlobals'], function(AppGlobals) {
 		 							   	   		  tempGrid, AppGlobals.mech.remainingMovement());
 		AppGlobals.mapDrawer.colorPath(path);					
 	}
+
+	var whenMouseClicksHex = function(event) {
+		var hex = event.target;
+		var tempGrid = AppGlobals.grid.clone();
+		var path = AppGlobals.pathFinder.findPath(AppGlobals.mech.getPosition().column, AppGlobals.mech.getPosition().row,
+									   hex.column, hex.row,
+									   tempGrid, AppGlobals.mech.remainingMovement());
+
+		path = path.reverse();
+		var furthestReachableHexOnPath;
+		path.forEach(function(point) {
+			var possibleMove = tempGrid.getNodeAt(point[0], point[1]);
+			if (possibleMove.withinRage && !furthestReachableHexOnPath) {
+				furthestReachableHexOnPath = AppGlobals.mapDrawer.getHexFromNode(possibleMove);
+			}
+		})
+
+		AppGlobals.mech.moveToHex(furthestReachableHexOnPath);
+		AppGlobals.mapDrawer.clearMovableHexes();
+		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
+	}
 	
 	return {
-		whenMouseEntersHex: whenMouseEntersHex
+		whenMouseEntersHex: whenMouseEntersHex,
+		whenMouseClicksHex: whenMouseClicksHex
 	};
 });
