@@ -1,4 +1,4 @@
-define(['AppGlobals'], function(AppGlobals) {
+define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 	'use strict';
 
 	var whenMouseEntersHex = function(event) {
@@ -9,7 +9,7 @@ define(['AppGlobals'], function(AppGlobals) {
 		var path = AppGlobals.pathFinder.findPath(AppGlobals.mech.getPosition().column, AppGlobals.mech.getPosition().row,
 									   	  		  hex.column, hex.row,
 		 							   	   		  tempGrid, AppGlobals.mech.remainingMovement());
-		AppGlobals.mapDrawer.colorPath(path);					
+		mapHelper.colorPath(path);					
 	}
 
 	var whenMouseClicksHex = function(event) {
@@ -26,13 +26,13 @@ define(['AppGlobals'], function(AppGlobals) {
 		path.forEach(function(point) {
 			var possibleMove = tempGrid.getNodeAt(point[0], point[1]);
 			if (possibleMove.withinRage && !furthestReachableHexOnPath) {
-				furthestReachableHexOnPath = AppGlobals.mapDrawer.getHexFromNode(possibleMove);
+				furthestReachableHexOnPath = AppGlobals.map.getHexFromNode(possibleMove);
 			}
 		})
 
 		AppGlobals.mech.moveToHex(furthestReachableHexOnPath);
-		AppGlobals.mapDrawer.clearMovableHexes();
-		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
+		mapHelper.clearMovableHexes();
+		mapHelper.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
 
 		whenMouseEntersHex(event);
 	}

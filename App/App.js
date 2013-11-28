@@ -1,5 +1,5 @@
-define(['AppGlobals','PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/MapDrawer', 'Character/Mech'], 
-function(AppGlobals, Grid, PathFinder, MapDrawer, Mech) {
+define(['AppGlobals','PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/Map', 'Character/Mech', 'Map/MapHelper'], 
+function(AppGlobals, Grid, PathFinder, Map, Mech, mapHelper) {
 	'use strict';
 
 	var InitApp = function() {
@@ -11,14 +11,14 @@ function(AppGlobals, Grid, PathFinder, MapDrawer, Mech) {
 			height: 17
 		}
 
-		AppGlobals.tool = new paper.Tool();
 		AppGlobals.pathFinder = new PathFinder();
 		AppGlobals.grid = new Grid(map.width, map.height); 
-		AppGlobals.mapDrawer = new MapDrawer(AppGlobals.grid)
-		AppGlobals.mapDrawer.drawMap();
 		
-		AppGlobals.mech = new Mech(AppGlobals.mapDrawer, AppGlobals.grid.getNodeAt(0,0));
-		AppGlobals.mapDrawer.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
+		AppGlobals.map = new Map(AppGlobals.grid)
+		
+		var mechStartingPosition = AppGlobals.map.getHexFromCoordinates(0, 0);
+		AppGlobals.mech = new Mech(mechStartingPosition);
+		mapHelper.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
 
 		paper.view.draw();
 
