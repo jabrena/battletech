@@ -1,4 +1,4 @@
-define([], function() {
+define(['Events/HexEvents'], function(hexEvents) {
 	'use strict';
 	var HEX_RADIUS = 25;
 	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
@@ -21,9 +21,7 @@ define([], function() {
 		hexagon.row = coordinates.row;
 		hexagon.column = coordinates.column
 
-		hexagon.onMouseEnter = function() {
-			console.log('use me instead of mouse over');
-		};
+		hexagon.onMouseEnter = hexEvents.whenMouseEntersHex;
 
 		return hexagon;
 	}
