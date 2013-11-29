@@ -3,7 +3,9 @@ define(['Events/HexEvents'], function(hexEvents) {
 	var HEX_RADIUS = 25;
 	var TOP_LEFT_POINT = new paper.Point(HEX_RADIUS, HEX_RADIUS);
 
-	var _drawTopLayer = function(coordinates, topLayer) {
+	var _hexSize;
+
+	var _drawTopLayer = function(coordinates, position, topLayer) {
 		topLayer.activate();
 
 		var group = new paper.Group();
@@ -11,6 +13,7 @@ define(['Events/HexEvents'], function(hexEvents) {
 		var hexagon = new paper.Path.RegularPolygon({
 			sides: 6,
 			radius: HEX_RADIUS,
+			position: position,
 			fillColor: 'green',
 			parent: group,
 			clipMask: false,
@@ -41,22 +44,31 @@ define(['Events/HexEvents'], function(hexEvents) {
 		group.addChild(hexImage);
 	}
 
-	var _getHexStartingPosition = function(hex, coordinates) {
-		var size = hex.bounds.size;
+	var _getHexStartingPosition = function(coordinates) {
+		var size = _hexSize;
 
-		var startingPosition = new paper.Point(TOP_LEFT_POINT);
+		var startingPosition = _(TOP_LEFT_POINT).clone();
 		startingPosition.x += size._width * (coordinates.column + (coordinates.row % 2 ? 0.5 : 0));
 		startingPosition.y += size._height *(coordinates.row * 0.75);
 
 		return startingPosition;
 	}
 
-	var HexDrawer = function() { }
+	var HexDrawer = function() { 
+		//this will be used to calculate positions before hex is created to avoid bug with setPosition
+		var hexagon = new paper.Path.RegularPolygon({
+			sides: 6,
+			radius: HEX_RADIUS,
+		});
+
+		_hexSize = hexagon.bounds.size;
+		hexagon.remove();
+	}
 
 	HexDrawer.prototype.drawHex = function(nodeDetails, coordinates, topLayer, bottomLayer) {
-		var topLayerHex = _drawTopLayer(coordinates, topLayer);
-		var hexPosition = _getHexStartingPosition(topLayerHex, coordinates);
-		topLayerHex.setPosition(hexPosition);
+		//calculate position first to avoid but with setPosition;
+		var hexPosition = _getHexStartingPosition(coordinates);
+		var topLayerHex = _drawTopLayer(coordinates, hexPosition, topLayer);
 
 		_drawBottomLayer(nodeDetails, topLayerHex, bottomLayer);
 

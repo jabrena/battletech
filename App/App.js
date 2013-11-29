@@ -22,7 +22,5 @@ function(AppGlobals, Grid, PathFinder, Map, Mech, mapHelper) {
 
 		paper.view.draw();
 
-	}
-
-	setTimeout(InitApp, 600);
+	}();
 });
