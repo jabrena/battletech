@@ -39,8 +39,9 @@ define(['AppGlobals'], function(appGlobals) {
 		return moveDirection.y;
 	}
 
-	var _adjustDestinationIfInvalid = function(movement, currentLocation, minBound) {
-		var destinationOutOfBounds = (currentLocation + movement) < minBound;
+	var _adjustMinDestinationIfInvalid = function(movement, currentLocation, minBound) {
+		var destination = currentLocation + movement;
+		var destinationOutOfBounds = destination < minBound;
 		if (destinationOutOfBounds) {
 			movement = minBound - currentLocation;
 		}
@@ -55,8 +56,8 @@ define(['AppGlobals'], function(appGlobals) {
 
 		var bounds = paper.view.bounds;
 
-		moveDirection.x = _adjustDestinationIfInvalid(moveDirection.x, bounds.x, 0);
-		moveDirection.y = _adjustDestinationIfInvalid(moveDirection.y, bounds.y, 0);
+		moveDirection.x = _adjustMinDestinationIfInvalid(moveDirection.x, bounds.x, 0);
+		moveDirection.y = _adjustMinDestinationIfInvalid(moveDirection.y, bounds.y, 0);
 
 		moveDirection.x = _calculateMaxRightScroll(moveDirection)
 		moveDirection.y = _calculateMaxBottomScroll(moveDirection)
