@@ -11,13 +11,7 @@ define(['AppGlobals'], function(appGlobals) {
 		var numberOfHexesOnScreenWidth = Math.floor(bounds.width / hexWidth) -1;
 		var maxScrollablePoint = (numberOfHexes - numberOfHexesOnScreenWidth) * hexWidth;
 
-		var futurePoint = (paper.view.bounds.x + moveDirection.x);
-		var maxRightReach =  futurePoint > maxScrollablePoint;
-		if (maxRightReach) {
-			moveDirection.x = maxScrollablePoint - paper.view.bounds.x;
-		}
-
-		return moveDirection.x;
+		return _adjustMaxDestinationIfInvalid(moveDirection.x, bounds.x, maxScrollablePoint);
 	}
 
 	var _calculateMaxBottomScroll = function(moveDirection) {
@@ -30,13 +24,17 @@ define(['AppGlobals'], function(appGlobals) {
 		var numberOfHexesOnScreenHeight = Math.floor(bounds.height / hexHeight) -1;
 		var maxScrollablePoint = (numberOfHexes - numberOfHexesOnScreenHeight) * hexHeight;
 
-		var futurePoint = (paper.view.bounds.y + moveDirection.y);
-		var maxRightReach =  futurePoint > maxScrollablePoint;
-		if (maxRightReach) {
-			moveDirection.y = maxScrollablePoint - paper.view.bounds.y;
+		return _adjustMaxDestinationIfInvalid(moveDirection.y, bounds.y, maxScrollablePoint);
+	}
+
+	var _adjustMaxDestinationIfInvalid = function(movement, currentLocation, maxBound) {
+		var destination = currentLocation + movement;
+		var destinationOutOfBounds = destination > maxBound;
+		if (destinationOutOfBounds) {
+			movement = maxBound - currentLocation;
 		}
 
-		return moveDirection.y;
+		return movement;
 	}
 
 	var _adjustMinDestinationIfInvalid = function(movement, currentLocation, minBound) {
