@@ -7,9 +7,19 @@ function(AppGlobals, Grid, PathFinder, Map, Mech, mapHelper) {
 		paper.setup(canvas);
 
 		var map = {
-			width: 28,
-			height: 17
+			width: 30,
+			height: 20
 		}
+
+		var tool = new paper.Tool();
+		tool.onMouseDrag = function(event) {
+			var moveDirection = new paper.Point();
+			moveDirection.x = event.downPoint.x - event.point.x; //mobile convention
+			moveDirection.y = event.downPoint.y - event.point.y; //mobile convention
+
+			paper.view.scrollBy(moveDirection);
+		};
+
 
 		AppGlobals.pathFinder = new PathFinder();
 		AppGlobals.grid = new Grid(map.width, map.height); 
