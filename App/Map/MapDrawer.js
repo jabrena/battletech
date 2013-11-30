@@ -13,9 +13,9 @@ define(['AppGlobals', 'Map/HexDrawer'], function(AppGlobals, HexDrawer) {
 		bottomLayer.name = 'bottom';
 	}
 
-	var MapDrawer = function(grid) {
+	var MapDrawer = function(grid, mapDetails) {
 		_grid = grid;
-		_hexDrawer = new HexDrawer();
+		_hexDrawer = new HexDrawer(mapDetails);
 
 		_initLayers();
 	}
