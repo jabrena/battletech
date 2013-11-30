@@ -39,8 +39,13 @@ define(['AppGlobals'], function(appGlobals) {
 		return moveDirection.y;
 	}
 
-	appGlobals.tool.onMouseDown = function(event) {
-		console.log(event.point);
+	var _adjustDestinationIfInvalid = function(movement, currentLocation, minBound) {
+		var destinationOutOfBounds = (currentLocation + movement) < minBound;
+		if (destinationOutOfBounds) {
+			movement = currentLocation * - 1;
+		}
+
+		return movement;
 	}
 
 	appGlobals.tool.onMouseDrag = function(event) {
@@ -50,15 +55,8 @@ define(['AppGlobals'], function(appGlobals) {
 
 		var bounds = paper.view.bounds;
 
-		var maxLeftReached = (paper.view.bounds.x + moveDirection.x) < 0;
-		if (maxLeftReached) {
-			moveDirection.x = paper.view.bounds.x * -1;
-		}
-
-		var maxTopReached = (paper.view.bounds.y + moveDirection.y) < 0;
-		if (maxTopReached) {
-			moveDirection.y = paper.view.bounds.y * -1;
-		}
+		moveDirection.x = _adjustDestinationIfInvalid(moveDirection.x, bounds.x, 0);
+		moveDirection.y = _adjustDestinationIfInvalid(moveDirection.y, bounds.y, 0);
 
 		moveDirection.x = _calculateMaxRightScroll(moveDirection)
 		moveDirection.y = _calculateMaxBottomScroll(moveDirection)
