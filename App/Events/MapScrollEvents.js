@@ -42,7 +42,7 @@ define(['AppGlobals'], function(appGlobals) {
 	var _adjustDestinationIfInvalid = function(movement, currentLocation, minBound) {
 		var destinationOutOfBounds = (currentLocation + movement) < minBound;
 		if (destinationOutOfBounds) {
-			movement = currentLocation * - 1;
+			movement = minBound - currentLocation;
 		}
 
 		return movement;
