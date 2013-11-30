@@ -1,10 +1,17 @@
 define(['Map/MapDrawer'], function(MapDrawer) {
 	'use strict'
 	var _mapHexes;
+	var _mapDetails;
 
-	var Map = function(grid) {
-		var mapDrawer = new MapDrawer(grid);
+	var Map = function(mapDetails, grid) {
+		_mapDetails = mapDetails;
+
+		var mapDrawer = new MapDrawer(grid, _mapDetails);
 		_mapHexes = mapDrawer.drawMap();
+	}
+
+	Map.prototype.getDetails = function() {
+		return _mapDetails;
 	}
 
 	Map.prototype.getAllHexes = function() {
