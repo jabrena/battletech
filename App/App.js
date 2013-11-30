@@ -8,15 +8,42 @@ function(AppGlobals, Grid, PathFinder, Map, Mech, mapHelper) {
 
 		var map = {
 			width: 30,
-			height: 20
+			height: 20,
+			hexSize: 25
 		}
 
 		var tool = new paper.Tool();
 		tool.onMouseDrag = function(event) {
 			var moveDirection = new paper.Point();
-			moveDirection.x = event.downPoint.x - event.point.x; //mobile convention
-			moveDirection.y = event.downPoint.y - event.point.y; //mobile convention
+			moveDirection.x = event.downPoint.x - event.point.x;
+			moveDirection.y = event.downPoint.y - event.point.y;
 
+			var bounds = paper.view.bounds;
+
+			var maxLeftReached = (paper.view.bounds.x + moveDirection.x) < 0;
+			if (maxLeftReached) {
+				moveDirection.x = paper.view.bounds.x * -1;
+			}
+
+			var maxTopReached = (paper.view.bounds.y + moveDirection.y) < 0;
+			if (maxTopReached) {
+				moveDirection.y = paper.view.bounds.y * -1;
+			}
+
+			var hexWidth = 43.30127018922194;
+			var numberOfHexes = 30;
+
+			var numberOfHexesOnScreenWidth = Math.floor(bounds.width / hexWidth) -1;
+			var maxScrollablePoint = (numberOfHexes - numberOfHexesOnScreenWidth ) * hexWidth;
+
+			var futurePoint = (paper.view.bounds.x + moveDirection.x);
+			var maxRightReach =  futurePoint > maxScrollablePoint;
+			if (maxRightReach) {
+				moveDirection.x = maxScrollablePoint - paper.view.bounds.x;
+			}
+
+
+			console.log(paper.view.bounds.y);
 			paper.view.scrollBy(moveDirection);
 		};
 
