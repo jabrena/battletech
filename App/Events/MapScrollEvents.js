@@ -8,10 +8,13 @@ define(['AppGlobals'], function(appGlobals) {
 		var hexWidth = mapDetails.hexSize.width;
 		var numberOfHexes = mapDetails.width;
 
-		var numberOfHexesOnScreenWidth = Math.floor(bounds.width / hexWidth) -1;
-		var maxScrollablePoint = (numberOfHexes - numberOfHexesOnScreenWidth) * hexWidth;
+		var maxScrollablePoint = _calculateMaxScrollBound(hexWidth,
+														  numberOfHexes,
+														  bounds.width)
 
-		return _adjustMaxDestinationIfInvalid(moveDirection.x, bounds.x, maxScrollablePoint);
+		return _adjustMaxDestinationIfInvalid(moveDirection.x,
+											  bounds.x,
+									  		  maxScrollablePoint);
 	}
 
 	var _calculateMaxBottomScroll = function(moveDirection) {
@@ -21,10 +24,18 @@ define(['AppGlobals'], function(appGlobals) {
 		var hexHeight = mapDetails.hexSize.height * 0.75; //hexes overlap vertically
 		var numberOfHexes = mapDetails.height;
 
-		var numberOfHexesOnScreenHeight = Math.floor(bounds.height / hexHeight) -1;
-		var maxScrollablePoint = (numberOfHexes - numberOfHexesOnScreenHeight) * hexHeight;
+		var maxScrollablePoint = _calculateMaxScrollBound(hexHeight,
+														  numberOfHexes,
+														  bounds.height)
 
-		return _adjustMaxDestinationIfInvalid(moveDirection.y, bounds.y, maxScrollablePoint);
+		return _adjustMaxDestinationIfInvalid(moveDirection.y,
+											  bounds.y,
+											  maxScrollablePoint);
+	}
+
+	var _calculateMaxScrollBound = function(hexSize, numberOfHexes, bounds) {
+		var numberOfHexesOnScreenHeight = Math.floor(bounds / hexSize) -1;
+		return (numberOfHexes - numberOfHexesOnScreenHeight) * hexSize;
 	}
 
 	var _adjustMaxDestinationIfInvalid = function(movement, currentLocation, maxBound) {
