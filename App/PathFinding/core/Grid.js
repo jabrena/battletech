@@ -1,5 +1,4 @@
-//var Node = require('./Node');
-define(['PathFinding/core/Node'], function(Node) {
+define(['PathFinding/Core/Node'], function(Node) {
     'use strict';
 
     /**
