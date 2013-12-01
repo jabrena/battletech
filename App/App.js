@@ -8,8 +8,8 @@ function(appGlobals, Grid, PathFinder, Map, Mech, mapHelper, mapScrollEvents) {
 
 		var mapDetails = {
 			width: 30,
-			height: 20,
-			hexRadius: 25,
+			height: 30,
+			hexRadius: 40,
 			hexSize: undefined
 		}
 

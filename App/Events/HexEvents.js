@@ -1,5 +1,6 @@
 define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 	'use strict';
+	var _dragging;
 
 	var whenMouseEntersHex = function(event) {
 		paper.project.activeLayer.selected = false;
@@ -13,6 +14,10 @@ define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 	}
 
 	var whenMouseClicksHex = function(event) {
+		if (_dragging) { 
+			return false;
+		 }
+
 		paper.project.activeLayer.selected = false;
 
 		var hex = event.target;
@@ -36,9 +41,18 @@ define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 
 		whenMouseEntersHex(event);
 	}
+
+	var doNothing = function(event) {
+		_dragging = true;
+
+		setTimeout(function () {
+			_dragging = false;
+		}, 0);
+	}
 	
 	return {
 		whenMouseEntersHex: whenMouseEntersHex,
-		whenMouseClicksHex: whenMouseClicksHex
+		whenMouseClicksHex: whenMouseClicksHex,
+		doNothing: doNothing
 	};
 });

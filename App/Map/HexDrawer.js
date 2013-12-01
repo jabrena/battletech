@@ -23,6 +23,7 @@ define(['Events/HexEvents'], function(hexEvents) {
 		hexagon.column = coordinates.column
 
 		hexagon.onMouseEnter = hexEvents.whenMouseEntersHex;
+		hexagon.onMouseDrag = hexEvents.doNothing;
 		hexagon.onClick = hexEvents.whenMouseClicksHex;
 
 		return hexagon;
