@@ -22,9 +22,9 @@ define(['Events/HexEvents'], function(hexEvents) {
 		hexagon.row = coordinates.row;
 		hexagon.column = coordinates.column
 
-		hexagon.onMouseEnter = hexEvents.whenMouseEntersHex;
-		hexagon.onMouseDrag = hexEvents.doNothing;
-		hexagon.onClick = hexEvents.whenMouseClicksHex;
+		//hexagon.onMouseEnter = hexEvents.whenMouseEntersHex;
+		//hexagon.onMouseDrag = hexEvents.doNothing;
+		//hexagon.onClick = hexEvents.whenMouseClicksHex;
 
 		return hexagon;
 	}
