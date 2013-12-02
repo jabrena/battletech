@@ -2,13 +2,19 @@ define(['Map/MapDrawer', 'Map/ViewPort'], function(MapDrawer, ViewPort) {
 	'use strict'
 	var _mapHexes;
 	var _mapDetails;
+	var _mapDrawer;
+	var _viewPort;
 
 	var Map = function(mapDetails, grid) {
 		_mapDetails = mapDetails;
 
-		var mapDrawer = new MapDrawer(grid, _mapDetails);
-		var viewPort = new ViewPort(_mapDetails);
-		_mapHexes = mapDrawer.drawMap(viewPort);
+		_mapDrawer = new MapDrawer(grid, _mapDetails);
+		_viewPort = new ViewPort(_mapDetails);
+		_mapHexes = _mapDrawer.drawMap(_viewPort);
+	}
+
+	Map.prototype.drawMap = function() {
+		_mapDrawer.drawMap(_viewPort);
 	}
 
 	Map.prototype.getDetails = function() {

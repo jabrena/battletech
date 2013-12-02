@@ -1,4 +1,5 @@
 define(['AppGlobals'], function(appGlobals) {
+	'use strict'
 	var _mapDetails;
 
 	var ViewPort = function(mapDetails) {

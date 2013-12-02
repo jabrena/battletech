@@ -72,5 +72,10 @@ define(['AppGlobals'], function(appGlobals) {
 		moveDirection.y = _calculateMaxBottomScroll(moveDirection)
 
 		paper.view.scrollBy(moveDirection);
+
+		//erase and redraw map;
+		paper.project.layers[0].children = [];
+		paper.project.layers[1].children = [];
+		appGlobals.map.drawMap();
 	};
 });
