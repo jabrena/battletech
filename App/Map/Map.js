@@ -1,4 +1,4 @@
-define(['Map/MapDrawer'], function(MapDrawer) {
+define(['Map/MapDrawer', 'Map/ViewPort'], function(MapDrawer, ViewPort) {
 	'use strict'
 	var _mapHexes;
 	var _mapDetails;
@@ -7,7 +7,8 @@ define(['Map/MapDrawer'], function(MapDrawer) {
 		_mapDetails = mapDetails;
 
 		var mapDrawer = new MapDrawer(grid, _mapDetails);
-		_mapHexes = mapDrawer.drawMap();
+		var viewPort = new ViewPort(_mapDetails);
+		_mapHexes = mapDrawer.drawMap(viewPort);
 	}
 
 	Map.prototype.getDetails = function() {

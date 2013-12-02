@@ -20,13 +20,15 @@ define(['AppGlobals', 'Map/HexDrawer'], function(AppGlobals, HexDrawer) {
 		_initLayers();
 	}
 
-	MapDrawer.prototype.drawMap = function()  {
+	MapDrawer.prototype.drawMap = function(viewPort)  {
+		var view = viewPort.getView();
 		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
 		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
 
 		var mapHexes = [];
-		for (var y = 0; y < _grid.height; y++) {
-			for (var x = 0; x < _grid.width; x++) {
+		// y and x become views
+		for (var y = view.firstRow; y < view.lastRow; y++) {
+			for (var x = view.firstColumn; x < view.lastColumn; x++) {
 				var coordinates = { column: x, row: y };
 				var nodeDetails = _grid.getNodeAt(x, y).details;
 				var hex = _hexDrawer.drawHex(nodeDetails, coordinates, topLayer, bottomLayer);
