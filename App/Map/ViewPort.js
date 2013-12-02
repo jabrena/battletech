@@ -16,11 +16,17 @@ define(['AppGlobals'], function(appGlobals) {
 		var numberOfColumnsToShow = Math.ceil(currentView.width / mapDetails.hexSize.width);
 		var numberOfRowsToShow = Math.ceil(currentView.height / (mapDetails.hexSize.height * 0.75));
 
+		var lastColumn = numberOfHiddenColumns + numberOfColumnsToShow;
+		lastColumn = (lastColumn > mapDetails.width) ? mapDetails.width : lastColumn;
+
+		var lastRow = numberOfHiddenRows + numberOfRowsToShow;
+		lastRow = (lastRow > mapDetails.height) ? mapDetails.height : lastRow;
+
 		return { firstColumn: numberOfHiddenColumns,
-				 lastColumn: numberOfHiddenColumns + numberOfColumnsToShow,
+				 lastColumn: lastColumn,
 				 
 				 firstRow: numberOfHiddenRows,
-				 lastRow: numberOfHiddenRows + numberOfRowsToShow
+				 lastRow: lastRow
 			   };
 	}
 
