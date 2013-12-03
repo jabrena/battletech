@@ -2,31 +2,41 @@ define(['Events/HexEvents'], function(hexEvents) {
 	'use strict';
 	var _mapDetails;
 	var _topLeftPoint;
+	var _hexImageCollection = [];
 
-	var _drawTopLayer = function(coordinates, position, topLayer) {
-		topLayer.activate();
+	var _drawTopLayer = function(nodeDetails, coordinates, position) {
+		if (_hexImageCollection[nodeDetails.groundImage]) {
+			return _hexImageCollection[nodeDetails.groundImage];
+		}
 
-		var group = new paper.Group();
+		//else
+		var project = new paper.Project();
+		var layer  = new paper.Layer();
 
 		var hexagon = new paper.Path.RegularPolygon({
 			sides: 6,
 			radius: _mapDetails.hexRadius,
-			position: position,
-			fillColor: 'green',
-			parent: group,
-			clipMask: false,
+			clipMask: true,
 			opacity: .01, //zero would erase selected outlines
-			name: 'hexagon'
 		});
 
-		hexagon.row = coordinates.row;
-		hexagon.column = coordinates.column
+		var hexRaster = new paper.Raster(nodeDetails.groundImage);
+		hexRaster.fitBounds(hexagon.bounds, true);
 
-		//hexagon.onMouseEnter = hexEvents.whenMouseEntersHex;
-		//hexagon.onMouseDrag = hexEvents.doNothing;
-		//hexagon.onClick = hexEvents.whenMouseClicksHex;
+		var hexImage = layer.rasterize();//.toDataURL();
+		var grrr = new paper.Symbol(hexImage);
 
-		return hexagon;
+		layer.remove();
+		project.remove();
+
+		//var img = new Image();
+		//img.src = hexImage;
+
+
+		_hexImageCollection[nodeDetails.groundImage] = grrr;
+		//_hexImageCollection[nodeDetails.groundImage] = img;
+
+		return _hexImageCollection[nodeDetails.groundImage];
 	}
 
 	var _drawBottomLayer = function(nodeDetails, hexToCopy, bottomLayer) {
@@ -47,8 +57,8 @@ define(['Events/HexEvents'], function(hexEvents) {
 		var size = _mapDetails.hexSize;
 
 		var startingPosition = _(_topLeftPoint).clone();
-		startingPosition.x += size._width * (coordinates.column + (coordinates.row % 2 ? 0.5 : 0));
-		startingPosition.y += size._height *(coordinates.row * 0.75);
+		startingPosition.x += Math.round(size._width * (coordinates.column + (coordinates.row % 2 ? 0.5 : 0)));
+		startingPosition.y += Math.round(size._height *(coordinates.row * 0.75));
 
 		return startingPosition;
 	}
@@ -67,13 +77,22 @@ define(['Events/HexEvents'], function(hexEvents) {
 	}
 
 	HexDrawer.prototype.drawHex = function(nodeDetails, coordinates, topLayer, bottomLayer) {
-		//calculate position first to avoid but with setPosition;
+		//calculate position first to avoid bug with setPosition;
 		var hexPosition = _getHexStartingPosition(coordinates);
-		var topLayerHex = _drawTopLayer(coordinates, hexPosition, topLayer);
+		var topLayerHexImage = _drawTopLayer(nodeDetails, coordinates, hexPosition, topLayer);
 
-		_drawBottomLayer(nodeDetails, topLayerHex, bottomLayer);
+		paper.projects[0].activate();
+		topLayer.activate();
 
-		return topLayerHex;
+		topLayerHexImage.place(hexPosition);
+		//var group = new paper.Group();
+		//group.addChild(topLayerHexImage);
+		//group.setPosition(hexPosition)
+
+		//_drawBottomLayer(nodeDetails, topLayerHex, bottomLayer);
+		//paper.getView()._context.drawImage(topLayerHexImage, hexPosition.x, hexPosition.y);
+
+		return topLayerHexImage;
 	}
 
 	return HexDrawer;

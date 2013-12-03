@@ -18,9 +18,9 @@ function(appGlobals, Grid, PathFinder, Map, Mech, mapHelper, mapScrollEvents) {
 		
 		appGlobals.map = new Map(mapDetails, appGlobals.grid)
 		
-		var mechStartingPosition = appGlobals.map.getHexFromCoordinates(0, 0);
-		appGlobals.mech = new Mech(mechStartingPosition);
-		mapHelper.colorHexesWithinReach(appGlobals.mech, appGlobals.pathFinder);
+		//var mechStartingPosition = appGlobals.map.getHexFromCoordinates(0, 0);
+		//appGlobals.mech = new Mech(mechStartingPosition);
+		//mapHelper.colorHexesWithinReach(appGlobals.mech, appGlobals.pathFinder);
 
 		paper.view.draw();
 
