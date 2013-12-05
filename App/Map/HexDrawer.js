@@ -32,12 +32,12 @@ define(['Events/HexEvents'], function(hexEvents) {
 		return _hexImageCollection[nodeDetails.groundImage];
 	}
 
-	var _getHexStartingPosition = function(coordinates) {
+	var _getCenterPointAt = function(column, row) {
 		var size = _mapDetails.hexSize;
 
 		var startingPosition = { x: _topLeftPoint.x, y: _topLeftPoint.y };
-		startingPosition.x += _quickRound(size._width * (coordinates.column + (coordinates.row % 2 ? 0.5 : 0)));
-		startingPosition.y += _quickRound(size._height *(coordinates.row * 0.75));
+		startingPosition.x += _quickRound(size._width * (column + (row % 2 ? 0.5 : 0)));
+		startingPosition.y += _quickRound(size._height *(row * 0.75));
 
 		return startingPosition;
 	}
@@ -65,7 +65,7 @@ define(['Events/HexEvents'], function(hexEvents) {
 	}
 
 	HexDrawer.prototype.drawHex = function(nodeDetails, coordinates, mapLayer) {
-		var hexPosition = _getHexStartingPosition(coordinates);
+		var hexPosition = _getCenterPointAt(coordinates.column, coordinates.row);
 		var hexImage = _getImageForNodeType(nodeDetails);
 
 		paper.projects[0].activate();

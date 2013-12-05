@@ -76,6 +76,6 @@ define(['AppGlobals'], function(appGlobals) {
 		paper.project.layers.forEach(function(layer) {
 			layer.children = [];
 		});
-		appGlobals.map.drawMap();
+		appGlobals.map.drawMap(appGlobals.grid);
 	};
 });

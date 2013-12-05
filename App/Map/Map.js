@@ -9,13 +9,14 @@ define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort'], function(MapDrawer, H
 
 		// hexDrawer updates mapDetails by side effect
 		var hexDrawer = new HexDrawer(_mapDetails);
-		_mapDrawer = new MapDrawer(grid, hexDrawer);
+		_mapDrawer = new MapDrawer(hexDrawer);
 
 		_viewPort = new ViewPort(_mapDetails);
 	}
 
-	Map.prototype.drawMap = function() {
-		_mapDrawer.drawMap(_viewPort.getView());
+	Map.prototype.drawMap = function(grid) {
+		var view = _viewPort.getView();
+		_mapDrawer.drawMap(grid, view);
 	}
 
 	Map.prototype.getDetails = function() {
