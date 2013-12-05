@@ -1,5 +1,5 @@
-define(['Map/MapInitializer', 'Map/HexInitializer'],
-function(mapInitializer, hexInitializer) {
+define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer'],
+function(hexInitializer, mapInitializer, unitInitializer) {
 	'use strict';
 
 	var InitApp = function() {
@@ -15,13 +15,8 @@ function(mapInitializer, hexInitializer) {
 		mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
 		mapInitializer.initMap(mapDetails);	
-
-		//Init Units
-		//mechStartingPosition = appGlobals.grid.getNodeAt(0, 0);
-		//appGlobals.mech = new Mech(mechStartingPosition);
-		//mapHelper.colorHexesWithinReach(appGlobals.mech, appGlobals.pathFinder);
+		unitInitializer.initUnits();
 
 		paper.view.draw();
-
 	}();
 });
