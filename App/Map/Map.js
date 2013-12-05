@@ -7,7 +7,6 @@ define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort'], function(MapDrawer, H
 	var Map = function(mapDetails, grid) {
 		_mapDetails = mapDetails;
 
-		// hexDrawer updates mapDetails by side effect
 		var hexDrawer = new HexDrawer(_mapDetails);
 		_mapDrawer = new MapDrawer(hexDrawer);
 

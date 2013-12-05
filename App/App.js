@@ -1,5 +1,5 @@
-define(['AppGlobals','PathFinding/Core/Grid', 'PathFinding/Finders/AStarFinder', 'Map/Map', 'Character/Mech', 'Map/MapHelper', 'Events/MapScrollEvents'], 
-function(appGlobals, Grid, PathFinder, Map, Mech, mapHelper, mapScrollEvents) {
+define(['Map/MapInitializer', 'Map/HexInitializer'],
+function(mapInitializer, hexInitializer) {
 	'use strict';
 
 	var InitApp = function() {
@@ -10,15 +10,13 @@ function(appGlobals, Grid, PathFinder, Map, Mech, mapHelper, mapScrollEvents) {
 			width: 30,
 			height: 30,
 			hexRadius: 40,
-			hexSize: undefined //is set in the HexDrawer constructor
+			hexSize: undefined // use hexInitializer below
 		}
+		mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
-		appGlobals.pathFinder = new PathFinder();
-		appGlobals.grid = new Grid(mapDetails.width, mapDetails.height); 
-		
-		appGlobals.map = new Map(mapDetails, appGlobals.grid);
-		appGlobals.map.drawMap(appGlobals.grid);
-		
+		mapInitializer.initMap(mapDetails);	
+
+		//Init Units
 		//mechStartingPosition = appGlobals.grid.getNodeAt(0, 0);
 		//appGlobals.mech = new Mech(mechStartingPosition);
 		//mapHelper.colorHexesWithinReach(appGlobals.mech, appGlobals.pathFinder);
