@@ -1,6 +1,5 @@
 define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort'], function(MapDrawer, HexDrawer, ViewPort) {
 	'use strict'
-	var _mapHexes;
 	var _mapDetails;
 	var _mapDrawer;
 	var _viewPort;
@@ -21,10 +20,6 @@ define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort'], function(MapDrawer, H
 
 	Map.prototype.getDetails = function() {
 		return _mapDetails;
-	}
-
-	Map.prototype.getAllHexes = function() {
-		return _mapHexes;
 	}
 
 	return Map

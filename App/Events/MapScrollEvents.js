@@ -73,9 +73,9 @@ define(['AppGlobals'], function(appGlobals) {
 
 		paper.view.scrollBy(moveDirection);
 
-		//erase and redraw map;
-		paper.project.layers[0].children = [];
-		paper.project.layers[1].children = [];
+		paper.project.layers.forEach(function(layer) {
+			layer.children = [];
+		});
 		appGlobals.map.drawMap();
 	};
 });

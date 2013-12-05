@@ -4,7 +4,7 @@ define(['Events/HexEvents'], function(hexEvents) {
 	var _topLeftPoint;
 	var _hexImageCollection = [];
 
-	var _drawTopLayer = function(nodeDetails, coordinates, position) {
+	var _getImageForNodeType = function(nodeDetails) {
 		if (_hexImageCollection[nodeDetails.groundImage]) {
 			return _hexImageCollection[nodeDetails.groundImage];
 		}
@@ -64,16 +64,14 @@ define(['Events/HexEvents'], function(hexEvents) {
 		hexagon.remove();
 	}
 
-	HexDrawer.prototype.drawHex = function(nodeDetails, coordinates, topLayer, bottomLayer) {
+	HexDrawer.prototype.drawHex = function(nodeDetails, coordinates, mapLayer) {
 		var hexPosition = _getHexStartingPosition(coordinates);
-		var topLayerHexImage = _drawTopLayer(nodeDetails, coordinates, hexPosition, topLayer);
+		var hexImage = _getImageForNodeType(nodeDetails);
 
 		paper.projects[0].activate();
-		topLayer.activate();
+		mapLayer.activate();
 
-		topLayerHexImage.place(hexPosition);
-
-		return topLayerHexImage;
+		hexImage.place(hexPosition);
 	}
 
 	return HexDrawer;
