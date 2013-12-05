@@ -3,7 +3,7 @@ function(appGlobals, Mech) {
 	'use strict';
 
 	var initUnits = function() {
-		appGlobals.mech = new Mech(0, 0);
+		appGlobals.units[0] = new Mech(0, 0);
 		//mapHelper.colorHexesWithinReach(appGlobals.mech, appGlobals.pathFinder);
 	}
 

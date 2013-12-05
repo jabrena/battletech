@@ -18,6 +18,10 @@ function(appGlobals, hexPositionCalculator) {
 		return _mech.movement;
 	}
 
+	Mech.prototype.getRaster = function() {
+		return _mech;
+	}
+
 	Mech.prototype.moveToHex = function(column, row) {
 		var position = hexPositionCalculator.getCenterPoint(column, row);
 
