@@ -16,7 +16,8 @@ function(appGlobals, Grid, PathFinder, Map, Mech, mapHelper, mapScrollEvents) {
 		appGlobals.pathFinder = new PathFinder();
 		appGlobals.grid = new Grid(mapDetails.width, mapDetails.height); 
 		
-		appGlobals.map = new Map(mapDetails, appGlobals.grid)
+		appGlobals.map = new Map(mapDetails, appGlobals.grid);
+		appGlobals.map.drawMap();
 		
 		//var mechStartingPosition = appGlobals.map.getHexFromCoordinates(0, 0);
 		//appGlobals.mech = new Mech(mechStartingPosition);

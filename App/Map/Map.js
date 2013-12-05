@@ -1,4 +1,4 @@
-define(['Map/MapDrawer', 'Map/ViewPort'], function(MapDrawer, ViewPort) {
+define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort'], function(MapDrawer, HexDrawer, ViewPort) {
 	'use strict'
 	var _mapHexes;
 	var _mapDetails;
@@ -8,13 +8,15 @@ define(['Map/MapDrawer', 'Map/ViewPort'], function(MapDrawer, ViewPort) {
 	var Map = function(mapDetails, grid) {
 		_mapDetails = mapDetails;
 
-		_mapDrawer = new MapDrawer(grid, _mapDetails);
+		// hexDrawer updates mapDetails by side effect
+		var hexDrawer = new HexDrawer(_mapDetails);
+		_mapDrawer = new MapDrawer(grid, hexDrawer);
+
 		_viewPort = new ViewPort(_mapDetails);
-		_mapHexes = _mapDrawer.drawMap(_viewPort);
 	}
 
 	Map.prototype.drawMap = function() {
-		_mapDrawer.drawMap(_viewPort);
+		_mapDrawer.drawMap(_viewPort.getView());
 	}
 
 	Map.prototype.getDetails = function() {
@@ -23,24 +25,6 @@ define(['Map/MapDrawer', 'Map/ViewPort'], function(MapDrawer, ViewPort) {
 
 	Map.prototype.getAllHexes = function() {
 		return _mapHexes;
-	}
-
-	Map.prototype.getHexFromNode = function(node) {
-		return _(_mapHexes).find(function(hex) { 
-			return hex.column === node.x && hex.row === node.y
-		});
-	}
-
-	Map.prototype.getHexFromPoint = function(point) {
-		return _(_mapHexes).find(function(hex) { 
-			return hex.column === point[0] && hex.row === point[1];
-		});
-	}
-
-	Map.prototype.getHexFromCoordinates = function(column, row) {
-		return _(_mapHexes).find(function(hex) { 
-			return hex.column === column && hex.row === row;
-		});	
 	}
 
 	return Map

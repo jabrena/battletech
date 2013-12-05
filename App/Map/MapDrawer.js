@@ -1,4 +1,4 @@
-define(['AppGlobals', 'Map/HexDrawer'], function(AppGlobals, HexDrawer) {
+define(['AppGlobals'], function(AppGlobals) {
 	'use strict';
 	var _grid;
 	var _hexDrawer;
@@ -13,33 +13,27 @@ define(['AppGlobals', 'Map/HexDrawer'], function(AppGlobals, HexDrawer) {
 		bottomLayer.name = 'bottom';
 	}
 
-	var MapDrawer = function(grid, mapDetails) {
+	var MapDrawer = function(grid, hexDrawer) {
 		_grid = grid;
-		_hexDrawer = new HexDrawer(mapDetails);
+		_hexDrawer = hexDrawer;
 
 		_initLayers();
 	}
 
-	MapDrawer.prototype.drawMap = function(viewPort)  {
-		var view = viewPort.getView();
+	MapDrawer.prototype.drawMap = function(view)  {
 		var topLayer = _(paper.project.layers).findWhere({ 'name': 'top' });
 		var bottomLayer = _(paper.project.layers).findWhere({ 'name': 'bottom' });
 
-		var mapHexes = [];
-		// y and x become views
 		for (var y = view.firstRow; y < view.lastRow; y++) {
 			for (var x = view.firstColumn; x < view.lastColumn; x++) {
 				var coordinates = { column: x, row: y };
 				var nodeDetails = _grid.getNodeAt(x, y).details;
-				var hex = _hexDrawer.drawHex(nodeDetails, coordinates, topLayer, bottomLayer);
-
-				mapHexes.push(hex);
+				_hexDrawer.drawHex(nodeDetails, coordinates, topLayer, bottomLayer);
 			}
 		}
 
 		topLayer.moveAbove(bottomLayer);
 		topLayer.activate();
-		return mapHexes;
 	}
 
 	return MapDrawer;
