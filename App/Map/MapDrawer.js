@@ -20,9 +20,8 @@ define(['AppGlobals'], function(AppGlobals) {
 
 		for (var y = view.firstRow; y < view.lastRow; y++) {
 			for (var x = view.firstColumn; x < view.lastColumn; x++) {
-				var coordinates = { column: x, row: y };
-				var nodeDetails = grid.getNodeAt(x, y).details;
-				_hexDrawer.drawHex(nodeDetails, coordinates, mapLayer);
+				var node = grid.getNodeAt(x, y);
+				_hexDrawer.drawHex(node, mapLayer);
 			}
 		}
 	}

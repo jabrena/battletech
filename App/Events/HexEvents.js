@@ -1,8 +1,8 @@
-define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
+define(['AppGlobals'], function(AppGlobals) {
 	'use strict';
 	var _dragging;
 
-	var whenMouseEntersHex = function(event) {
+/*	var whenMouseEntersHex = function(event) {
 		paper.project.activeLayer.selected = false;
 
 		var hex = event.target;
@@ -11,9 +11,9 @@ define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 									   	  		  hex.column, hex.row,
 		 							   	   		  tempGrid, AppGlobals.mech.remainingMovement());
 		mapHelper.colorPath(path);					
-	}
+	}*/
 
-	var whenMouseClicksHex = function(event) {
+/*	var whenMouseClicksHex = function(event) {
 		if (_dragging) { 
 			return false;
 		 }
@@ -40,7 +40,7 @@ define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 		mapHelper.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
 
 		whenMouseEntersHex(event);
-	}
+	}*/
 
 	var doNothing = function(event) {
 		_dragging = true;
@@ -50,9 +50,9 @@ define(['AppGlobals', 'Map/MapHelper'], function(AppGlobals, mapHelper) {
 		}, 0);
 	}
 	
-	return {
+/*	return {
 		whenMouseEntersHex: whenMouseEntersHex,
 		whenMouseClicksHex: whenMouseClicksHex,
 		doNothing: doNothing
-	};
+	};*/
 });

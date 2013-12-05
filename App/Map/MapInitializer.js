@@ -6,7 +6,6 @@ function(appGlobals, Grid, PathFinder, Map, MapScrollEvents) {
 		appGlobals.grid = new Grid(mapDetails.width, mapDetails.height); 
 		
 		appGlobals.map = new Map(mapDetails, appGlobals.grid);
-		appGlobals.map.drawMap(appGlobals.grid);
 	}
 
 	return { initMap: initMap };
