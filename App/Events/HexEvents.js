@@ -1,5 +1,5 @@
-define(['AppGlobals', 'Map/HexPositionCalculator'], 
-function(appGlobals, hexPositionCalculator) {
+define(['AppGlobals', 'Map/HexPositionCalculator', 'Units/MoveHelper'], 
+function(appGlobals, hexPositionCalculator, moveHelper) {
 	'use strict';
 	var _dragging;
 
@@ -22,21 +22,15 @@ function(appGlobals, hexPositionCalculator) {
 		var activeUnit = appGlobals.units[0];
 		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
-/*		var tempGrid = AppGlobals.grid.clone();
-		var path = AppGlobals.pathFinder.findPath(activeUnit.getLocation().column, activeUnit.getLocation().row,
-									   			  hexLocation.column, hexLocation.row,
-									   			  tempGrid, activeUnit.remainingMovement());
+		//must click inside move range to move?
+		//outside will reveal path?
+		//second click on path will move?
+		var clickedNode = appGlobals.grid.getNodeAt(hexLocation.column, hexLocation.row);
+		var destinationNode = moveHelper.getValidMove(activeUnit, clickedNode, appGlobals.pathFinder);
 
-	path = path.reverse();
-		var furthestReachableHexOnPath;
-		path.forEach(function(point) {
-			var possibleMove = tempGrid.getNodeAt(point[0], point[1]);
-			if (possibleMove.withinRage && !furthestReachableHexOnPath) {
-				furthestReachableHexOnPath = AppGlobals.map.getHexFromNode(possibleMove);
-			}
-		})*/
+		activeUnit.moveToHex(destinationNode.x, destinationNode.y);
 
-		activeUnit.moveToHex(hexLocation.column, hexLocation.row);
+		//must now recalculate valid moves
 		appGlobals.map.drawMap(appGlobals.grid);
 	}
 

@@ -21,18 +21,23 @@ define(['AppGlobals'], function(AppGlobals) {
 		return gridToMark;
 	}
 
-	// not used yet
-	var colorPath = function(pointsInPath) {
-		paper.project.activeLayer.selected = false;
+	var getValidMove = function(unit, destinationNode, pathFinder) {
+		var grid = _.clone(AppGlobals.grid);
 
-		var hexesOnPath = [];
-		pointsInPath.forEach(function(point) {
-			hexesOnPath.push(AppGlobals.map.getHexFromPoint(point));
+		var path = pathFinder.findPath(unit.getLocation().column, unit.getLocation().row,
+								   destinationNode.x, destinationNode.y,
+								   grid, unit.remainingMovement());
+
+		path = path.reverse();
+		var furthestReachableNode;
+		path.forEach(function(point) {
+			var possibleMove = grid.getNodeAt(point[0], point[1]);
+			if (possibleMove.withinRage && !furthestReachableNode) {
+				furthestReachableNode = possibleMove;
+			}
 		});
 
-		hexesOnPath.forEach(function(hex) {
-			hex.setSelected(true);
-		});
+		return furthestReachableNode;
 	}
 
 	var markNodesWithinReach = function(unit, pathFinder) {
@@ -57,7 +62,6 @@ define(['AppGlobals'], function(AppGlobals) {
 
 	return {
 		markNodesWithinReach: markNodesWithinReach,
-		colorPath: colorPath //not used yet
+		getValidMove: getValidMove
 	}
-
 });
