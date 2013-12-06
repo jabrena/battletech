@@ -1,4 +1,5 @@
-define(['AppGlobals'], function(AppGlobals) {
+define(['AppGlobals', 'Map/HexPositionCalculator'], 
+function(appGlobals, hexPositionCalculator) {
 	'use strict';
 	var _dragging;
 
@@ -13,34 +14,31 @@ define(['AppGlobals'], function(AppGlobals) {
 		mapHelper.colorPath(path);					
 	}*/
 
-/*	var whenMouseClicksHex = function(event) {
+	var whenMouseClicksHex = function(event) {
 		if (_dragging) { 
 			return false;
 		 }
 
-		paper.project.activeLayer.selected = false;
+		var activeUnit = appGlobals.units[0];
+		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
-		var hex = event.target;
-		var tempGrid = AppGlobals.grid.clone();
-		var path = AppGlobals.pathFinder.findPath(AppGlobals.mech.getPosition().column, AppGlobals.mech.getPosition().row,
-									   hex.column, hex.row,
-									   tempGrid, AppGlobals.mech.remainingMovement());
+/*		var tempGrid = AppGlobals.grid.clone();
+		var path = AppGlobals.pathFinder.findPath(activeUnit.getLocation().column, activeUnit.getLocation().row,
+									   			  hexLocation.column, hexLocation.row,
+									   			  tempGrid, activeUnit.remainingMovement());
 
-		path = path.reverse();
+	path = path.reverse();
 		var furthestReachableHexOnPath;
 		path.forEach(function(point) {
 			var possibleMove = tempGrid.getNodeAt(point[0], point[1]);
 			if (possibleMove.withinRage && !furthestReachableHexOnPath) {
 				furthestReachableHexOnPath = AppGlobals.map.getHexFromNode(possibleMove);
 			}
-		})
+		})*/
 
-		AppGlobals.mech.moveToHex(furthestReachableHexOnPath);
-		mapHelper.clearMovableHexes();
-		mapHelper.colorHexesWithinReach(AppGlobals.mech, AppGlobals.pathFinder);
-
-		whenMouseEntersHex(event);
-	}*/
+		activeUnit.moveToHex(hexLocation.column, hexLocation.row);
+		appGlobals.map.drawMap(appGlobals.grid);
+	}
 
 	var doNothing = function(event) {
 		_dragging = true;
@@ -50,9 +48,9 @@ define(['AppGlobals'], function(AppGlobals) {
 		}, 0);
 	}
 	
-/*	return {
-		whenMouseEntersHex: whenMouseEntersHex,
+	return {
+	//	whenMouseEntersHex: whenMouseEntersHex,
 		whenMouseClicksHex: whenMouseClicksHex,
 		doNothing: doNothing
-	};*/
+	};
 });

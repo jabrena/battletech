@@ -32,11 +32,55 @@ function(appGlobals) {
 		centerPoint.x = _getTopLeftCornerOfMap().x;
 		centerPoint.y = _getTopLeftCornerOfMap().y;
 
-		centerPoint.x += _quickRound(hexSize._width * (column + (row % 2 ? 0.5 : 0)));
-		centerPoint.y += _quickRound(hexSize._height *(row * 0.75));
+		centerPoint.x += _quickRound(hexSize.width * column);
+        var evenColumn = (column % 2) === 0;
+        if (!evenColumn) {
+           row += .5;
+       }
+       centerPoint.y += _quickRound(hexSize.height * row);
 
-		return centerPoint;
+       return centerPoint;
 	}
 
-	return { getCenterPoint: getCenterPoint };
+	var getLocationFromMouseClick = function(point) {
+        var posx = point.x;
+        var posy = point.y;
+        
+        //posx = posx - map.offsetLeft;
+        //posy = posy - map.offsetTop;
+
+        var hexSize = appGlobals.map.getDetails().hexSize;
+        var fullWidth = hexSize.width / .75;
+
+        var x = (posx - (fullWidth/2)) / hexSize.width;
+        var y = (posy - (hexSize.height/2)) / hexSize.height;
+        var z = -0.5 * x - y;
+        var y = -0.5 * x + y;
+
+        var ix = Math.floor(x+0.5);
+        var iy = Math.floor(y+0.5);
+        var iz = Math.floor(z+0.5);
+        var s = ix + iy + iz;
+        if (s) {
+            var abs_dx = Math.abs(ix-x);
+            var abs_dy = Math.abs(iy-y);
+            var abs_dz = Math.abs(iz-z);
+            if (abs_dx >= abs_dy && abs_dx >= abs_dz) {
+                ix -= s;
+            } else if (abs_dy >= abs_dx && abs_dy >= abs_dz) {
+                iy -= s;
+            } else {
+                iz -= s;
+            }
+        }
+
+        var map_x = ix;
+        var map_y = (iy - iz + (1 - ix %2 ) ) / 2 - 0.5;
+
+        return { column: map_x, row: map_y };
+	}
+
+	return { getCenterPoint: getCenterPoint,
+			 getLocationFromMouseClick: getLocationFromMouseClick
+		   };
 });
