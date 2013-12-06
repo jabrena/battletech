@@ -13,6 +13,7 @@ define(['Events/HexEvents', 'Map/HexPositionCalculator'], function(hexEvents, he
 			radius: _mapDetails.hexRadius,
 			clipMask: true,
 		});
+		invisilbeHex.rotate(90);
 
 		var hexRaster = new paper.Raster(nodeDetails.groundImage);
 		hexRaster.fitBounds(invisilbeHex.bounds, true);
@@ -26,6 +27,7 @@ define(['Events/HexEvents', 'Map/HexPositionCalculator'], function(hexEvents, he
 			clipMask: false,
 			opacity: opacity
 		});
+		visibleHex.rotate(90);
 
 		var savedSymbol = new paper.Symbol(layer);
 
@@ -74,7 +76,9 @@ define(['Events/HexEvents', 'Map/HexPositionCalculator'], function(hexEvents, he
 		paper.projects[0].activate();
 		mapLayer.activate();
 
-		hexImage.place(hexPosition);
+		var placedHex = hexImage.place(hexPosition);
+		placedHex.onClick = hexEvents.whenMouseClicksHex;
+		placedHex.onMouseDrag = hexEvents.doNothing;
 	}
 
 	return HexDrawer;

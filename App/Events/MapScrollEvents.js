@@ -21,7 +21,7 @@ define(['AppGlobals'], function(appGlobals) {
 		var bounds = paper.view.bounds;
 
 		var mapDetails = appGlobals.map.getDetails();
-		var hexHeight = mapDetails.hexSize.height * 0.75; //hexes overlap vertically
+		var hexHeight = mapDetails.hexSize.height;
 		var numberOfHexes = mapDetails.height;
 
 		var maxScrollablePoint = _calculateMaxScrollBound(hexHeight,

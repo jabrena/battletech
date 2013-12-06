@@ -4,10 +4,12 @@ define([], function() {
 			sides: 6,
 			radius: hexRadius,
 		});
+		hexagon.rotate(90);
 
 		var hexSize = hexagon.bounds.size;
 		hexagon.remove();
 
+		hexSize.width *= .75;
 		return hexSize
 	}
 

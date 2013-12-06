@@ -1,4 +1,4 @@
-define(['AppGlobals'], function(AppGlobals) {
+define(['AppGlobals'], function(appGlobals) {
 	'use strict';
 	var _hexDrawer;
 
