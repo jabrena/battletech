@@ -16,7 +16,7 @@ function(appGlobals, moveHelper) {
 		startTurn(nextUnitToGo);
 	}
 
-	var getCurrentUnit = function() {
+	var getActiveUnit = function() {
 		return _activeUnit;
 	}
 
@@ -32,7 +32,7 @@ function(appGlobals, moveHelper) {
 	}
 
 	return {
-		getCurrentUnit: getCurrentUnit,
+		getActiveUnit: getActiveUnit,
 		start: startTurn,
 		end: endTurn
 	}

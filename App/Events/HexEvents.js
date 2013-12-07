@@ -8,7 +8,7 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 			return false;
 		 }
 
-		var activeUnit = turn.getCurrentUnit();
+		var activeUnit = turn.getActiveUnit();
 		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
 		//must click inside move range to move
