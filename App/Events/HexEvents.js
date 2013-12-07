@@ -1,5 +1,5 @@
-define(['AppGlobals', 'Map/HexPositionCalculator', 'Units/MoveHelper'], 
-function(appGlobals, hexPositionCalculator, moveHelper) {
+define(['AppGlobals', 'Map/HexPositionCalculator', 'Units/MoveHelper', 'Turns/Turn'], 
+function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	'use strict';
 	var _dragging;
 
@@ -28,13 +28,14 @@ function(appGlobals, hexPositionCalculator, moveHelper) {
 
 		if (destinationNode) {
 			activeUnit.moveToHex(destinationNode.x, destinationNode.y);
-			appGlobals.map.drawMap(appGlobals.grid);
+
+			turn.end();
 		}
 	}
 
 	var doNothing = function(event) {
 		if (_dragging) {
-			return;
+			return false;
 		}
 
 		_dragging = true;
