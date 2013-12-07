@@ -3,11 +3,11 @@ function(appGlobals, Mech, turn) {
 	'use strict';
 
 	var initUnits = function() {
-		appGlobals.units[0] = new Mech(0, 0);
+		appGlobals.units.push(new Mech(0, 0, 'redMechImage'));
+		appGlobals.units.push(new Mech(1, 1, 'axeMechImage'));
 
-		var mech = appGlobals.units[0];
-   		turn.start(mech);
+		var startingMech = appGlobals.units[0];
+   		turn.start(startingMech);
 	}
-
 	return { initUnits: initUnits };
 });

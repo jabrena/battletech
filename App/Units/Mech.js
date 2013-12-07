@@ -1,37 +1,38 @@
 define(['AppGlobals', 'Map/HexPositionCalculator'],
 function(appGlobals, hexPositionCalculator) {
-	var _mech;
 
-	var Mech = function(column, row) {
-		_mech = new paper.Raster('redMechImage');
+	var Mech = function(column, row, image) {
+		this._mech = new paper.Raster(image);
 		
 		var hexSize = appGlobals.map.getDetails().hexSize;
-		_mech.size.width = hexSize.width *.5;
-		_mech.size.height = hexSize.height *.6;
-		_mech.movement = 3;
+		this._mech.size.width = hexSize.width *.5;
+		this._mech.size.height = hexSize.height *.6;
+		this._mech.movement = 3;
 
-		_mech.data.position = { row: undefined, column: undefined };
+		this._mech.data.position = { row: undefined, column: undefined };
 		this.moveToHex(column, row)
 	}
 
+	Mech.prototype._mech = {};
+
 	Mech.prototype.remainingMovement = function() {
-		return _mech.movement;
+		return this._mech.movement;
 	}
 
 	Mech.prototype.getRaster = function() {
-		return _mech;
+		return this._mech;
 	}
 
 	Mech.prototype.moveToHex = function(column, row) {
 		var position = hexPositionCalculator.getCenterPoint(column, row);
 
-		_mech.setPosition(position);
-		_mech.data.position.row = row;
-		_mech.data.position.column  = column;
+		this._mech.setPosition(position);
+		this._mech.data.position.row = row;
+		this._mech.data.position.column  = column;
 	}
 
 	Mech.prototype.getLocation = function() {
-		return _mech.data.position;
+		return this._mech.data.position;
 	}
 
 	return Mech;
