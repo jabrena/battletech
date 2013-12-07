@@ -59,10 +59,42 @@ define(['AppGlobals'], function(appGlobals) {
 	}
 
 	var centerOnPoint = function(xCord, yCord) {
-		var centerPoint = new paper.Point(xCord, yCord);
-        paper.view.center = centerPoint;
-        _scrollTo(paper.view.center.x, paper.view.center.y,
-        		  paper.view.center.x, paper.view.center.y);
+		console.log('hello');
+		var view = paper.view.center;
+		var bounds = paper.view.bounds;
+
+		if ((xCord != view.x) || (yCord != view.y))  {
+			setTimeout(function() {
+				var maxScrollAmount = 100
+				var minScrollAmount = maxScrollAmount * -1
+
+				var xDiff = xCord - view.x;
+				xDiff = (xDiff > maxScrollAmount) ? maxScrollAmount : xDiff;
+				xDiff = (xDiff < minScrollAmount) ? minScrollAmount : xDiff;
+
+				var yDiff = yCord - view.y;
+				yDiff = (yDiff > maxScrollAmount) ? maxScrollAmount : yDiff;
+				yDiff = (yDiff < minScrollAmount) ? minScrollAmount : yDiff;
+
+				var finalMoveAmount = new paper.Point(xDiff, yDiff);
+				finalMoveAmount.y =  _adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
+				finalMoveAmount.y = _calculateMaxBottomScroll(finalMoveAmount);
+
+				finalMoveAmount.x = _adjustMinDestinationIfInvalid(finalMoveAmount.x, bounds.x, 0);
+				finalMoveAmount.x = _calculateMaxRightScroll(finalMoveAmount);
+
+				paper.view.scrollBy(finalMoveAmount);
+
+				paper.project.layers.forEach(function(layer) {
+					layer.children = [];
+				});
+				appGlobals.map.drawMap(appGlobals.activeGrid);
+
+				if (finalMoveAmount.x !== 0 || finalMoveAmount.y !== 0) {
+	        		centerOnPoint(xCord, yCord);
+				}
+			}, 0)
+		}
 	}
 
 	var _scrollTo = function(xCord, yCord, downXCoord, downYCoord) {
@@ -75,8 +107,8 @@ define(['AppGlobals'], function(appGlobals) {
 		moveDirection.x = _adjustMinDestinationIfInvalid(moveDirection.x, bounds.x, 0);
 		moveDirection.y = _adjustMinDestinationIfInvalid(moveDirection.y, bounds.y, 0);
 
-		moveDirection.x = _calculateMaxRightScroll(moveDirection)
-		moveDirection.y = _calculateMaxBottomScroll(moveDirection)
+		moveDirection.x = _calculateMaxRightScroll(moveDirection);
+		moveDirection.y = _calculateMaxBottomScroll(moveDirection);
 
 		paper.view.scrollBy(moveDirection);
 
