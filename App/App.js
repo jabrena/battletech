@@ -7,9 +7,9 @@ function(hexInitializer, mapInitializer, unitInitializer) {
 		paper.setup(canvas);
 
 		var mapDetails = {
-			width: 30,
-			height: 30,
-			hexRadius: 40,
+			width: 50,
+			height: 50,
+			hexRadius: 50,
 			hexSize: undefined // use hexInitializer below
 		}
 		mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);

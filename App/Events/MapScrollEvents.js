@@ -65,8 +65,8 @@ define(['AppGlobals'], function(appGlobals) {
 
 		if ((xCord != view.x) || (yCord != view.y))  {
 			setTimeout(function() {
-				var maxScrollAmount = 100
-				var minScrollAmount = maxScrollAmount * -1
+				var maxScrollAmount = 60;
+				var minScrollAmount = maxScrollAmount * -1;
 
 				var xDiff = xCord - view.x;
 				xDiff = (xDiff > maxScrollAmount) ? maxScrollAmount : xDiff;
