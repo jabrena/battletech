@@ -28,16 +28,12 @@ define(['AppGlobals'], function(AppGlobals) {
 								   destinationNode.x, destinationNode.y,
 								   grid, unit.remainingMovement());
 
-		path = path.reverse();
-		var furthestReachableNode;
-		path.forEach(function(point) {
-			var possibleMove = grid.getNodeAt(point[0], point[1]);
-			if (possibleMove.withinRage && !furthestReachableNode) {
-				furthestReachableNode = possibleMove;
-			}
-		});
+		var destinationNode;
+		if (path[0].withinRage) {
+			destinationNode = path[0];
+		}
 
-		return furthestReachableNode;
+		return destinationNode;
 	}
 
 	var markNodesWithinReach = function(unit, pathFinder) {

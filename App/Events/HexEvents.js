@@ -22,16 +22,14 @@ function(appGlobals, hexPositionCalculator, moveHelper) {
 		var activeUnit = appGlobals.units[0];
 		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
-		//must click inside move range to move?
-		//outside will reveal path?
-		//second click on path will move?
+		//must click inside move range to move
 		var clickedNode = appGlobals.grid.getNodeAt(hexLocation.column, hexLocation.row);
 		var destinationNode = moveHelper.getValidMove(activeUnit, clickedNode, appGlobals.pathFinder);
 
-		activeUnit.moveToHex(destinationNode.x, destinationNode.y);
-
-		//must now recalculate valid moves
-		appGlobals.map.drawMap(appGlobals.grid);
+		if (destinationNode) {
+			activeUnit.moveToHex(destinationNode.x, destinationNode.y);
+			appGlobals.map.drawMap(appGlobals.grid);
+		}
 	}
 
 	var doNothing = function(event) {
