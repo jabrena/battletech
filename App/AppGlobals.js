@@ -1,16 +1,18 @@
 define([], function() {
 	'use strict';
-	var _grid;
-	var _pathFinder;
-	var _map;
-	var _tool = new paper.Tool();
-	var _units = [];
+	var pristineGrid;
+	var activeGrid;
+	var pathFinder;
+	var map;
+	var tool = new paper.Tool();
+	var units = [];
 
 	return {
-		grid: _grid,
-		map: _map,
-		pathFinder: _pathFinder,
-		tool: _tool,
-		units: _units
+		pristineGrid: pristineGrid,
+	    activeGrid: activeGrid,
+		pathFinder: pathFinder,
+		map: map,
+		tool: tool,
+		units: units
 	};
 })

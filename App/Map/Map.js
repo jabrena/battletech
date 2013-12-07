@@ -6,7 +6,7 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 	var _unitDrawer;
 	var _viewPort;
 
-	var Map = function(mapDetails, grid) {
+	var Map = function(mapDetails) {
 		_mapDetails = mapDetails;
 
 		var hexDrawer = new HexDrawer(_mapDetails);
@@ -20,6 +20,10 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 		var view = _viewPort.getView();
 		_mapDrawer.drawMap(grid, view);
 		_unitDrawer.drawUnits(view);
+	}
+
+	Map.prototype.clear = function(grid) {
+		
 	}
 
 	Map.prototype.getDetails = function() {

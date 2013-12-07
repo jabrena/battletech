@@ -2,7 +2,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	'use strict';
 
 	var _markNodesWithinReach = function(mech, destinationNode, pathFinder, gridToMark) {
-		var tempGrid = AppGlobals.grid.clone();
+		var tempGrid = AppGlobals.pristineGrid.clone();
 		var path = pathFinder.findPath(mech.getLocation().column, mech.getLocation().row,
 								   destinationNode.x, destinationNode.y,
 								   tempGrid, mech.remainingMovement());
@@ -11,7 +11,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	
 	var _markMovableHexes = function(markedGrid, gridToMark) {
 		var allNodes = _(markedGrid.nodes).flatten();
-		var availableNodes = _(allNodes).where({ 'opened': true, 'withinRage': true });
+		var availableNodes = _(allNodes).where({ 'opened': true, 'withinRange': true });
 
 		availableNodes.forEach(function(node) {
 			var node = gridToMark.getNodeAt(node.x, node.y);
@@ -22,7 +22,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	}
 
 	var getValidMove = function(unit, clickedNode, pathFinder) {
-		var grid = _.clone(AppGlobals.grid);
+		var grid = AppGlobals.activeGrid.clone();
 
 		var path = pathFinder.findPath(unit.getLocation().column, unit.getLocation().row,
 								   clickedNode.x, clickedNode.y,
@@ -41,7 +41,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	var markNodesWithinReach = function(unit, pathFinder) {
 		// find paths to every coner to avoid missing possible moves.
 		// this should be done with a different path finding algo.
-		var grid = _.clone(AppGlobals.grid);
+		var grid = AppGlobals.pristineGrid.clone();
 
 		var SeMapCorner = grid.getNodeAt(grid.width-1, grid.height-1);
 		grid =_markNodesWithinReach(unit, SeMapCorner, pathFinder, grid);

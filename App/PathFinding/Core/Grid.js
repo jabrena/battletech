@@ -75,7 +75,6 @@ define(['PathFinding/Core/Node'], function(Node) {
         return this.nodes[y][x];
     };
 
-
     /**
      * Determine whether the node at the given position is walkable.
      * (Also returns false if the position is outside the grid.)

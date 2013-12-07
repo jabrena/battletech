@@ -3,8 +3,9 @@ function(appGlobals, moveHelper) {
 	'use strict';
 
 	var startTurn = function(unit) {
-        var markedGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
-	    appGlobals.map.drawMap(markedGrid);
+		appGlobals.activeGrid = appGlobals.pristineGrid.clone();
+        appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
+	    appGlobals.map.drawMap(appGlobals.activeGrid);
 	}
 
 	var endTurn = function() {

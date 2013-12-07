@@ -3,9 +3,9 @@ function(appGlobals, Grid, PathFinder, Map, MapScrollEvents) {
 	'use strict';
 	var initMap = function(mapDetails) {
 		appGlobals.pathFinder = new PathFinder();
-		appGlobals.grid = new Grid(mapDetails.width, mapDetails.height); 
+		appGlobals.pristineGrid = new Grid(mapDetails.width, mapDetails.height); 
 		
-		appGlobals.map = new Map(mapDetails, appGlobals.grid);
+		appGlobals.map = new Map(mapDetails);
 	}
 
 	return { initMap: initMap };

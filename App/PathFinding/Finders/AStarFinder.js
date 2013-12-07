@@ -82,7 +82,7 @@ function(Util, Heuristic) {
                     neighbor.f = neighbor.g + neighbor.h;
                     neighbor.parent = node;
 
-                    neighbor.withinRage = neighbor.g <= movePoints;
+                    neighbor.withinRange = neighbor.g <= movePoints;
 
                     if (!neighbor.opened) {
                         openList.push(neighbor);
