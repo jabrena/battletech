@@ -8,7 +8,7 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 			return false;
 		 }
 
-		var activeUnit = appGlobals.units[0];
+		var activeUnit = turn.getCurrentUnit();
 		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
 		//must click inside move range to move
@@ -18,7 +18,7 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 		if (destinationNode) {
 			activeUnit.moveToHex(destinationNode.x, destinationNode.y);
 
-			turn.end();
+			turn.end(activeUnit);
 		}
 	}
 
@@ -34,7 +34,6 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	}
 	
 	return {
-	//	whenMouseEntersHex: whenMouseEntersHex,
 		whenMouseClicksHex: whenMouseClicksHex,
 		doNothing: doNothing
 	};
