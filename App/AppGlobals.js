@@ -4,8 +4,13 @@ define([], function() {
 	var activeGrid;
 	var pathFinder;
 	var map;
-	var tool = new paper.Tool();
+	var tool;
 	var units = [];
+
+	var  initTool = function() { 
+		tool = new paper.Tool()
+		tool.minDistance = 10;
+	}();
 
 	return {
 		pristineGrid: pristineGrid,
