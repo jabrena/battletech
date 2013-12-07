@@ -21,16 +21,18 @@ define(['AppGlobals'], function(AppGlobals) {
 		return gridToMark;
 	}
 
-	var getValidMove = function(unit, destinationNode, pathFinder) {
+	var getValidMove = function(unit, clickedNode, pathFinder) {
 		var grid = _.clone(AppGlobals.grid);
 
 		var path = pathFinder.findPath(unit.getLocation().column, unit.getLocation().row,
-								   destinationNode.x, destinationNode.y,
+								   clickedNode.x, clickedNode.y,
 								   grid, unit.remainingMovement());
 
+		var markedClickedNode = grid.getNodeAt(clickedNode.x, clickedNode.y);
+
 		var destinationNode;
-		if (path[0].withinRage) {
-			destinationNode = path[0];
+		if (markedClickedNode.withinRange) {
+			destinationNode = markedClickedNode;
 		}
 
 		return destinationNode;

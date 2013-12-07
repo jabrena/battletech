@@ -38,7 +38,6 @@ function(appGlobals, hexPositionCalculator, moveHelper) {
 		}
 
 		_dragging = true;
-
 		setTimeout(function () {
 			_dragging = false;
 		}, 0);
