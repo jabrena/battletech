@@ -58,10 +58,17 @@ define(['AppGlobals'], function(appGlobals) {
 		return movement;
 	}
 
-	appGlobals.tool.onMouseDrag = function(event) {
+	var centerOnPoint = function(xCord, yCord) {
+		var centerPoint = new paper.Point(xCord, yCord);
+        paper.view.center = centerPoint;
+        _scrollTo(paper.view.center.x, paper.view.center.y,
+        		  paper.view.center.x, paper.view.center.y);
+	}
+
+	var _scrollTo = function(xCord, yCord, downXCoord, downYCoord) {
 		var moveDirection = new paper.Point();
-		moveDirection.x = event.downPoint.x - event.point.x;
-		moveDirection.y = event.downPoint.y - event.point.y;
+		moveDirection.x = downXCoord - xCord;
+		moveDirection.y = downYCoord - yCord;
 
 		var bounds = paper.view.bounds;
 
@@ -77,5 +84,14 @@ define(['AppGlobals'], function(appGlobals) {
 			layer.children = [];
 		});
 		appGlobals.map.drawMap(appGlobals.activeGrid);
+	}
+
+	appGlobals.tool.onMouseDrag = function(event) {
+		_scrollTo(event.point.x, event.point.y,
+				  event.downPoint.x, event.downPoint.y);
 	};
+
+	return {
+		centerOnPoint: centerOnPoint
+	}
 });

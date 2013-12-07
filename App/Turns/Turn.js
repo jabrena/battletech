@@ -1,5 +1,5 @@
-define(['AppGlobals', 'Units/MoveHelper'], 
-function(appGlobals, moveHelper) {
+define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents'], 
+function(appGlobals, moveHelper, mapScrollEvents) {
 	'use strict';
 	var _activeUnit;
 
@@ -7,6 +7,9 @@ function(appGlobals, moveHelper) {
 		_activeUnit = unit;
 		appGlobals.activeGrid = appGlobals.pristineGrid.clone();
         appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
+
+        var unitCoords = _activeUnit._mech.position;
+        mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
 	    appGlobals.map.drawMap(appGlobals.activeGrid);
 	}
 
