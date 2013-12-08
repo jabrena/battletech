@@ -4,11 +4,12 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	var _dragging;
 
 	var whenMouseClicksHex = function(event) {
-		if (_dragging) { 
+		var activeUnit = turn.getActiveUnit();
+
+		if (_dragging || !activeUnit) { 
 			return false;
 		 }
 
-		var activeUnit = turn.getActiveUnit();
 		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
 
 		//must click inside move range to move
