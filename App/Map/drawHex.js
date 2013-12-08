@@ -70,7 +70,7 @@ var canMove = function(currentPosition, newPosition) {
 
 var drawPath = function(currentPosition, newPosition) {
 	redMech.path.removeSegments();
-	redMech.path = new Path(currentPosition, newPosition);
+	redMech.path = new paper.Path(currentPosition, newPosition);
 	redMech.path.strokeColor = 'red';
 	redMech.path.closed = false;
 }

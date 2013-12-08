@@ -1,5 +1,5 @@
-define(['AppGlobals', 'Map/HexPositionCalculator'],
-function(appGlobals, hexPositionCalculator) {
+define(['AppGlobals', 'Map/HexPositionCalculator', 'Events/UnitEvents'],
+function(appGlobals, hexPositionCalculator, unitEvents) {
 
 	var Mech = function(column, row, image) {
 		this._mech = new paper.Raster(image);
@@ -10,7 +10,9 @@ function(appGlobals, hexPositionCalculator) {
 		this._mech.movement = 3;
 
 		this._mech.data.position = { row: undefined, column: undefined };
-		this.moveToHex(column, row)
+		this.moveToHex(column, row);
+
+		this._mech.onClick = unitEvents.whenMouseClicksUnit;
 	}
 
 	Mech.prototype._mech = {};
