@@ -1,13 +1,15 @@
 
-define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn'], 
-function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
+define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents'], 
+function(appGlobals, moveHelper, mapScrollEvents) {
 	'use strict';
 	var _activeUnit;
 
 	var startTurn = function(unit) {
 		_activeUnit = unit;
 		appGlobals.activeGrid = appGlobals.pristineGrid.clone();
-        appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
+
+		//reach of the gun!
+        //appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
 
         var unitCoords = _activeUnit._mech.position;
         mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
@@ -17,9 +19,7 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 		var nextUnitToGo = _getNextUnit(_activeUnit);
 		_activeUnit = undefined;
 		setTimeout(function() {
-			if (nextUnitToGo) {
-				startTurn(nextUnitToGo);
-			}
+			startTurn(nextUnitToGo);
 		}, 750);
 	}
 
@@ -33,8 +33,6 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
 		if (nextIndex > appGlobals.units.length-1) {
 			nextIndex = 0;
-			combatTurn.start(appGlobals.units[nextIndex]);
-			return false;
 		}
 
 		return appGlobals.units[nextIndex];

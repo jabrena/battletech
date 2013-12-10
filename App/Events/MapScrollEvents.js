@@ -59,7 +59,6 @@ define(['AppGlobals'], function(appGlobals) {
 	}
 
 	var centerOnPoint = function(xCord, yCord) {
-		console.log('hello');
 		var view = paper.view.center;
 		var bounds = paper.view.bounds;
 
