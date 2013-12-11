@@ -1,84 +1,42 @@
-define(['Events/HexEvents', 'Map/HexPositionCalculator'], function(hexEvents, hexPositionCalculator) {
+define(['Map/HexPositionCalculator'],
+function(hexPositionCalculator) {
 	'use strict';
 	var _mapDetails;
-	var _topLeftPoint;
-	var _hexImageCollection = [];
 
-	var _createImageForNodeType = function(nodeDetails, withinRange) {
-		var project = new paper.Project();
-		var layer  = new paper.Layer();
+	var _drawHex = function(xGrid, yGrid, mapContext) {
+	    //length of line
+	    var r = _mapDetails.hexRadius;
+	    var part = 60;
+	    var hexSize = r*Math.sqrt(3);
+	    var yHexSize = r*Math.sqrt(2.25);
 
-		var invisilbeHex = new paper.Path.RegularPolygon({
-			sides: 6,
-			radius: _mapDetails.hexRadius,
-			clipMask: true,
-		});
-		invisilbeHex.rotate(90);
-
-		var hexRaster = new paper.Raster(nodeDetails.groundImage);
-		hexRaster.fitBounds(invisilbeHex.bounds, true);
-
-		var opacity = (withinRange) ? .2 : .01; //zero would erase selected outlines
-		var visibleHex = new paper.Path.RegularPolygon({
-			sides: 6,
-			fillColor: 'green',
-			selected: withinRange,
-			radius: _mapDetails.hexRadius,
-			clipMask: false,
-			opacity: opacity
-		});
-		visibleHex.rotate(90);
-
-		var savedSymbol = new paper.Symbol(layer);
-
-		layer.remove();
-		project.remove();
-
-		return savedSymbol;
-	}
-
-	var _getCorrectHexState = function(node, hexType) {
-		if (node.withinRange) {
-			return hexType.withinRange;
+		if (yGrid % 2 == 0) {
+		  //even row
+		  var shiftX = hexSize/2;
 		}
-		
-		return hexType.normal;
-	}
-
-	var _getImageForNodeType = function(node) {
-		var nodeDetails = node.details;
-		var hexType = _hexImageCollection[nodeDetails.groundImage];
-
-		if (hexType) {
-			return _getCorrectHexState(node, hexType);
+		else {
+		  //odd row
+		  shiftX=0;
 		}
-
-		hexType = {};
-		_hexImageCollection[nodeDetails.groundImage] = hexType;
-
-		var normalHexImage = _createImageForNodeType(nodeDetails, false);
-		hexType.normal = normalHexImage;
-
-		var withinRangeHexImage = _createImageForNodeType(nodeDetails, true);
-		hexType.withinRange = withinRangeHexImage;
-
-		return _getCorrectHexState(node, hexType);
+		for (var i=0;i<=6;i++) {
+		  var a = i * part - 90;
+		  var x = r * Math.cos(a * Math.PI / 180)+xGrid*hexSize+shiftX;
+		  var y = r * Math.sin(a * Math.PI / 180)+yGrid*yHexSize;
+		  if (i == 0) {
+		       mapContext.moveTo(x,y);
+		  }
+		  else {
+		      mapContext.lineTo(x,y);
+		  }
+		}
 	}
 
 	var HexDrawer = function(mapDetails) { 
 		_mapDetails = mapDetails;
 	}
 
-	HexDrawer.prototype.drawHex = function(node, mapLayer) {
-		var hexPosition = hexPositionCalculator.getCenterPoint(node.x, node.y);
-		var hexImage = _getImageForNodeType(node);
-
-		paper.projects[0].activate();
-		mapLayer.activate();
-
-		var placedHex = hexImage.place(hexPosition);
-		placedHex.onClick = hexEvents.whenMouseClicksHex;
-		placedHex.onMouseDrag = hexEvents.doNothing;
+	HexDrawer.prototype.drawHex = function(column, row, mapContext) {
+		_drawHex(column, row, mapContext);
 	}
 
 	return HexDrawer;

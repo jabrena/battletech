@@ -9,8 +9,8 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 	var Map = function(mapDetails) {
 		_mapDetails = mapDetails;
 
-		//var hexDrawer = new HexDrawer(_mapDetails);
-		_mapDrawer = new MapDrawer();//hexDrawer);
+		var hexDrawer = new HexDrawer(_mapDetails);
+		_mapDrawer = new MapDrawer(hexDrawer);//hexDrawer);
 		//_unitDrawer = new UnitDrawer();
 
 		//_viewPort = new ViewPort(_mapDetails);
