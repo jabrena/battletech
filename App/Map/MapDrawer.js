@@ -17,18 +17,9 @@ define(['AppGlobals'], function(appGlobals) {
 		}*/
 	MapDrawer.prototype.drawMap = function(opts,c) {
 		var mapDetails = appGlobals.map.getDetails();
-
-
-	    var alpha       = opts.alpha || 1;
-	    var color       = opts.color || '#1e1e1e';
-	    var lineWidth   = opts.lineWidth || 1;
-	    var radius      = opts.radius || 20;
 	        
 	    var mapContext = c.getContext("2d");
         mapContext.clearRect(0, 0, c.width, c.height);
-	    mapContext.globalAlpha = alpha;
-	    mapContext.strokeStyle = color;
-	    mapContext.lineWidth = lineWidth;
 
 	    var xHexes = mapDetails.width;
 	    var yHexes = mapDetails.height;
