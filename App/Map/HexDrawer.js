@@ -29,12 +29,49 @@ function(hexPositionCalculator) {
 		}
 	}
 
+	var _drawSingleHex = function(mapContext) {
+		var hexSides = 6;
+		mapContext.beginPath();
+
+	    //length of line
+	    var radius = _mapDetails.hexRadius;
+	    var part = 60;
+	    var xHexSize = radius*Math.sqrt(2.25);
+	    var yHexSize = radius*Math.sqrt(3);
+
+		for (var i=0;i<=hexSides;i++) {
+		  var a = i * part - 180;
+		  var x = radius * Math.cos(a * Math.PI / 180) + radius;
+		  var y = radius * Math.sin(a * Math.PI / 180) + (yHexSize / 2) + 1;
+		  if (i !== 0) {
+		      mapContext.lineTo(x,y);
+		  }
+		}
+
+	    mapContext.fillStyle = "red";
+	    mapContext.closePath();
+        mapContext.stroke()
+        mapContext.fill()
+	}
+
+	var _drawHexImage = function(mapContext) {
+		var radius2x = _mapDetails.hexRadius * 2;
+		var image = new Image();
+		image.src = 'Images/clayGround.jpg';
+		mapContext.drawImage(image,
+		 					 0, 0, image.width, image.height,
+							 0, 0, radius2x, radius2x);
+	}
+
 	var HexDrawer = function(mapDetails) { 
 		_mapDetails = mapDetails;
 	}
 
 	HexDrawer.prototype.drawHex = function(column, row, mapContext) {
-		_drawHex(column, row, mapContext);
+		//_drawHex(column, row, mapContext);
+		_drawHexImage(mapContext);
+		mapContext.globalCompositeOperation = 'destination-in';
+		_drawSingleHex(mapContext);
 	}
 
 	return HexDrawer;

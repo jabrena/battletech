@@ -33,15 +33,12 @@ define(['AppGlobals'], function(appGlobals) {
 	    var xHexes = mapDetails.width;
 	    var yHexes = mapDetails.height;
 	    
-	    mapContext.beginPath();
-	    
 	    //loop through hex "rows" and every other row shift
 		for (var xGrid=0;xGrid<=xHexes;xGrid++){
 			for (var yGrid=0;yGrid<=yHexes;yGrid++){
 				_hexDrawer.drawHex(xGrid, yGrid, mapContext);
 			}
 		}
-        mapContext.stroke();
         
         return c;
     }
