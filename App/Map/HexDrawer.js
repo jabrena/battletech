@@ -14,7 +14,7 @@ function(hexPositionCalculator) {
 		}
 
 		var a = 180;
-	    var x = _radius * Math.cos(a * Math.PI / 180) + xGrid * _xHexSize;
+	    var x = _radius * Math.cos(a * Math.PI / 180) + xGrid * _xHexSize  + _radius;
 	    var y = _radius * Math.sin(a * Math.PI / 180) + yGrid * _yHexSize + shiftY;
 
         mapContext.drawImage(hexCanvas, x, y);
