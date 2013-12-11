@@ -15,7 +15,7 @@ define(['AppGlobals'], function(appGlobals) {
 				_hexDrawer.drawHex(node, mapLayer);
 			}
 		}*/
-	MapDrawer.prototype.drawMap = function(opts,c) {
+	MapDrawer.prototype.drawMap = function(opts, c) {
 		var mapDetails = appGlobals.map.getDetails();
 	        
 	    var mapContext = c.getContext("2d");
@@ -24,9 +24,8 @@ define(['AppGlobals'], function(appGlobals) {
 	    var xHexes = mapDetails.width;
 	    var yHexes = mapDetails.height;
 	    
-	    //loop through hex "rows" and every other row shift
-		for (var xGrid=0;xGrid<=xHexes;xGrid++){
-			for (var yGrid=0;yGrid<=yHexes;yGrid++){
+		for (var xGrid = 0; xGrid <= xHexes; xGrid++){
+			for (var yGrid = 0; yGrid <= yHexes; yGrid++){
 				_hexDrawer.drawHex(xGrid, yGrid, mapContext);
 			}
 		}

@@ -13,11 +13,9 @@ function(hexPositionCalculator) {
 		  var shiftY = _yHexSize / 2;
 		}
 
-		//var part = 60;
-		var a = 180; //hexSide * part - 180;
+		var a = 180;
 	    var x = _radius * Math.cos(a * Math.PI / 180) + xGrid * _xHexSize;
 	    var y = _radius * Math.sin(a * Math.PI / 180) + yGrid * _yHexSize + shiftY;
-        //mapContext.moveTo(x,y);
 
         mapContext.drawImage(hexCanvas, x, y);
 	}
@@ -48,7 +46,7 @@ function(hexPositionCalculator) {
 							 0, 0, radius2x, radius2x);
 	}
 
-	var _createSingleHex = function() {
+	var _createHex = function() {
 		var hexCanvas = document.createElement('canvas');
 		hexCanvas.width = _radius * 2;
 		hexCanvas.height = _radius * 2;
@@ -64,9 +62,10 @@ function(hexPositionCalculator) {
 	var _getImageCanvas = function(nodeType) {
 		var hexCanvas = _hexTypes[nodeType]
 		if (!hexCanvas) {
-			hexCanvas = _createSingleHex();
+			hexCanvas = _createHex();
+			 _hexTypes[nodeType] = hexCanvas;
 		}
-		return hexCanvas;
+		return _hexTypes[nodeType];
 	}
 
 	var HexDrawer = function(mapDetails) { 
