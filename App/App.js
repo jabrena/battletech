@@ -4,7 +4,7 @@ function(hexInitializer, mapInitializer, unitInitializer) {
 
 	var InitApp = function() {
 		var canvas = $('#myCanvas')[0];
-		paper.setup(canvas);
+		//paper.setup(canvas);
 
 		var mapDetails = {
 			width: 50,
@@ -12,11 +12,11 @@ function(hexInitializer, mapInitializer, unitInitializer) {
 			hexRadius: 50,
 			hexSize: undefined // use hexInitializer below
 		}
-		mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
+		//mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
 		mapInitializer.initMap(mapDetails);	
-		unitInitializer.initUnits();
+		//unitInitializer.initUnits();
 
-		paper.view.draw();
+		//paper.view.draw();
 	}();
 });

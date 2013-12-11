@@ -9,17 +9,28 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 	var Map = function(mapDetails) {
 		_mapDetails = mapDetails;
 
-		var hexDrawer = new HexDrawer(_mapDetails);
-		_mapDrawer = new MapDrawer(hexDrawer);
-		_unitDrawer = new UnitDrawer();
+		//var hexDrawer = new HexDrawer(_mapDetails);
+		_mapDrawer = new MapDrawer();//hexDrawer);
+		//_unitDrawer = new UnitDrawer();
 
-		_viewPort = new ViewPort(_mapDetails);
+		//_viewPort = new ViewPort(_mapDetails);
 	}
 
-	Map.prototype.drawMap = function(grid) {
-		var view = _viewPort.getView();
-		_mapDrawer.drawMap(grid, view);
-		_unitDrawer.drawUnits(view);
+	Map.prototype.draw = function(grid) {
+		//var view = _viewPort.getView();
+		//_mapDrawer.drawMap(grid, view);
+		//_unitDrawer.drawUnits(view);
+		c = document.createElement("canvas");
+	    c.width  = 1000;
+	    c.height = 500;
+
+	    var c = _mapDrawer.drawMap({}, c);
+	    var cContext = c.getContext('2d');
+    	var onScreenCanvas = document.getElementById('myCanvas')
+    	var onScreenContext = onScreenCanvas.getContext('2d');
+	    onScreenCanvas.width  = 1000;
+	    onScreenCanvas.height = 500;
+		onScreenContext.drawImage(c, 0, 0);
 	}
 
 	Map.prototype.clear = function(grid) {
