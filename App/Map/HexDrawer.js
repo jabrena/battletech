@@ -1,21 +1,19 @@
 define(['Map/HexPositionCalculator'],
 function(hexPositionCalculator) {
 	'use strict';
-	var _mapDetails;
+	var _hexSides;
+	var _radius;
+	var _xHexSize;
+	var _yHexSize;
 
 	var _drawHex = function(xGrid, yGrid, mapContext) {
-		var hexSides = 6;
-
-	    //length of line
-	    var r = _mapDetails.hexRadius;
 	    var part = 60;
-	    var xHexSize = r*Math.sqrt(2.25);
-	    var yHexSize = r*Math.sqrt(3);
 
 	    var shiftY =0
 		if (xGrid % 2 !== 0) {
 		  var shiftY = yHexSize/2;
 		}
+
 		for (var i=0;i<=hexSides;i++) {
 		  var a = i * part - 180;
 		  var x = r * Math.cos(a * Math.PI / 180)+xGrid*xHexSize;
@@ -30,32 +28,24 @@ function(hexPositionCalculator) {
 	}
 
 	var _drawSingleHex = function(mapContext) {
-		var hexSides = 6;
+		var part = 60;
 		mapContext.beginPath();
 
-	    //length of line
-	    var radius = _mapDetails.hexRadius;
-	    var part = 60;
-	    var xHexSize = radius*Math.sqrt(2.25);
-	    var yHexSize = radius*Math.sqrt(3);
-
-		for (var i=0;i<=hexSides;i++) {
+		for (var i=0;i<=_hexSides;i++) {
 		  var a = i * part - 180;
-		  var x = radius * Math.cos(a * Math.PI / 180) + radius;
-		  var y = radius * Math.sin(a * Math.PI / 180) + (yHexSize / 2) + 1;
+		  var x = _radius * Math.cos(a * Math.PI / 180) + _radius;
+		  var y = _radius * Math.sin(a * Math.PI / 180) + (_yHexSize / 2) + 1;
 		  if (i !== 0) {
 		      mapContext.lineTo(x,y);
 		  }
 		}
 
-	    mapContext.fillStyle = "red";
 	    mapContext.closePath();
-        mapContext.stroke()
-        mapContext.fill()
+		mapContext.fill();
 	}
 
 	var _drawHexImage = function(mapContext) {
-		var radius2x = _mapDetails.hexRadius * 2;
+		var radius2x = _radius * 2;
 		var image = new Image();
 		image.src = 'Images/clayGround.jpg';
 		mapContext.drawImage(image,
@@ -64,7 +54,10 @@ function(hexPositionCalculator) {
 	}
 
 	var HexDrawer = function(mapDetails) { 
-		_mapDetails = mapDetails;
+	    _hexSides = 6;
+	    _radius = mapDetails.hexRadius;
+	    _xHexSize = _radius*Math.sqrt(2.25);
+	    _yHexSize = _radius*Math.sqrt(3);
 	}
 
 	HexDrawer.prototype.drawHex = function(column, row, mapContext) {
