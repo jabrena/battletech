@@ -13,9 +13,8 @@ function(hexPositionCalculator) {
 		  var shiftY = _yHexSize / 2;
 		}
 
-		var a = 180;
-	    var x = _radius * Math.cos(a * Math.PI / 180) + xGrid * _xHexSize  + _radius;
-	    var y = _radius * Math.sin(a * Math.PI / 180) + yGrid * _yHexSize + shiftY;
+	    var x = _radius * Math.cos(Math.PI) + xGrid * _xHexSize  + _radius;
+	    var y = _radius * Math.sin(Math.PI) + yGrid * _yHexSize + shiftY;
 
         mapContext.drawImage(hexCanvas, x, y);
 	}
