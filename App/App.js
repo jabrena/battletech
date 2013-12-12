@@ -1,10 +1,10 @@
-define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer'],
-function(hexInitializer, mapInitializer, unitInitializer) {
+define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer', 'Events/MouseEventInitializer'],
+function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer) {
 	'use strict';
 
 	var InitApp = function() {
-		var canvas = $('#myCanvas')[0];
-		//paper.setup(canvas);
+		var canvas = $('#myCanvas');
+		mouseEventInitializer.initMouseEvents(canvas);
 
 		var mapDetails = {
 			width: 50,

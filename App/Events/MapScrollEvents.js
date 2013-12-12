@@ -117,10 +117,13 @@ define(['AppGlobals'], function(appGlobals) {
 		appGlobals.map.drawMap(appGlobals.activeGrid);
 	}
 
-	appGlobals.tool.onMouseDrag = function(event) {
-		_scrollTo(event.point.x, event.point.y,
-				  event.downPoint.x, event.downPoint.y);
+	var onMouseDrag = function(event) {
+		console.log(event);
+		_scrollTo(event.drugTo.x, event.drugTo.y,
+				  event.clickedAt.x, event.clickedAt.y);
 	};
+
+	radio('mouseDragEvent').subscribe(onMouseDrag);
 
 	return {
 		centerOnPoint: centerOnPoint
