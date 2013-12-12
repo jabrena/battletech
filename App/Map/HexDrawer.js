@@ -36,22 +36,22 @@ function(hexPositionCalculator) {
 		mapContext.fill();
 	}
 
-	var _drawHexImage = function(mapContext) {
+	var _drawHexImage = function(mapContext, imageSrc) {
 		var radius2x = _radius * 2;
 		var image = new Image();
-		image.src = 'Images/clayGround.jpg';
+		image.src = imageSrc;
 		mapContext.drawImage(image,
 		 					 0, 0, image.width, image.height,
 							 0, 0, radius2x, radius2x);
 	}
 
-	var _createHex = function() {
+	var _createHex = function(imageSrc) {
 		var hexCanvas = document.createElement('canvas');
 		hexCanvas.width = _radius * 2;
 		hexCanvas.height = _radius * 2;
 		var context = hexCanvas.getContext('2d');
 
-		_drawHexImage(context);
+		_drawHexImage(context, imageSrc);
 		context.globalCompositeOperation = 'destination-in';
 		_drawSingleHex(context);
 
@@ -61,7 +61,7 @@ function(hexPositionCalculator) {
 	var _getImageCanvas = function(nodeType) {
 		var hexCanvas = _hexTypes[nodeType]
 		if (!hexCanvas) {
-			hexCanvas = _createHex();
+			hexCanvas = _createHex(nodeType);
 			 _hexTypes[nodeType] = hexCanvas;
 		}
 		return _hexTypes[nodeType];
@@ -77,7 +77,7 @@ function(hexPositionCalculator) {
 	}
 
 	HexDrawer.prototype.drawHex = function(node, mapContext) {
-		var hexCanvas = _getImageCanvas('default');
+		var hexCanvas = _getImageCanvas(node.details.groundImage);
 		_drawHex(node.x, node.y, hexCanvas, mapContext);
 	}
 
