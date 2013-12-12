@@ -70,15 +70,15 @@ function(hexPositionCalculator) {
 	var HexDrawer = function(mapDetails) { 
 	    _hexSides = 6;
 	    _radius = mapDetails.hexRadius;
-	    _xHexSize = mapDetails.hexSize.x;
-	    _yHexSize = mapDetails.hexSize.y;
+	    _xHexSize = mapDetails.hexSize.width;
+	    _yHexSize = mapDetails.hexSize.height;
 
 	    _hexTypes = [];
 	}
 
-	HexDrawer.prototype.drawHex = function(column, row, mapContext) {
+	HexDrawer.prototype.drawHex = function(node, mapContext) {
 		var hexCanvas = _getImageCanvas('default');
-		_drawHex(column, row, hexCanvas, mapContext);
+		_drawHex(node.x, node.y, hexCanvas, mapContext);
 	}
 
 	return HexDrawer;

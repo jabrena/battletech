@@ -4,9 +4,10 @@ function(appGlobals, Grid, PathFinder, Map, MapScrollEvents) {
 	var initMap = function(mapDetails) {
 		appGlobals.pathFinder = new PathFinder();
 		appGlobals.pristineGrid = new Grid(mapDetails.width, mapDetails.height); 
+		appGlobals.activeGrid = appGlobals.pristineGrid.clone();
 		
 		appGlobals.map = new Map(mapDetails);
-		appGlobals.map.draw();
+		appGlobals.map.draw(appGlobals.pristineGrid);
 	}
 
 	return { initMap: initMap };
