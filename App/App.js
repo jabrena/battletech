@@ -12,7 +12,7 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
 			hexRadius: 50,
 			hexSize: undefined // use hexInitializer below
 		}
-		//mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
+		mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
 		mapInitializer.initMap(mapDetails);	
 		//unitInitializer.initUnits();

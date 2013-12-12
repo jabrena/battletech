@@ -70,8 +70,8 @@ function(hexPositionCalculator) {
 	var HexDrawer = function(mapDetails) { 
 	    _hexSides = 6;
 	    _radius = mapDetails.hexRadius;
-	    _xHexSize = _radius*Math.sqrt(2.25);
-	    _yHexSize = _radius*Math.sqrt(3);
+	    _xHexSize = mapDetails.hexSize.x;
+	    _yHexSize = mapDetails.hexSize.y;
 
 	    _hexTypes = [];
 	}
