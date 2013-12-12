@@ -2,7 +2,7 @@ define(['AppGlobals'], function(appGlobals) {
 	'use strict';
 
 	var _calculateMaxRightScroll = function(moveDirection) {
-		var bounds = paper.view.bounds;
+		var bounds = appGlobals.camera.bounds;
 
 		var mapDetails = appGlobals.map.getDetails();
 		var hexWidth = mapDetails.hexSize.width;
@@ -18,7 +18,7 @@ define(['AppGlobals'], function(appGlobals) {
 	}
 
 	var _calculateMaxBottomScroll = function(moveDirection) {
-		var bounds = paper.view.bounds;
+		var bounds = appGlobals.camera.bounds;
 
 		var mapDetails = appGlobals.map.getDetails();
 		var hexHeight = mapDetails.hexSize.height;
@@ -101,7 +101,7 @@ define(['AppGlobals'], function(appGlobals) {
 		moveDirection.x = downXCoord - xCord;
 		moveDirection.y = downYCoord - yCord;
 
-		var bounds = paper.view.bounds;
+		var bounds = appGlobals.camera.bounds;
 
 		moveDirection.x = _adjustMinDestinationIfInvalid(moveDirection.x, bounds.x, 0);
 		moveDirection.y = _adjustMinDestinationIfInvalid(moveDirection.y, bounds.y, 0);
@@ -109,12 +109,10 @@ define(['AppGlobals'], function(appGlobals) {
 		moveDirection.x = _calculateMaxRightScroll(moveDirection);
 		moveDirection.y = _calculateMaxBottomScroll(moveDirection);
 
-		paper.view.scrollBy(moveDirection);
+		appGlobals.camera.view.x += moveDirection.x;
+		appGlobals.camera.view.y += moveDirection.y;
 
-		paper.project.layers.forEach(function(layer) {
-			layer.children = [];
-		});
-		appGlobals.map.drawMap(appGlobals.activeGrid);
+		appGlobals.map.draw(appGlobals.activeGrid);
 	}
 
 	var onMouseDrag = function(event) {

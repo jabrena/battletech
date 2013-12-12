@@ -4,20 +4,27 @@ define([], function() {
 	var activeGrid;
 	var pathFinder;
 	var map;
-	var tool;
 	var units = [];
+	var camera = {}
 
-	var  initTool = function() { 
-		tool = new paper.Tool()
-		tool.minDistance = 10;
-	}();
+	var _initCamera = function() {
+		camera.bounds = {
+			width: window.screen.width,
+			height: window.screen.height
+		};
+
+		camera.view = {
+			x: 0,
+			y: 0
+		};
+	}()
 
 	return {
 		pristineGrid: pristineGrid,
 	    activeGrid: activeGrid,
 		pathFinder: pathFinder,
 		map: map,
-		tool: tool,
-		units: units
+		units: units,
+		camera: camera
 	};
 })
