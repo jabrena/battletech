@@ -13,11 +13,11 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 		_mapDrawer = new MapDrawer(hexDrawer);//hexDrawer);
 		//_unitDrawer = new UnitDrawer();
 
-		//_viewPort = new ViewPort(_mapDetails);
+		_viewPort = new ViewPort(_mapDetails);
 	}
 
 	Map.prototype.draw = function(grid) {
-		//var view = _viewPort.getView();
+		var view = _viewPort.getView();
 		//_mapDrawer.drawMap(grid, view);
 		//_unitDrawer.drawUnits(view);
 		c = document.createElement("canvas");
