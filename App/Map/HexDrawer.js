@@ -10,7 +10,7 @@ function(hexPositionCalculator) {
 	var _drawHex = function(xGrid, yGrid, hexCanvas, mapContext) {
 	    var shiftY = 0;
 		if (xGrid % 2 !== 0) {
-		  var shiftY = _yHexSize / 2;
+		  shiftY = _yHexSize / 2;
 		}
 
 	    var x = _radius * Math.cos(Math.PI) + xGrid * _xHexSize  + _radius;
@@ -76,9 +76,9 @@ function(hexPositionCalculator) {
 	    _hexTypes = [];
 	}
 
-	HexDrawer.prototype.drawHex = function(node, mapContext) {
+	HexDrawer.prototype.drawHex = function(node, mapCanvasCoords, mapContext) {
 		var hexCanvas = _getImageCanvas(node.details.groundImage);
-		_drawHex(node.x, node.y, hexCanvas, mapContext);
+		_drawHex(mapCanvasCoords.x, mapCanvasCoords.y, hexCanvas, mapContext);
 	}
 
 	return HexDrawer;
