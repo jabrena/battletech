@@ -4,6 +4,9 @@
 		{
 			"path": "../BattleTech/App",
 			"folder_exclude_patterns": ["node_modules"]
+		},
+		{
+			"path": "../BattleTech/Spec"
 		}
 	]
 }
