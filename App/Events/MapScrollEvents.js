@@ -1,62 +1,6 @@
-define(['AppGlobals'], function(appGlobals) {
+define(['AppGlobals', 'Events/ScrollCalculator'],
+function(appGlobals, scrollCalculator) {
    'use strict';
-
-   var _calculateMaxRightScroll = function(moveDirection) {
-      var bounds = appGlobals.camera.bounds;
-
-      var mapDetails = appGlobals.map.getDetails();
-      var hexWidth = mapDetails.hexSize.width;
-      var numberOfHexes = mapDetails.width;
-
-      var maxScrollablePoint = _calculateMaxScrollBound(hexWidth,
-                                                        numberOfHexes,
-                                                        bounds.width)
-
-      return _adjustMaxDestinationIfInvalid(moveDirection.x,
-                                            bounds.x,
-                                            maxScrollablePoint);
-   }
-
-   var _calculateMaxBottomScroll = function(moveDirection) {
-      var bounds = appGlobals.camera.bounds;
-
-      var mapDetails = appGlobals.map.getDetails();
-      var hexHeight = mapDetails.hexSize.height;
-      var numberOfHexes = mapDetails.height;
-
-      var maxScrollablePoint = _calculateMaxScrollBound(hexHeight,
-                                                        numberOfHexes,
-                                                        bounds.height)
-
-      return _adjustMaxDestinationIfInvalid(moveDirection.y,
-                                            bounds.y,
-                                            maxScrollablePoint);
-   }
-
-   var _calculateMaxScrollBound = function(hexSize, numberOfHexes, bounds) {
-      var numberOfHexesOnScreenHeight = Math.floor(bounds / hexSize) -1;
-      return (numberOfHexes - numberOfHexesOnScreenHeight) * hexSize;
-   }
-
-   var _adjustMaxDestinationIfInvalid = function(movement, currentLocation, maxBound) {
-      var destination = currentLocation + movement;
-      var destinationOutOfBounds = destination > maxBound;
-      if (destinationOutOfBounds) {
-         movement = maxBound - currentLocation;
-      }
-
-      return movement;
-   }
-
-   var _adjustMinDestinationIfInvalid = function(movement, currentLocation, minBound) {
-      var destination = currentLocation + movement;
-      var destinationOutOfBounds = destination < minBound;
-      if (destinationOutOfBounds) {
-         movement = minBound - currentLocation;
-      }
-
-      return movement;
-   }
 
     var centerOnPoint = function(xCord, yCord) {
       var view = paper.view.center;
@@ -64,7 +8,7 @@ define(['AppGlobals'], function(appGlobals) {
 
       if ((xCord != view.x) || (yCord != view.y))  {
          setTimeout(function() {
-            var maxScrollAmount = 60;
+            var maxScrollAmount = 20;
             var minScrollAmount = maxScrollAmount * -1;
 
             var xDiff = xCord - view.x;
@@ -103,11 +47,11 @@ define(['AppGlobals'], function(appGlobals) {
 
       var view = appGlobals.camera.view;
 
-      moveDirection.x = _adjustMinDestinationIfInvalid(moveDirection.x, view.x, 0);
-      moveDirection.y = _adjustMinDestinationIfInvalid(moveDirection.y, view.y, 0);
+      moveDirection.x = scrollCalculator.adjustMinDestinationIfInvalid(moveDirection.x, view.x, 0);
+      moveDirection.y = scrollCalculator.adjustMinDestinationIfInvalid(moveDirection.y, view.y, 0);
 
-      moveDirection.x = _calculateMaxRightScroll(moveDirection);
-      moveDirection.y = _calculateMaxBottomScroll(moveDirection);
+      moveDirection.x = scrollCalculator.calculateMaxRightScroll(moveDirection.x);
+      moveDirection.y = scrollCalculator.calculateMaxBottomScroll(moveDirection.y);
 
       appGlobals.camera.view.x += moveDirection.x;
       appGlobals.camera.view.y += moveDirection.y;
