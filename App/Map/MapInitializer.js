@@ -4,8 +4,8 @@ function(appGlobals, Grid, PathFinder, Map, MapScrollEvents) {
    var initMap = function(mapDetails) {
       appGlobals.camera = {
          bounds: {
-            width: window.screen.width,
-            height: window.screen.height
+            width: $(window).width(),
+            height: $(window).height()
          },
          view: {
             x: 0,
