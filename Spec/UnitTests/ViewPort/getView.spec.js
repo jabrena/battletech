@@ -6,14 +6,16 @@ define(['Squire', 'AppGlobals'], function(Squire, appGlobals) {
          var _mapDetails;
 
          beforeEach(function(done) {
-            var testContext = {};
-            testContext.injector = new Squire();
+            var injector = new Squire();
 
-            appGlobals.camera.bounds.width = 100;
-            appGlobals.camera.bounds.height = 100;
-            testContext.injector.mock('AppGlobals', appGlobals);
+            appGlobals.camera = {
+               bounds: { width: 100, height: 100 },
+               view: { x: 0, y:0 }
+            };
 
-            testContext.injector.require(['Map/ViewPort'], function(ViewPort) {
+            injector.mock('AppGlobals', appGlobals);
+
+            injector.require(['Map/ViewPort'], function(ViewPort) {
                _mapDetails = {
                   hexSize: {
                      width: 5,
@@ -23,10 +25,13 @@ define(['Squire', 'AppGlobals'], function(Squire, appGlobals) {
                   width: 12
                }
 
-               testContext.ViewPort = new ViewPort(_mapDetails);
-               _viewPort = testContext.ViewPort;
+               _viewPort = new ViewPort(_mapDetails);
                done();
             });
+         });
+
+         afterEach(function() {
+            appGlobals.camera = {};
          });
 
          describe('Given any view coordinates, getView', function() {

@@ -7,6 +7,8 @@
 <body>
   <div id="mocha"></div>
 </body>
+  <script type="text/javascript" src="../libs/radio.min.js"></script>
+
   <script type="text/javascript" src="libs/mocha/mocha.js"></script>
   <script type="text/javascript" src="libs/chai/chai.js"></script>
   <script type="text/javascript" src="libs/sinon/sinon.js"></script>
@@ -18,6 +20,7 @@
   <script type="text/javascript">
     require([
       'unitTest/ViewPort/getView.spec',
+      'unitTest/MapScrollEvents/onMouseDrag.spec',
     ], 
     runMocha);
   </script>
