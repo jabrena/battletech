@@ -23,6 +23,7 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 
     	var onScreenCanvas = document.getElementById('myCanvas')
     	var onScreenContext = onScreenCanvas.getContext('2d');
+      onScreenContext.fillRect(0, 0, onScreenCanvas.width, onScreenCanvas.height);
 		onScreenContext.drawImage(mapCanvas, 0, 0);
 	}
 
