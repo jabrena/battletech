@@ -38,7 +38,7 @@ function(appGlobals) {
    }
 
    var _calculateMaxScrollBound = function(hexSize, numberOfHexes, bounds) {
-      var numberOfHexesOnScreenHeight = Math.floor(bounds / hexSize);
+      var numberOfHexesOnScreenHeight = bounds / hexSize;
       return (numberOfHexes - numberOfHexesOnScreenHeight) * hexSize;
    }
 

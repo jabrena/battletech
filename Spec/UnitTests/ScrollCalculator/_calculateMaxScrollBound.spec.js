@@ -36,7 +36,7 @@ define(['Squire'], function(Squire) {
                                                                           mapHeight,
                                                                           screenHeight);
 
-            var remainder = Math.ceil(screenHeight - hexSize) / hexSize);
+            var remainder = Math.ceil((screenHeight - hexSize) / hexSize);
             expect(maxViewPoint).to.equal(30 - hexSize - remainder);
          });
       });

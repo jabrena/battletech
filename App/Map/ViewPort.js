@@ -23,8 +23,8 @@ define(['AppGlobals'], function(appGlobals) {
       var numberOfHiddenRows = Math.floor(yStartingPoint / mapDetails.hexSize.height);
       var firstRow = (numberOfHiddenRows === 0) ? numberOfHiddenRows : numberOfHiddenRows - 1;
 
-      var numberOfRowsToShow = Math.ceil(bounds.height / mapDetails.hexSize.height);
-      var lastRow = numberOfHiddenRows + numberOfRowsToShow + 1;
+      var numberOfRowsToShow = Math.floor(bounds.height / mapDetails.hexSize.height);
+      var lastRow = firstRow + numberOfRowsToShow + 1;
       lastRow = (lastRow > mapDetails.height) ? mapDetails.height : lastRow;
 
       return { firstColumn: firstColumn,

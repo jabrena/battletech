@@ -18,11 +18,11 @@ define(['Squire', 'AppGlobals'], function(Squire, appGlobals) {
             injector.require(['Map/ViewPort'], function(ViewPort) {
                _mapDetails = {
                   hexSize: {
-                     width: 5,
-                     height: 5
+                     width: 15,
+                     height: 15
                   },
-                  height: 10,
-                  width: 12
+                  height: 15,
+                  width: 15
                }
 
                _viewPort = new ViewPort(_mapDetails);
@@ -84,8 +84,12 @@ define(['Squire', 'AppGlobals'], function(Squire, appGlobals) {
 
                var view = _viewPort.getView();
 
-               expect(view.firstColumn).to.equal(1);
-               //expect(view.firstColumn).to.equal(???);
+               var hexesThatFitOnScreen = appGlobals.camera.bounds.height /
+                                          _mapDetails.hexSize.height;
+               var hexesThatFitOnScreenPlusOne = Math.floor(hexesThatFitOnScreen) + 1;
+
+               expect(view.firstRow).to.equal(1);
+               expect(view.lastRow).to.equal(hexesThatFitOnScreenPlusOne + view.firstRow);
             });
          });
       });
