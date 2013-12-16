@@ -9,7 +9,7 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
       canvas[0].height = $(window).height();
 
       var mapDetails = {
-            width: 50,
+            width: 10,
             height: 50,
             hexRadius: 50,
             hexSize: undefined // use hexInitializer below

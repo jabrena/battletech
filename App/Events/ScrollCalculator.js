@@ -12,6 +12,8 @@ function(appGlobals) {
                                                         numberOfHexes,
                                                         bounds.width)
 
+      var extraPaddingForSomeReasonIdoNotKnow = hexWidth / 3;
+      maxScrollablePoint += extraPaddingForSomeReasonIdoNotKnow;
       return _adjustMaxDestinationIfInvalid(amountToMove,
                                             view.x,
                                             maxScrollablePoint);

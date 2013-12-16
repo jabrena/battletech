@@ -8,7 +8,7 @@ define(['AppGlobals'], function(appGlobals) {
 
    MapDrawer.prototype.drawMap = function(grid, mapDetails)  {
       var mapCanvas = document.createElement("canvas");
-      mapCanvas.width  = mapDetails.width * mapDetails.hexSize.width *.75;
+      mapCanvas.width  = mapDetails.width * mapDetails.hexSize.width + (mapDetails.hexSize.width / 3);;
       mapCanvas.height = (mapDetails.height * mapDetails.hexSize.height) + (mapDetails.hexSize.height / 2);
       var mapContext = mapCanvas.getContext('2d');
 
