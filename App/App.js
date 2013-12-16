@@ -5,8 +5,8 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
    var InitApp = function() {
       var canvas = $('#myCanvas');
       mouseEventInitializer.initMouseEvents(canvas);
-      canvas[0].width  = window.screen.width;
-      canvas[0].height = window.screen.height;
+      canvas[0].width  = $(window).width();
+      canvas[0].height = $(window).height();
 
       var mapDetails = {
             width: 50,

@@ -1,5 +1,5 @@
-define(['Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort', 'Units/UnitDrawer'],
-function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
+define(['AppGlobals', 'Map/MapDrawer', 'Map/HexDrawer', 'Map/ViewPort', 'Units/UnitDrawer'],
+function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
    'use strict'
    var _mapDetails;
    var _mapDrawer;
@@ -27,8 +27,13 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
       onScreenContext.fillRect(0, 0, onScreenCanvas.width, onScreenCanvas.height);
       //onScreenContext.drawImage(_offScreenMapCanvas, source_x, source_y, source_width, source_height,
       //                                               dest_x, dest_y, dest_width, dest_height);
-      onScreenContext.drawImage(_offScreenMapCanvas, x, y, 1000, 500,
-                                                     0, 0, 1000, 500);
+      var screenWidth = appGlobals.camera.bounds.width;
+      var screenHeight = appGlobals.camera.bounds.height;
+      var viewingX = appGlobals.camera.view.x;
+      var viewingY = appGlobals.camera.view.y;
+      
+      onScreenContext.drawImage(_offScreenMapCanvas, viewingX, viewingY, screenWidth, screenHeight,
+                                                     0, 0, screenWidth, screenHeight);
       x += 10;
       y += 10;
    }
