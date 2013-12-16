@@ -8,7 +8,7 @@ function(appGlobals, scrollCalculator) {
 
       if ((xCord != view.x) || (yCord != view.y))  {
          setTimeout(function() {
-            var maxScrollAmount = 20;
+            var maxScrollAmount = 1;
             var minScrollAmount = maxScrollAmount * -1;
 
             var xDiff = xCord - view.x;
