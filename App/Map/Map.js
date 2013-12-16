@@ -18,7 +18,7 @@ function(MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 
 	Map.prototype.draw = function(grid) {
 		var view = _viewPort.getView();
-		var mapCanvas = _mapDrawer.drawMap(grid, view);
+		var mapCanvas = _mapDrawer.drawMap(grid, _mapDetails);
 		//_unitDrawer.drawUnits(view);
 
     	var onScreenCanvas = document.getElementById('myCanvas')

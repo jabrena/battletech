@@ -76,10 +76,10 @@ function(hexPositionCalculator) {
 	    _hexTypes = [];
 	}
 
-	HexDrawer.prototype.drawHex = function(node, mapCanvasCoords, mapContext) {
-		var hexCanvas = _getImageCanvas(node.details.groundImage);
-		_drawHex(mapCanvasCoords.x, mapCanvasCoords.y, hexCanvas, mapContext);
-	}
+   HexDrawer.prototype.drawHex = function(node, mapContext) {
+      var hexCanvas = _getImageCanvas(node.details.groundImage);
+      _drawHex(node.x, node.y, hexCanvas, mapContext);
+   }
 
-	return HexDrawer;
+   return HexDrawer;
 });
