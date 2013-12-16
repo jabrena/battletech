@@ -29,6 +29,9 @@ function(appGlobals) {
                                                         numberOfHexes,
                                                         bounds.height)
 
+      var extraPaddingForOddColumns = hexHeight / 2;
+      maxScrollablePoint += extraPaddingForOddColumns;
+
       return _adjustMaxDestinationIfInvalid(amountToMove,
                                             view.y,
                                             maxScrollablePoint);

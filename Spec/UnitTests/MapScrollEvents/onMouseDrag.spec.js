@@ -16,8 +16,8 @@ function(Squire, appGlobals, scrollCalculator) {
             };
 
             var mapDetails = { 
-               width: 10,
-               height: 12,
+               width: 100,
+               height: 120,
                hexSize: { width: 5, height: 5}
              };
 

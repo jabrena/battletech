@@ -75,6 +75,19 @@ define(['Squire', 'AppGlobals'], function(Squire, appGlobals) {
                expect(view.lastColumn).to.be.below(_mapDetails.width + 1);
             });
          });
+
+         describe('Given a non edge view, getView', function() {
+            it('should draw an extra top and bottom row.', function() {
+               var twoHexesDeep = _mapDetails.hexSize.height * 2;
+               appGlobals.camera.view.x = 0;
+               appGlobals.camera.view.y = twoHexesDeep;
+
+               var view = _viewPort.getView();
+
+               expect(view.firstColumn).to.equal(1);
+               //expect(view.firstColumn).to.equal(???);
+            });
+         });
       });
    });
 });
