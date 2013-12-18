@@ -17,7 +17,7 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
       mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
       mapInitializer.initMap(mapDetails);
-      //unitInitializer.initUnits();
+      unitInitializer.initUnits();
 
       //paper.view.draw();
    }

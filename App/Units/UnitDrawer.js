@@ -1,33 +1,40 @@
 define(['AppGlobals'],
 function(appGlobals) {
+   var _mapDetails;
 
-	var _isInsideView = function(unit, view) {
-		var column = unit.getLocation().column;
-		var row = unit.getLocation().row;
+   var _drawUnitAtLocation = function(unit, context) {
+      var _xHexSize = _mapDetails.hexSize.width;
+      var _yHexSize = _mapDetails.hexSize.height;
+      var _radius = _mapDetails.hexRadius;
 
-		var visibleColumn = column >= view.firstColumn &&
-					        column <= view.lastColumn;
+      var shiftY = 0;
+      if (unit.location.column % 2 !== 0) {
+         shiftY = _yHexSize / 2;
+      }
 
-		var visibleRow = row >= view.firstRow &&
-						 row <= view.lastRow;
+      var x = _radius * Math.cos(Math.PI) + unit.location.column * _xHexSize  + _radius;
+      var y = _radius * Math.sin(Math.PI) + unit.location.row * _yHexSize + shiftY;
 
-		return visibleColumn && visibleRow;
-	}
+      var screenWidth = appGlobals.camera.bounds.width;
+      var screenHeight = appGlobals.camera.bounds.height;
 
-	var UnitDrawer = function() { }
+      context.globalCompositeOperation = 'soucre-over';
+      context.drawImage(unit.canvas, 0, 0, unit.canvas.width, unit.canvas.height,
+                                     x, y, unit.canvas.width, unit.canvas.height);
+   }
 
-	UnitDrawer.prototype.drawUnits = function(view) {
-		var units = appGlobals.units;
+   var UnitDrawer = function(mapDetails) {
+      _mapDetails = mapDetails;
+   }
 
-		var unitsToDraw = [];
-		units.forEach(function(unit) {
-			if(_isInsideView(unit, view)) {
-				unitsToDraw.push(unit.getRaster());
-			}
-		});
+   UnitDrawer.prototype.drawUnits = function(context) {
+      var units = appGlobals.units;
 
-		paper.project.layers[0].addChildren(unitsToDraw);
-	}
+      var unitsToDraw = [];
+      units.forEach(function(unit) {
+         _drawUnitAtLocation(unit, context);
+      });
+   }
 
-	return UnitDrawer;
-});
+   return UnitDrawer;
+   });

@@ -32,7 +32,7 @@ function(hexPositionCalculator) {
 		  }
 		}
 
-	    mapContext.closePath();
+	   mapContext.closePath();
 		mapContext.fill();
 	}
 

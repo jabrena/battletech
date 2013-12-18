@@ -13,15 +13,17 @@ function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
       var hexDrawer = new HexDrawer(_mapDetails);
       _mapDrawer = new MapDrawer(hexDrawer);
       _offScreenMapCanvas = _mapDrawer.drawMap(grid, _mapDetails);
-      //_unitDrawer = new UnitDrawer();
+      _unitDrawer = new UnitDrawer(_mapDetails);
       _viewPort = new ViewPort(_mapDetails);
    }
 
    Map.prototype.draw = function(grid) {
-      var view = _viewPort.getView();
-      //_unitDrawer.drawUnits(view);
       var onScreenCanvas = document.getElementById('myCanvas');
       var onScreenContext = onScreenCanvas.getContext('2d');
+      
+      var view = _viewPort.getView();
+      _unitDrawer.drawUnits(_offScreenMapCanvas.getContext('2d'));
+
       onScreenContext.fillRect(0, 0, onScreenCanvas.width, onScreenCanvas.height);
      
       var screenWidth = appGlobals.camera.bounds.width;
