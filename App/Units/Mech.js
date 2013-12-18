@@ -12,10 +12,6 @@ function(appGlobals, hexPositionCalculator, unitEvents) {
       this.canvas.height = hexSize.height *.6;
 
       this.context = this.canvas.getContext('2d');
-      this.context.globalCompositeOperation = 'soucre-over';
-/*      this.context.drawImage(image,
-                           0, 0, imageSize.width, image.height,
-                           0, 0, imageSize.width, image.width);*/
       this.context.drawImage(image, 0, 0,  this.canvas.width, this.canvas.height)
 
       this.movement = 3;

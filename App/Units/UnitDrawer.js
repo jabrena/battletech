@@ -19,8 +19,9 @@ function(appGlobals) {
       var screenHeight = appGlobals.camera.bounds.height;
 
       context.globalCompositeOperation = 'soucre-over';
-      context.drawImage(unit.canvas, 0, 0, unit.canvas.width, unit.canvas.height,
-                                     x, y, unit.canvas.width, unit.canvas.height);
+      context.drawImage(unit.canvas, 0, 0, unit.canvas.width,   unit.canvas.height,
+                                           x + (unit.canvas.width * .75), y + (unit.canvas.height / 3), 
+                                           unit.canvas.width,         unit.canvas.height);
    }
 
    var UnitDrawer = function(mapDetails) {
