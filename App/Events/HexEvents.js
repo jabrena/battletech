@@ -3,14 +3,14 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	'use strict';
 	var _dragging;
 
-	var whenMouseClicksHex = function(event) {
+	var whenMouseClicksHex = function(button) {
 		var activeUnit = turn.getActiveUnit();
 
 		if (_dragging || !activeUnit) { 
 			return false;
 		 }
 
-		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event);
+		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(button);
 
 		//must click inside move range to move
 		var clickedNode = appGlobals.activeGrid.getNodeAt(hexLocation.column, hexLocation.row);

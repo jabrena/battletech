@@ -43,8 +43,8 @@ function(appGlobals) {
 	}
 
 	var getLocationFromMouseClick = function(button) {
-        var posx = button.clickedAt.x;
-        var posy = button.clickedAt.y;
+        var posx = button.clickedAt.x + appGlobals.camera.view.x;
+        var posy = button.clickedAt.y + appGlobals.camera.view.y;
 
         var hexSize = appGlobals.map.getDetails().hexSize;
         var fullWidth = hexSize.width / .75;
