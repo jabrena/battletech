@@ -35,6 +35,7 @@ function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
    }
 
    Map.prototype.update = function(grid) {
+      _offScreenMapCanvas = _mapDrawer.drawMap(grid, _mapDetails);
       _unitDrawer.drawUnits(_offScreenMapCanvas.getContext('2d'));
    }
 

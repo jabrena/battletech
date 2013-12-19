@@ -1,11 +1,11 @@
 define(['Map/HexPositionCalculator'],
 function(hexPositionCalculator) {
-	'use strict';
-	var _hexSides;
-	var _radius;
-	var _xHexSize;
-	var _yHexSize;
-	var _hexTypes;
+   'use strict';
+   var _hexSides;
+   var _radius;
+   var _xHexSize;
+   var _yHexSize;
+   var _hexTypes;
 
 	var _drawHex = function(xGrid, yGrid, hexCanvas, mapContext) {
 	    var shiftY = 0;
@@ -19,7 +19,7 @@ function(hexPositionCalculator) {
         mapContext.drawImage(hexCanvas, x, y);
 	}
 
-	var _drawSingleHex = function(mapContext) {
+	var _drawSingleHex = function(mapContext, fill) {
 		var part = 60;
 		mapContext.beginPath();
 
@@ -32,8 +32,11 @@ function(hexPositionCalculator) {
 		  }
 		}
 
-	   mapContext.closePath();
-		mapContext.fill();
+      mapContext.closePath();
+      mapContext.stroke();
+      if (fill) {
+         mapContext.fill();
+      }
 	}
 
 	var _drawHexImage = function(mapContext, imageSrc) {
@@ -45,39 +48,56 @@ function(hexPositionCalculator) {
 							 0, 0, radius2x, radius2x);
 	}
 
-	var _createHex = function(imageSrc) {
-		var hexCanvas = document.createElement('canvas');
-		hexCanvas.width = _radius * 2;
-		hexCanvas.height = _radius * 2;
-		var context = hexCanvas.getContext('2d');
+   var _createHex = function(node, color) {
+      var imageSrc = node.details.groundImage;
+      var hexCanvas = document.createElement('canvas');
+      hexCanvas.width = _radius * 2;
+      hexCanvas.height = _radius * 2;
+      var context = hexCanvas.getContext('2d');
+      context.strokeStyle = color;
+      context.lineWidth = 2;
 
-		_drawHexImage(context, imageSrc);
-		context.globalCompositeOperation = 'destination-in';
-		_drawSingleHex(context);
+      _drawSingleHex(context, true);
+      context.globalCompositeOperation = 'source-in';
+      _drawHexImage(context, imageSrc);
+      context.globalCompositeOperation = 'source-over';
+      _drawSingleHex(context, false);
 
-		return hexCanvas;
-	}
+      return hexCanvas;
+   }
 
-	var _getImageCanvas = function(nodeType) {
-		var hexCanvas = _hexTypes[nodeType]
-		if (!hexCanvas) {
-			hexCanvas = _createHex(nodeType);
-			 _hexTypes[nodeType] = hexCanvas;
-		}
-		return _hexTypes[nodeType];
-	}
+   var _getCorrectHexStatus = function(node) {
+      var hexType = _hexTypes[node.details.groundImage];
+      if(node.withinRange) {
+         return hexType.withinRange;
+      } else {
+         return hexType.default;
+      }
+   }
 
-	var HexDrawer = function(mapDetails) { 
-	    _hexSides = 6;
-	    _radius = mapDetails.hexRadius;
-	    _xHexSize = mapDetails.hexSize.width;
-	    _yHexSize = mapDetails.hexSize.height;
+   var _getImageCanvas = function(node) {
+      var hexType = node.details.groundImage
+      var hexCanvas = _hexTypes[hexType]
+      if (!hexCanvas) {
+         var defaultVersion = _createHex(node, 'transparent');
+         var withinRangeVersion = _createHex(node, '99FF00');
+         _hexTypes[hexType] = { default: defaultVersion,
+                                         withinRange: withinRangeVersion };
+      }
+      return _getCorrectHexStatus(node);
+   }
 
-	    _hexTypes = [];
-	}
+   var HexDrawer = function(mapDetails) { 
+      _hexSides = 6;
+      _radius = mapDetails.hexRadius;
+      _xHexSize = mapDetails.hexSize.width;
+      _yHexSize = mapDetails.hexSize.height;
+
+      _hexTypes = [];
+   }
 
    HexDrawer.prototype.drawHex = function(node, mapContext) {
-      var hexCanvas = _getImageCanvas(node.details.groundImage);
+      var hexCanvas = _getImageCanvas(node);
       _drawHex(node.x, node.y, hexCanvas, mapContext);
    }
 
