@@ -22,7 +22,6 @@ function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
       var onScreenContext = onScreenCanvas.getContext('2d');
       
       var view = _viewPort.getView();
-      _unitDrawer.drawUnits(_offScreenMapCanvas.getContext('2d'));
 
       onScreenContext.fillRect(0, 0, onScreenCanvas.width, onScreenCanvas.height);
      
@@ -33,6 +32,10 @@ function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
 
       onScreenContext.drawImage(_offScreenMapCanvas, viewingX, viewingY, screenWidth, screenHeight,
                                                      0, 0, screenWidth, screenHeight);
+   }
+
+   Map.prototype.update = function(grid) {
+      _unitDrawer.drawUnits(_offScreenMapCanvas.getContext('2d'));
    }
 
    Map.prototype.getDetails = function() {

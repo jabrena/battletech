@@ -6,9 +6,11 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
    var startTurn = function(unit) {
       _activeUnit = unit;
-   //appGlobals.activeGrid = appGlobals.pristineGrid.clone();
-      //appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
+      appGlobals.activeGrid = appGlobals.pristineGrid.clone();
+      appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
 
+     appGlobals.map.update(appGlobals.activeGrid);
+     appGlobals.map.draw();
      //var unitCoords = _activeUnit._mech.position;
      //mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
    }

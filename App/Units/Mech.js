@@ -18,12 +18,11 @@ function(appGlobals, hexPositionCalculator, unitEvents) {
 
       this.location = { row: undefined, column: undefined };
       this.moveToHex(column, row);
-
       //this._mech.onClick = unitEvents.whenMouseClicksUnit;
    }
 
    Mech.prototype.remainingMovement = function() {
-    return this._mech.movement;
+      return this.movement;
    }
 
    Mech.prototype.moveToHex = function(column, row) {

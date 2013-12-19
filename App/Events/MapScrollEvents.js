@@ -56,7 +56,7 @@ function(appGlobals, scrollCalculator) {
       appGlobals.camera.view.x += moveDirection.x;
       appGlobals.camera.view.y += moveDirection.y;
 
-      appGlobals.map.draw(appGlobals.activeGrid);
+      appGlobals.map.draw();
    }
 
    var onMouseDrag = function(event) {
