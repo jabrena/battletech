@@ -1,13 +1,13 @@
 define(['AppGlobals', 'Units/Mech', 'Turns/Turn'],
 function(appGlobals, Mech, turn) {
-	'use strict';
+   'use strict';
 
-	var initUnits = function() {
-		appGlobals.units.push(new Mech(10, 10, 'redMechImage'));
-		appGlobals.units.push(new Mech(1, 1, 'axeMechImage'));
+   var initUnits = function() {
+      appGlobals.units.push(new Mech(2, 2, 'Images/redMech.jpg'));
+      appGlobals.units.push(new Mech(1, 1, 'Images/axeMech.jpg'));
 
-		var startingMech = appGlobals.units[0];
-   		turn.start(startingMech);
-	}
-	return { initUnits: initUnits };
+      var startingMech = appGlobals.units[0];
+      turn.start(startingMech);
+   }
+   return { initUnits: initUnits };
 });

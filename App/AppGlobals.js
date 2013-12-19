@@ -1,23 +1,18 @@
 define([], function() {
-	'use strict';
-	var pristineGrid;
-	var activeGrid;
-	var pathFinder;
-	var map;
-	var tool;
-	var units = [];
+   'use strict';
+   var pristineGrid;
+   var activeGrid;
+   var pathFinder;
+   var map = {};
+   var units = [];
+   var camera = {}
 
-	var  initTool = function() { 
-		tool = new paper.Tool()
-		tool.minDistance = 10;
-	}();
-
-	return {
-		pristineGrid: pristineGrid,
-	    activeGrid: activeGrid,
-		pathFinder: pathFinder,
-		map: map,
-		tool: tool,
-		units: units
-	};
+   return {
+      pristineGrid: pristineGrid,
+      activeGrid: activeGrid,
+      pathFinder: pathFinder,
+      map: map,
+      units: units,
+      camera: camera
+   };
 })

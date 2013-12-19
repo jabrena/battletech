@@ -1,16 +1,8 @@
 define([], function() {
 	var getHexSize = function(hexRadius) {
-		var hexagon = new paper.Path.RegularPolygon({
-			sides: 6,
-			radius: hexRadius,
-		});
-		hexagon.rotate(90);
-
-		var hexSize = hexagon.bounds.size;
-		hexagon.remove();
-
-		hexSize.width *= .75;
-		return hexSize
+	    var xHexSize = hexRadius*Math.sqrt(2.25);
+	    var yHexSize = hexRadius*Math.sqrt(3);
+	    return { width: xHexSize, height: yHexSize };
 	}
 
 	return { getHexSize: getHexSize };

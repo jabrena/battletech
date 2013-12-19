@@ -1,11 +1,11 @@
 define(['AppGlobals'], function(AppGlobals) {
 	'use strict';
 
-	var _markNodesWithinReach = function(mech, destinationNode, pathFinder, gridToMark) {
+	var _markNodesWithinReach = function(unit, destinationNode, pathFinder, gridToMark) {
 		var tempGrid = AppGlobals.pristineGrid.clone();
-		var path = pathFinder.findPath(mech.getLocation().column, mech.getLocation().row,
+		var path = pathFinder.findPath(unit.location.column, unit.location.row,
 								   destinationNode.x, destinationNode.y,
-								   tempGrid, mech.remainingMovement());
+								   tempGrid, unit.remainingMovement());
 		return _markMovableHexes(tempGrid, gridToMark);
 	}
 	
@@ -24,7 +24,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	var getValidMove = function(unit, clickedNode, pathFinder) {
 		var grid = AppGlobals.activeGrid.clone();
 
-		var path = pathFinder.findPath(unit.getLocation().column, unit.getLocation().row,
+		var path = pathFinder.findPath(unit.location.column, unit.location.row,
 								   clickedNode.x, clickedNode.y,
 								   grid, unit.remainingMovement());
 

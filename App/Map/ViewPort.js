@@ -1,36 +1,39 @@
 define(['AppGlobals'], function(appGlobals) {
-	'use strict'
-	var _mapDetails;
+   'use strict'
+   var _mapDetails;
 
-	var ViewPort = function(mapDetails) {
-		_mapDetails = mapDetails;
-	}
+   var ViewPort = function(mapDetails) {
+      _mapDetails = mapDetails;
+   }
 
-	ViewPort.prototype.getView = function() {
-		var currentView = paper.view.bounds;
-		var mapDetails = _mapDetails;
+   ViewPort.prototype.getView = function() {
+      var currentView = appGlobals.camera.view;
+      var bounds = appGlobals.camera.bounds;
+      var mapDetails = _mapDetails;
 
-		var numberOfHiddenColumns = Math.floor(currentView.x / mapDetails.hexSize.width);
-		var firstColumn = (numberOfHiddenColumns === 0) ? numberOfHiddenColumns : numberOfHiddenColumns - 1;
+      var xStartingPoint = (currentView.x >= 0) ? currentView.x : 0;
+      var numberOfHiddenColumns = Math.floor(xStartingPoint / mapDetails.hexSize.width);
+      var firstColumn = (numberOfHiddenColumns === 0) ? numberOfHiddenColumns : numberOfHiddenColumns - 1;
 
-		var numberOfColumnsToShow = Math.ceil(currentView.width / mapDetails.hexSize.width);
-		var lastColumn = numberOfHiddenColumns + numberOfColumnsToShow + 1;
-		lastColumn = (lastColumn > mapDetails.width) ? mapDetails.width : lastColumn;
-		
-		var numberOfHiddenRows = Math.floor(currentView.y / mapDetails.hexSize.height);
-		var firstRow = (numberOfHiddenRows === 0) ? numberOfHiddenRows : numberOfHiddenRows - 1;
-		
-		var numberOfRowsToShow = Math.ceil(currentView.height / mapDetails.hexSize.height);
-		var lastRow = numberOfHiddenRows + numberOfRowsToShow + 1;
-		lastRow = (lastRow > mapDetails.height) ? mapDetails.height : lastRow;
+      var numberOfColumnsToShow = Math.ceil(bounds.width / mapDetails.hexSize.width);
+      var lastColumn = numberOfHiddenColumns + numberOfColumnsToShow + 1;
+      lastColumn = (lastColumn > mapDetails.width) ? mapDetails.width : lastColumn;
 
-		return { firstColumn: firstColumn,
-				 lastColumn: lastColumn,
-				 
-				 firstRow: firstRow,
-				 lastRow: lastRow
-			   };
-	}
+      var yStartingPoint = (currentView.y >= 0) ? currentView.y : 0;
+      var numberOfHiddenRows = Math.floor(yStartingPoint / mapDetails.hexSize.height);
+      var firstRow = (numberOfHiddenRows === 0) ? numberOfHiddenRows : numberOfHiddenRows - 1;
 
-	return ViewPort
+      var numberOfRowsToShow = Math.floor(bounds.height / mapDetails.hexSize.height);
+      var lastRow = firstRow + numberOfRowsToShow + 1;
+      lastRow = (lastRow > mapDetails.height) ? mapDetails.height : lastRow;
+
+      return { firstColumn: firstColumn,
+               lastColumn: lastColumn,
+
+               firstRow: firstRow,
+               lastRow: lastRow
+             };
+   }
+
+   return ViewPort
 });

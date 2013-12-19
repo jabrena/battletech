@@ -1,128 +1,73 @@
-define(['AppGlobals'], function(appGlobals) {
-	'use strict';
+define(['AppGlobals', 'Events/ScrollCalculator'],
+function(appGlobals, scrollCalculator) {
+   'use strict';
 
-	var _calculateMaxRightScroll = function(moveDirection) {
-		var bounds = paper.view.bounds;
+    var centerOnPoint = function(xCord, yCord) {
+      var view = paper.view.center;
+      var bounds = paper.view.bounds;
 
-		var mapDetails = appGlobals.map.getDetails();
-		var hexWidth = mapDetails.hexSize.width;
-		var numberOfHexes = mapDetails.width;
+      if ((xCord != view.x) || (yCord != view.y))  {
+         setTimeout(function() {
+            var maxScrollAmount = 1;
+            var minScrollAmount = maxScrollAmount * -1;
 
-		var maxScrollablePoint = _calculateMaxScrollBound(hexWidth,
-														  numberOfHexes,
-														  bounds.width)
+            var xDiff = xCord - view.x;
+            xDiff = (xDiff > maxScrollAmount) ? maxScrollAmount : xDiff;
+            xDiff = (xDiff < minScrollAmount) ? minScrollAmount : xDiff;
 
-		return _adjustMaxDestinationIfInvalid(moveDirection.x,
-											  bounds.x,
-									  		  maxScrollablePoint);
-	}
+            var yDiff = yCord - view.y;
+            yDiff = (yDiff > maxScrollAmount) ? maxScrollAmount : yDiff;
+            yDiff = (yDiff < minScrollAmount) ? minScrollAmount : yDiff;
 
-	var _calculateMaxBottomScroll = function(moveDirection) {
-		var bounds = paper.view.bounds;
+            var finalMoveAmount = new paper.Point(xDiff, yDiff);
+            finalMoveAmount.y =  _adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
+            finalMoveAmount.y = _calculateMaxBottomScroll(finalMoveAmount);
 
-		var mapDetails = appGlobals.map.getDetails();
-		var hexHeight = mapDetails.hexSize.height;
-		var numberOfHexes = mapDetails.height;
+            finalMoveAmount.x = _adjustMinDestinationIfInvalid(finalMoveAmount.x, bounds.x, 0);
+            finalMoveAmount.x = _calculateMaxRightScroll(finalMoveAmount);
 
-		var maxScrollablePoint = _calculateMaxScrollBound(hexHeight,
-														  numberOfHexes,
-														  bounds.height)
+            paper.view.scrollBy(finalMoveAmount);
 
-		return _adjustMaxDestinationIfInvalid(moveDirection.y,
-											  bounds.y,
-											  maxScrollablePoint);
-	}
+            paper.project.layers.forEach(function(layer) {
+             layer.children = [];
+            });
+            appGlobals.map.drawMap(appGlobals.activeGrid);
 
-	var _calculateMaxScrollBound = function(hexSize, numberOfHexes, bounds) {
-		var numberOfHexesOnScreenHeight = Math.floor(bounds / hexSize) -1;
-		return (numberOfHexes - numberOfHexesOnScreenHeight) * hexSize;
-	}
+            if (finalMoveAmount.x !== 0 || finalMoveAmount.y !== 0) {
+               centerOnPoint(xCord, yCord);
+            }
+         }, 0)
+      }
+   }
 
-	var _adjustMaxDestinationIfInvalid = function(movement, currentLocation, maxBound) {
-		var destination = currentLocation + movement;
-		var destinationOutOfBounds = destination > maxBound;
-		if (destinationOutOfBounds) {
-			movement = maxBound - currentLocation;
-		}
+   var _scrollTo = function(xCord, yCord, downXCoord, downYCoord) {
+      var moveDirection = {};
+      moveDirection.x = downXCoord - xCord;
+      moveDirection.y = downYCoord - yCord;
 
-		return movement;
-	}
+      var view = appGlobals.camera.view;
 
-	var _adjustMinDestinationIfInvalid = function(movement, currentLocation, minBound) {
-		var destination = currentLocation + movement;
-		var destinationOutOfBounds = destination < minBound;
-		if (destinationOutOfBounds) {
-			movement = minBound - currentLocation;
-		}
+      moveDirection.x = scrollCalculator.adjustMinDestinationIfInvalid(moveDirection.x, view.x, 0);
+      moveDirection.y = scrollCalculator.adjustMinDestinationIfInvalid(moveDirection.y, view.y, 0);
 
-		return movement;
-	}
+      moveDirection.x = scrollCalculator.calculateMaxRightScroll(moveDirection.x);
+      moveDirection.y = scrollCalculator.calculateMaxBottomScroll(moveDirection.y);
 
-	var centerOnPoint = function(xCord, yCord) {
-		var view = paper.view.center;
-		var bounds = paper.view.bounds;
+      appGlobals.camera.view.x += moveDirection.x;
+      appGlobals.camera.view.y += moveDirection.y;
 
-		if ((xCord != view.x) || (yCord != view.y))  {
-			setTimeout(function() {
-				var maxScrollAmount = 60;
-				var minScrollAmount = maxScrollAmount * -1;
+      appGlobals.map.draw();
+   }
 
-				var xDiff = xCord - view.x;
-				xDiff = (xDiff > maxScrollAmount) ? maxScrollAmount : xDiff;
-				xDiff = (xDiff < minScrollAmount) ? minScrollAmount : xDiff;
+   var onMouseDrag = function(event) {
+      _scrollTo(event.drugTo.x, event.drugTo.y,
+                event.clickedAt.x, event.clickedAt.y);
+   };
 
-				var yDiff = yCord - view.y;
-				yDiff = (yDiff > maxScrollAmount) ? maxScrollAmount : yDiff;
-				yDiff = (yDiff < minScrollAmount) ? minScrollAmount : yDiff;
+   radio('mouseDragEvent').subscribe(onMouseDrag);
 
-				var finalMoveAmount = new paper.Point(xDiff, yDiff);
-				finalMoveAmount.y =  _adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
-				finalMoveAmount.y = _calculateMaxBottomScroll(finalMoveAmount);
-
-				finalMoveAmount.x = _adjustMinDestinationIfInvalid(finalMoveAmount.x, bounds.x, 0);
-				finalMoveAmount.x = _calculateMaxRightScroll(finalMoveAmount);
-
-				paper.view.scrollBy(finalMoveAmount);
-
-				paper.project.layers.forEach(function(layer) {
-					layer.children = [];
-				});
-				appGlobals.map.drawMap(appGlobals.activeGrid);
-
-				if (finalMoveAmount.x !== 0 || finalMoveAmount.y !== 0) {
-	        		centerOnPoint(xCord, yCord);
-				}
-			}, 0)
-		}
-	}
-
-	var _scrollTo = function(xCord, yCord, downXCoord, downYCoord) {
-		var moveDirection = new paper.Point();
-		moveDirection.x = downXCoord - xCord;
-		moveDirection.y = downYCoord - yCord;
-
-		var bounds = paper.view.bounds;
-
-		moveDirection.x = _adjustMinDestinationIfInvalid(moveDirection.x, bounds.x, 0);
-		moveDirection.y = _adjustMinDestinationIfInvalid(moveDirection.y, bounds.y, 0);
-
-		moveDirection.x = _calculateMaxRightScroll(moveDirection);
-		moveDirection.y = _calculateMaxBottomScroll(moveDirection);
-
-		paper.view.scrollBy(moveDirection);
-
-		paper.project.layers.forEach(function(layer) {
-			layer.children = [];
-		});
-		appGlobals.map.drawMap(appGlobals.activeGrid);
-	}
-
-	appGlobals.tool.onMouseDrag = function(event) {
-		_scrollTo(event.point.x, event.point.y,
-				  event.downPoint.x, event.downPoint.y);
-	};
-
-	return {
-		centerOnPoint: centerOnPoint
-	}
+   return {
+      onMouseDrag: onMouseDrag,
+      centerOnPoint: centerOnPoint
+   }
 });

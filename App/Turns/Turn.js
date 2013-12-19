@@ -1,17 +1,19 @@
 
 define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn'], 
 function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
-	'use strict';
-	var _activeUnit;
+   'use strict';
+   var _activeUnit;
 
-	var startTurn = function(unit) {
-		_activeUnit = unit;
-		appGlobals.activeGrid = appGlobals.pristineGrid.clone();
-        appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
+   var startTurn = function(unit) {
+      _activeUnit = unit;
+      appGlobals.activeGrid = appGlobals.pristineGrid.clone();
+      appGlobals.activeGrid = moveHelper.markNodesWithinReach(unit, appGlobals.pathFinder);
 
-        var unitCoords = _activeUnit._mech.position;
-        mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
-	}
+     appGlobals.map.update(appGlobals.activeGrid);
+     appGlobals.map.draw();
+     //var unitCoords = _activeUnit._mech.position;
+     //mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
+   }
 
 	var endTurn = function() {
 		var nextUnitToGo = _getNextUnit(_activeUnit);
@@ -20,7 +22,7 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 			if (nextUnitToGo) {
 				startTurn(nextUnitToGo);
 			}
-		}, 750);
+		}, 0);//750);
 	}
 
 	var getActiveUnit = function() {
@@ -33,8 +35,8 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
 		if (nextIndex > appGlobals.units.length-1) {
 			nextIndex = 0;
-			combatTurn.start(appGlobals.units[nextIndex]);
-			return false;
+			//combatTurn.start(appGlobals.units[nextIndex]);
+			//return false;
 		}
 
 		return appGlobals.units[nextIndex];

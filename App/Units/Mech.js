@@ -1,41 +1,34 @@
 define(['AppGlobals', 'Map/HexPositionCalculator', 'Events/UnitEvents'],
 function(appGlobals, hexPositionCalculator, unitEvents) {
+   'use strict';
 
-	var Mech = function(column, row, image) {
-		this._mech = new paper.Raster(image);
-		
-		var hexSize = appGlobals.map.getDetails().hexSize;
-		this._mech.size.width = hexSize.width *.5;
-		this._mech.size.height = hexSize.height *.6;
-		this._mech.movement = 3;
+   var Mech = function(column, row, imageSrc) {
+      this.canvas = document.createElement("canvas");
+      var hexSize = appGlobals.map.getDetails().hexSize;
+      var image = new Image();
+      image.src = imageSrc;
 
-		this._mech.data.position = { row: undefined, column: undefined };
-		this.moveToHex(column, row);
+      this.canvas.width = hexSize.width *.5;
+      this.canvas.height = hexSize.height *.6;
 
-		this._mech.onClick = unitEvents.whenMouseClicksUnit;
-	}
+      this.context = this.canvas.getContext('2d');
+      this.context.drawImage(image, 0, 0,  this.canvas.width, this.canvas.height)
 
-	Mech.prototype._mech = {};
+      this.movement = 3;
 
-	Mech.prototype.remainingMovement = function() {
-		return this._mech.movement;
-	}
+      this.location = { row: undefined, column: undefined };
+      this.moveToHex(column, row);
+      //this._mech.onClick = unitEvents.whenMouseClicksUnit;
+   }
 
-	Mech.prototype.getRaster = function() {
-		return this._mech;
-	}
+   Mech.prototype.remainingMovement = function() {
+      return this.movement;
+   }
 
-	Mech.prototype.moveToHex = function(column, row) {
-		var position = hexPositionCalculator.getCenterPoint(column, row);
+   Mech.prototype.moveToHex = function(column, row) {
+      this.location.row = row;
+      this.location.column  = column;
+   }
 
-		this._mech.setPosition(position);
-		this._mech.data.position.row = row;
-		this._mech.data.position.column  = column;
-	}
-
-	Mech.prototype.getLocation = function() {
-		return this._mech.data.position;
-	}
-
-	return Mech;
+   return Mech;
 });

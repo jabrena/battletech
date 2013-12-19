@@ -3,14 +3,14 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	'use strict';
 	var _dragging;
 
-	var whenMouseClicksHex = function(event) {
+	var whenMouseClicksHex = function(button) {
 		var activeUnit = turn.getActiveUnit();
 
 		if (_dragging || !activeUnit) { 
 			return false;
 		 }
 
-		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
+		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(button);
 
 		//must click inside move range to move
 		var clickedNode = appGlobals.activeGrid.getNodeAt(hexLocation.column, hexLocation.row);
@@ -33,7 +33,9 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 			_dragging = false;
 		}, 0);
 	}
-	
+
+   radio('mouseDownEvent').subscribe(whenMouseClicksHex);
+
 	return {
 		whenMouseClicksHex: whenMouseClicksHex,
 		doNothing: doNothing
