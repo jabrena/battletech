@@ -35,8 +35,8 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
 		if (nextIndex > appGlobals.units.length-1) {
 			nextIndex = 0;
-			combatTurn.start(appGlobals.units[nextIndex]);
-			return false;
+			//combatTurn.start(appGlobals.units[nextIndex]);
+			//return false;
 		}
 
 		return appGlobals.units[nextIndex];
