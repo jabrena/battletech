@@ -22,7 +22,7 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 			if (nextUnitToGo) {
 				startTurn(nextUnitToGo);
 			}
-		}, 750);
+		}, 0);//750);
 	}
 
 	var getActiveUnit = function() {
