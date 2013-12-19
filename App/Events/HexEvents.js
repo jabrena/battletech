@@ -10,7 +10,7 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 			return false;
 		 }
 
-		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event.point);
+		var hexLocation = hexPositionCalculator.getLocationFromMouseClick(event);
 
 		//must click inside move range to move
 		var clickedNode = appGlobals.activeGrid.getNodeAt(hexLocation.column, hexLocation.row);
@@ -33,7 +33,9 @@ function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 			_dragging = false;
 		}, 0);
 	}
-	
+
+   radio('mouseDownEvent').subscribe(whenMouseClicksHex);
+
 	return {
 		whenMouseClicksHex: whenMouseClicksHex,
 		doNothing: doNothing

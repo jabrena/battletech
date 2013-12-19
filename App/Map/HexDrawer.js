@@ -1,5 +1,5 @@
-define(['Map/HexPositionCalculator'],
-function(hexPositionCalculator) {
+define(['Map/HexPositionCalculator', 'Events/HexEvents'],
+function(hexPositionCalculator, hexEvents) {
    'use strict';
    var _hexSides;
    var _radius;

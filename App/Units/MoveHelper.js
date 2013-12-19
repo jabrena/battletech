@@ -24,7 +24,7 @@ define(['AppGlobals'], function(AppGlobals) {
 	var getValidMove = function(unit, clickedNode, pathFinder) {
 		var grid = AppGlobals.activeGrid.clone();
 
-		var path = pathFinder.findPath(unit.getLocation().column, unit.getLocation().row,
+		var path = pathFinder.findPath(unit.location.column, unit.location.row,
 								   clickedNode.x, clickedNode.y,
 								   grid, unit.remainingMovement());
 

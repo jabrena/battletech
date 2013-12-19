@@ -42,12 +42,9 @@ function(appGlobals) {
        return centerPoint;
 	}
 
-	var getLocationFromMouseClick = function(point) {
-        var posx = point.x;
-        var posy = point.y;
-        
-        //posx = posx - map.offsetLeft;
-        //posy = posy - map.offsetTop;
+	var getLocationFromMouseClick = function(button) {
+        var posx = button.clickedAt.x;
+        var posy = button.clickedAt.y;
 
         var hexSize = appGlobals.map.getDetails().hexSize;
         var fullWidth = hexSize.width / .75;

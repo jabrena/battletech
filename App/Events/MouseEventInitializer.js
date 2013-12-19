@@ -39,6 +39,7 @@ define([], function() {
 	    $canvas.on('mousedown', function(e) {
 	        if (_leftMouseButtonAction(e)) {
 	        	_setLeftMouseButton(true, e.offsetX, e.offsetY);
+            radio('mouseDownEvent').broadcast(_leftMouseButton);
 	        }
 	    });
 
