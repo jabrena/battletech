@@ -20,9 +20,6 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
       unitInitializer.initUnits();
 
       //paper.view.draw();
-   }
+   }();
 
-   $(window).load(function() { 
-      InitApp();
-   });
 });
