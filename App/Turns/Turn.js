@@ -1,6 +1,6 @@
 
-define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn'], 
-function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
+define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn', 'Map/HexPositionCalculator'], 
+function(appGlobals, moveHelper, mapScrollEvents, combatTurn, hexPositionCalculator) {
    'use strict';
    var _activeUnit;
 
@@ -11,8 +11,10 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
      appGlobals.map.update(appGlobals.activeGrid);
      appGlobals.map.draw();
-     //var unitCoords = _activeUnit._mech.position;
-     //mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
+
+     var centerPoint = hexPositionCalculator.getCenterOfHex(unit.location.column,
+                                                            unit.location.row);
+     mapScrollEvents.centerOnPoint(centerPoint.x, centerPoint.y);
    }
 
 	var endTurn = function() {

@@ -1,5 +1,5 @@
 define(['AppGlobals'], function(AppGlobals) {
-	'use strict';
+   'use strict';
 
 	var _markNodesWithinReach = function(unit, destinationNode, pathFinder, gridToMark) {
 		var tempGrid = AppGlobals.pristineGrid.clone();
