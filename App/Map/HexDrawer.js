@@ -80,7 +80,7 @@ function(hexPositionCalculator, hexEvents) {
       var hexCanvas = _hexTypes[hexType]
       if (!hexCanvas) {
          var defaultVersion = _createHex(node, 'transparent');
-         var withinRangeVersion = _createHex(node, '99FF00');
+         var withinRangeVersion = _createHex(node, '#99FF00');
          _hexTypes[hexType] = { default: defaultVersion,
                                          withinRange: withinRangeVersion };
       }
