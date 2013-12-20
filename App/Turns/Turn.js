@@ -14,18 +14,19 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn, hexPositionCalcula
 
      var centerPoint = hexPositionCalculator.getCenterOfHex(unit.location.column,
                                                             unit.location.row);
-     mapScrollEvents.centerOnPoint(centerPoint.x, centerPoint.y);
+
+      setTimeout(function() {
+         mapScrollEvents.centerOnPoint(centerPoint.x, centerPoint.y);
+      }, 750);
    }
 
-	var endTurn = function() {
-		var nextUnitToGo = _getNextUnit(_activeUnit);
-		_activeUnit = undefined;
-		setTimeout(function() {
-			if (nextUnitToGo) {
-				startTurn(nextUnitToGo);
-			}
-		}, 0);//750);
-	}
+   var endTurn = function() {
+      var nextUnitToGo = _getNextUnit(_activeUnit);
+      _activeUnit = undefined;
+         if (nextUnitToGo) {
+            startTurn(nextUnitToGo);
+         }
+   }
 
 	var getActiveUnit = function() {
 		return _activeUnit;
