@@ -20,10 +20,10 @@ function(appGlobals, scrollCalculator) {
             yDiff = (yDiff < minScrollAmount) ? minScrollAmount : yDiff;
 
             var finalMoveAmount = { x: 0, y: 0 };
-            finalMoveAmount.y =  scrollCalculator.adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
+            finalMoveAmount.y =  scrollCalculator.adjustMinDestinationIfInvalid(yDiff, view.y, 0);
             finalMoveAmount.y = scrollCalculator.calculateMaxBottomScroll(finalMoveAmount.y);
 
-            finalMoveAmount.x = scrollCalculator.adjustMinDestinationIfInvalid(xDiff, bounds.x, 0);
+            finalMoveAmount.x = scrollCalculator.adjustMinDestinationIfInvalid(xDiff, view.x, 0);
             finalMoveAmount.x = scrollCalculator.calculateMaxRightScroll(finalMoveAmount.x);
 
             view.x += finalMoveAmount.x;
@@ -51,8 +51,8 @@ function(appGlobals, scrollCalculator) {
       moveDirection.x = scrollCalculator.calculateMaxRightScroll(moveDirection.x);
       moveDirection.y = scrollCalculator.calculateMaxBottomScroll(moveDirection.y);
 
-      appGlobals.camera.view.x += moveDirection.x;
-      appGlobals.camera.view.y += moveDirection.y;
+      view.x += moveDirection.x;
+      view.y += moveDirection.y;
 
       appGlobals.map.draw();
    }
