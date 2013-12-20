@@ -9,6 +9,23 @@ function(appGlobals) {
       return roundedNumber;
    }
 
+   var _bah = function(bound, size) {
+      var hexesOnScreen = bound / size;
+      var hexesOnLeftSideOfHex = hexesOnScreen / 2;
+
+      var moveCamera = hexesOnLeftSideOfHex * size;
+      return moveCamera * -1;
+   }
+
+   var centerHexOnScreen = function(column, row) {
+      var hexSize = appGlobals.map.getDetails().hexSize;
+      var centerPoint = getCenterOfHex(column, row);
+      centerPoint.x += _bah(appGlobals.camera.bounds.width, hexSize.width);
+      centerPoint.y += _bah(appGlobals.camera.bounds.height, hexSize.height);
+
+      return centerPoint;
+   }
+
    var getCenterOfHex = function(column, row) {
       var hexSize = appGlobals.map.getDetails().hexSize;
       var centerPoint = { x: undefined, y: undefined }
@@ -58,6 +75,7 @@ function(appGlobals) {
    }
 
    return { getCenterOfHex: getCenterOfHex,
+            centerHexOnScreen: centerHexOnScreen,
             getLocationFromMouseClick: getLocationFromMouseClick
    };
 });

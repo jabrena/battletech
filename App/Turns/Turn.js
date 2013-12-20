@@ -12,8 +12,8 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn, hexPositionCalcula
      appGlobals.map.update(appGlobals.activeGrid);
      appGlobals.map.draw();
 
-     var centerPoint = hexPositionCalculator.getCenterOfHex(unit.location.column,
-                                                            unit.location.row);
+     var centerPoint = hexPositionCalculator.centerHexOnScreen(unit.location.column,
+                                                               unit.location.row);
 
       setTimeout(function() {
          mapScrollEvents.centerOnPoint(centerPoint.x, centerPoint.y);
