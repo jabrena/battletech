@@ -51,8 +51,8 @@ function(appGlobals, scrollCalculator) {
       moveDirection.x = scrollCalculator.calculateMaxRightScroll(moveDirection.x);
       moveDirection.y = scrollCalculator.calculateMaxBottomScroll(moveDirection.y);
 
-      appGlobals.camera.view.x += moveDirection.x;
-      appGlobals.camera.view.y += moveDirection.y;
+      view.x += moveDirection.x;
+      view.y += moveDirection.y;
 
       appGlobals.map.draw();
    }
