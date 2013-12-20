@@ -3,12 +3,12 @@ function(appGlobals, scrollCalculator) {
    'use strict';
 
     var centerOnPoint = function(xCord, yCord) {
-      var view = paper.view.center;
-      var bounds = paper.view.bounds;
+      var view = appGlobals.camera.view
+      var bounds = appGlobals.camera.bounds;
 
       if ((xCord != view.x) || (yCord != view.y))  {
          setTimeout(function() {
-            var maxScrollAmount = 1;
+            var maxScrollAmount = 4;
             var minScrollAmount = maxScrollAmount * -1;
 
             var xDiff = xCord - view.x;
@@ -19,19 +19,17 @@ function(appGlobals, scrollCalculator) {
             yDiff = (yDiff > maxScrollAmount) ? maxScrollAmount : yDiff;
             yDiff = (yDiff < minScrollAmount) ? minScrollAmount : yDiff;
 
-            var finalMoveAmount = new paper.Point(xDiff, yDiff);
-            finalMoveAmount.y =  _adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
-            finalMoveAmount.y = _calculateMaxBottomScroll(finalMoveAmount);
+            var finalMoveAmount = { x: 0, y: 0 };
+            finalMoveAmount.y =  scrollCalculator.adjustMinDestinationIfInvalid(yDiff, bounds.y, 0);
+            finalMoveAmount.y = scrollCalculator.calculateMaxBottomScroll(finalMoveAmount.y);
 
-            finalMoveAmount.x = _adjustMinDestinationIfInvalid(finalMoveAmount.x, bounds.x, 0);
-            finalMoveAmount.x = _calculateMaxRightScroll(finalMoveAmount);
+            finalMoveAmount.x = scrollCalculator.adjustMinDestinationIfInvalid(xDiff, bounds.x, 0);
+            finalMoveAmount.x = scrollCalculator.calculateMaxRightScroll(finalMoveAmount.x);
 
-            paper.view.scrollBy(finalMoveAmount);
+            view.x += finalMoveAmount.x;
+            view.y += finalMoveAmount.y;
 
-            paper.project.layers.forEach(function(layer) {
-             layer.children = [];
-            });
-            appGlobals.map.drawMap(appGlobals.activeGrid);
+            appGlobals.map.draw();
 
             if (finalMoveAmount.x !== 0 || finalMoveAmount.y !== 0) {
                centerOnPoint(xCord, yCord);

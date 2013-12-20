@@ -1,6 +1,6 @@
 
-define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn'], 
-function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
+define(['AppGlobals', 'Units/MoveHelper', 'Events/MapScrollEvents', 'Turns/CombatTurn', 'Map/HexPositionCalculator'], 
+function(appGlobals, moveHelper, mapScrollEvents, combatTurn, hexPositionCalculator) {
    'use strict';
    var _activeUnit;
 
@@ -11,19 +11,22 @@ function(appGlobals, moveHelper, mapScrollEvents, combatTurn) {
 
      appGlobals.map.update(appGlobals.activeGrid);
      appGlobals.map.draw();
-     //var unitCoords = _activeUnit._mech.position;
-     //mapScrollEvents.centerOnPoint(unitCoords.x, unitCoords.y);
+
+     var centerPoint = hexPositionCalculator.getCenterOfHex(unit.location.column,
+                                                            unit.location.row);
+
+      setTimeout(function() {
+         mapScrollEvents.centerOnPoint(centerPoint.x, centerPoint.y);
+      }, 750);
    }
 
-	var endTurn = function() {
-		var nextUnitToGo = _getNextUnit(_activeUnit);
-		_activeUnit = undefined;
-		setTimeout(function() {
-			if (nextUnitToGo) {
-				startTurn(nextUnitToGo);
-			}
-		}, 0);//750);
-	}
+   var endTurn = function() {
+      var nextUnitToGo = _getNextUnit(_activeUnit);
+      _activeUnit = undefined;
+         if (nextUnitToGo) {
+            startTurn(nextUnitToGo);
+         }
+   }
 
 	var getActiveUnit = function() {
 		return _activeUnit;

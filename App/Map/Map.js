@@ -17,7 +17,7 @@ function(appGlobals, MapDrawer, HexDrawer, ViewPort, UnitDrawer) {
       _viewPort = new ViewPort(_mapDetails);
    }
 
-   Map.prototype.draw = function(grid) {
+   Map.prototype.draw = function() {
       var onScreenCanvas = document.getElementById('myCanvas');
       var onScreenContext = onScreenCanvas.getContext('2d');
       
