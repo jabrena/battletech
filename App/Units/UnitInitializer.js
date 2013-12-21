@@ -4,7 +4,7 @@ function(appGlobals, Mech, turn) {
 
    var initUnits = function() {
       appGlobals.units.push(new Mech(2, 2, 'Images/redMech.jpg'));
-      appGlobals.units.push(new Mech(1, 1, 'Images/axeMech.jpg'));
+      appGlobals.units.push(new Mech(0, 3, 'Images/axeMech.jpg'));
 
       var startingMech = appGlobals.units[0];
       turn.start(startingMech);

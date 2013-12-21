@@ -14,7 +14,7 @@ function(appGlobals, Grid, PathFinder, Map, MapScrollEvents) {
       };
 
       appGlobals.pathFinder = new PathFinder();
-      appGlobals.pristineGrid = new Grid(mapDetails.width, mapDetails.height); 
+      appGlobals.pristineGrid = new Grid(mapDetails.width, mapDetails.height, mapDetails.terrainMatrix); 
       appGlobals.activeGrid = appGlobals.pristineGrid.clone();
 
       appGlobals.map = new Map(mapDetails, appGlobals.pristineGrid);
