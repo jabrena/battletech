@@ -1,41 +1,12 @@
 define(['PathFinding/Core/Node'], function(Node) {
     'use strict';
 
-    /**
-     * The Grid class, which serves as the encapsulation of the layout of the nodes.
-     * @constructor
-     * @param {number} width Number of columns of the grid.
-     * @param {number} height Number of rows of the grid.
-     * @param {Array.<Array.<(number|boolean)>>} [matrix] - A 0-1 matrix
-     *     representing the walkable status of the nodes(0 or false for walkable).
-     *     If the matrix is not supplied, all the nodes will be walkable.  */
     function Grid(width, height, matrix) {
-        /**
-         * The number of columns of the grid.
-         * @type number
-         */
         this.width = width;
-        /**
-         * The number of rows of the grid.
-         * @type number
-         */
         this.height = height;
-
-        /**
-         * A 2D array of nodes.
-         */
         this.nodes = this._buildNodes(width, height, matrix);
     }
 
-    /**
-     * Build and return the nodes.
-     * @private
-     * @param {number} width
-     * @param {number} height
-     * @param {Array.<Array.<number|boolean>>} [matrix] - A 0-1 matrix representing
-     *     the walkable status of the nodes.
-     * @see Grid
-     */
     Grid.prototype._buildNodes = function(width, height, matrix) {
         var i, j,
             nodes = new Array(height),
@@ -44,7 +15,11 @@ define(['PathFinding/Core/Node'], function(Node) {
         for (i = 0; i < height; ++i) {
             nodes[i] = new Array(width);
             for (j = 0; j < width; ++j) {
-                nodes[i][j] = new Node(j, i, true, 1);
+                if (matrix) {
+                  nodes[i][j] = new Node(j, i, true, matrix[i][j]);
+                } else {
+                  nodes[i][j] = new Node(j, i, true);
+               }
             }
         }
 
@@ -244,7 +219,7 @@ define(['PathFinding/Core/Node'], function(Node) {
             for (j = 0; j < width; ++j) {
                 newNodes[i][j] = new Node(j,
                                           i, 
-                                          thisNodes[i][j].walkable,
+                                          true,
                                           thisNodes[i][j].type,
                                           thisNodes[i][j].details);
             }

@@ -1,5 +1,5 @@
-define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer', 'Events/MouseEventInitializer'],
-function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer) {
+define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer', 'Events/MouseEventInitializer', 'Resources/MapOne'],
+function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer, mapOne) {
    'use strict';
 
    var InitApp = function() {
@@ -8,11 +8,13 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer)
       canvas[0].width  = $(window).width();
       canvas[0].height = $(window).height();
 
+      var terrainMatrix = mapOne.getTerrain();
       var mapDetails = {
-            width: 50,
-            height: 50,
+            width: terrainMatrix[0].length,
+            height: terrainMatrix.length,
             hexRadius: 50,
-            hexSize: undefined // use hexInitializer below
+            terrainMatrix: terrainMatrix,
+            hexSize: undefined, // use hexInitializer below
       }
       mapDetails.hexSize = hexInitializer.getHexSize(mapDetails.hexRadius);
 
