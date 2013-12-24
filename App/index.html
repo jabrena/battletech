@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <script data-main="AppLoad" src="../libs/require.js"></script>
-    </head>
-    <body style="padding:0; margin:0; overflow:hidden;">
-        <img class="hidden" id="redMechImage" src="Images/redMech.jpg" width="30" height="50" style="display:none;">
-        <img class="hidden" id="axeMechImage" src="Images/axeMech.jpg" width="30" height="50" style="display:none;">
+<head>
+<script type="text/javascript" src="../libs/jquery.js"></script>
+<script type="text/javascript" src="../libs/underscore.js"></script>
+<script type="text/javascript" src="../libs/heap.js"></script>
+<script type="text/javascript" src="../libs/radio.min.js"></script>
 
-        <img class="hidden" src="Resources/Tiles/grass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stone.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stoneNgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stoneSgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stoneNEgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stoneEgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/stoneWgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassSWstone.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassNEstone.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassNWstone.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/forestEgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/forest.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/forestNgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/forestSgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/forestWgrass.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassSWforest.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassSEforest.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassNEforest.BMP" style="display:none;">
-        <img class="hidden" src="Resources/Tiles/grassNWforest.BMP" style="display:none;">
+</head>
+<body style="padding:0; margin:0; overflow:hidden;">
+    <img class="hidden" id="redMechImage" src="Images/redMech.jpg" width="30" height="50" style="display:none;">
+    <img class="hidden" id="axeMechImage" src="Images/axeMech.jpg" width="30" height="50" style="display:none;">
+
+    <img class="hidden" src="Resources/Tiles/grass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stone.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stoneNgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stoneSgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stoneNEgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stoneEgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/stoneWgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassSWstone.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassNEstone.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassNWstone.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/forestEgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/forest.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/forestNgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/forestSgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/forestWgrass.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassSWforest.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassSEforest.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassNEforest.BMP" style="display:none;">
+    <img class="hidden" src="Resources/Tiles/grassNWforest.BMP" style="display:none;">
 
 
-        <img class="hidden" id="clayGround" src="Images/clayGround.jpg" width="30" height="50" style="display:none;">
-        <img class="hidden" id="mountainGround" src="Images/mountainGround.jpg" width="30" height="50" style="display:none;">
+    <img class="hidden" id="clayGround" src="Images/clayGround.jpg" width="30" height="50" style="display:none;">
+    <img class="hidden" id="mountainGround" src="Images/mountainGround.jpg" width="30" height="50" style="display:none;">
 
-    	<canvas id="myCanvas"></canvas>
-        <script data-main="App" src="../libs/require.js"></script>
-    </body>
+	<canvas id="myCanvas"></canvas>
+    <script data-main="App" src="../libs/require.js"></script>
+</body>
 </html>

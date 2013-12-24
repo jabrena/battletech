@@ -1,5 +1,5 @@
-define(['radio', 'AppGlobals', 'Map/HexPositionCalculator', 'Units/MoveHelper', 'Turns/Turn'], 
-function(radio, appGlobals, hexPositionCalculator, moveHelper, turn) {
+define(['AppGlobals', 'Map/HexPositionCalculator', 'Units/MoveHelper', 'Turns/Turn'], 
+function(appGlobals, hexPositionCalculator, moveHelper, turn) {
 	'use strict';
 	var _dragging;
 
