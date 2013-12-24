@@ -1,6 +1,12 @@
 define([], function() {
    'use strict';
 
+   var _getMovementCost = function(tileType) {
+      if (tileType.indexOf('forest') === 0) { return 2; }
+      else if (tileType.indexOf('stone') === 0) { return 3; }
+      else { return 1 }
+   }
+
    var getTerrain = function() {
       var rows = [];
       rows[0]  = 'grass,             grass,              grassNEstone,           grassNEstone,          stone,          stone,          stone,          stone,          stone,          stone,          stone,          stone,          stone,          stone,          stone,    stoneEgrass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass,          grass'.split(',');
@@ -31,7 +37,8 @@ define([], function() {
 
       rows.forEach(function(row, rowIndex) {
          row.forEach(function(tile, columnIndex) {
-            rows[rowIndex][columnIndex] = tile.trim();
+            var tileType = tile.trim();
+            rows[rowIndex][columnIndex] = { type: tileType, weight: _getMovementCost(tileType) };
          });
       });
       return rows;
