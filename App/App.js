@@ -2,7 +2,7 @@ define(['Map/HexInitializer', 'Map/MapInitializer', 'Units/UnitInitializer', 'Ev
 function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer, mapOne) {
    'use strict';
 
-   var InitApp = function() {
+   var initApp = function() {
       var canvas = $('#myCanvas');
       mouseEventInitializer.initMouseEvents(canvas);
       canvas[0].width  = $(window).width();
@@ -20,8 +20,7 @@ function(hexInitializer, mapInitializer, unitInitializer, mouseEventInitializer,
 
       mapInitializer.initMap(mapDetails);
       unitInitializer.initUnits();
+   };
 
-      //paper.view.draw();
-   }();
-
+   return { initApp: initApp }
 });

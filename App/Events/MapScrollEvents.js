@@ -1,5 +1,5 @@
-define(['AppGlobals', 'Events/ScrollCalculator'],
-function(appGlobals, scrollCalculator) {
+define(['radio', 'AppGlobals', 'Events/ScrollCalculator'],
+function(radio, appGlobals, scrollCalculator) {
    'use strict';
 
     var centerOnPoint = function(xCord, yCord) {

@@ -1,4 +1,4 @@
-define([], function() {
+define(['radio'], function(radio) {
     var _leftMouseButton = {
     	isDown: false,
     	clickedAt: {
